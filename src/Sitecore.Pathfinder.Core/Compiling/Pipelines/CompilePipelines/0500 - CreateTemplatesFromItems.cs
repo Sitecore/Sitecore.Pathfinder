@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 template.IconProperty.SetValue(iconField.ValueProperty);
             }
 
-            foreach (var sectionItem in templateItem.GetChildren())
+            foreach (var sectionItem in templateItem.Children)
             {
                 var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
                 template.Sections.Add(templateSection);
@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                     }
                 }
 
-                foreach (var fieldItem in sectionItem.GetChildren())
+                foreach (var fieldItem in sectionItem.Children)
                 {
                     var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
                     templateSection.Fields.Add(templateField);
@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var templateItem in templateItems)
             {
-                if (pipeline.Context.Project.FindQualifiedItem<Template>(templateItem.Uri) != null)
+                if (pipeline.Context.Project.Indexes.FindQualifiedItem<Template>(templateItem.Uri) != null)
                 {
                     continue;
                 }

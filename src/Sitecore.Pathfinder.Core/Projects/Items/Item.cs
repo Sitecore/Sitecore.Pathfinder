@@ -66,10 +66,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         public ItemHelp Help => _help ?? (_help = new ItemHelp(this));
 
         [NotNull]
-        public string this[[NotNull] string fieldName] => Fields.GetFieldValue(fieldName);
+        public string this[[NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => Fields.GetFieldValue(fieldName, language, version);
 
         [NotNull]
-        public string this[Guid guid] => Fields.GetFieldValue(guid);
+        public string this[Guid fieldId, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => Fields.GetFieldValue(fieldId, language, version);
 
         public MergingMatch MergingMatch { get; set; }
 
@@ -108,11 +108,11 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
                 {
-                    return Project.FindQualifiedItem<Template>(Database, templateIdOrPath) ?? Template.Empty;
+                    return Database.FindQualifiedItem<Template>(templateIdOrPath) ?? Template.Empty;
                 }
 
                 // resolve by short name
-                var templates = Project.GetByShortName<Template>(Database, templateIdOrPath).ToArray();
+                var templates = Database.GetByShortName<Template>(templateIdOrPath).ToArray();
                 return templates.Length == 1 ? templates.First() : Template.Empty;
             }
         }
@@ -133,12 +133,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string TemplateName => Template.ItemName;
 
-        [NotNull, ItemNotNull]
-        public virtual IEnumerable<Item> GetChildren()
-        {
-            return Project.GetChildren(this);
-        }
-
         [NotNull]
         public string GetDisplayName([NotNull] Language language, [NotNull] Version version)
         {
@@ -155,7 +149,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Item GetParent()
         {
-            return Project.FindQualifiedItem<Item>(Database, ParentItemPath);
+            return Database.FindQualifiedItem<Item>(ParentItemPath);
         }
 
         [NotNull, ItemNotNull]

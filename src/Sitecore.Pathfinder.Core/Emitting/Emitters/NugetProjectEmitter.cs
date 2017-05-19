@@ -105,7 +105,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
-            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
                 context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
@@ -270,7 +270,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                     if (string.Equals(field.TemplateField.Type, "attachment", StringComparison.OrdinalIgnoreCase))
                     {
-                        var mediaFile = context.Project.FindQualifiedItem<MediaFile>(field.Value);
+                        var mediaFile = context.Project.Indexes.FindQualifiedItem<MediaFile>(field.Value);
                         if (mediaFile == null)
                         {
                             context.Trace.TraceInformation(Msg.E1047, "No media item", item.SourceTextNode);

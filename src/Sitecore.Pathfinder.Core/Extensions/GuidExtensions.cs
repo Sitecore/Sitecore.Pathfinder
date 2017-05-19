@@ -13,10 +13,14 @@ namespace Sitecore.Pathfinder.Extensions
             return guid.ToString("B").ToUpperInvariant();
         }
 
-        public static bool IsGuid([NotNull] this string guid)
+        public static bool IsGuid([NotNull] this string s)
         {
             Guid g;
-            return Guid.TryParse(guid, out g);
+            return Guid.TryParse(s, out g);
+        }
+        public static bool IsGuidOrSoftGuid([NotNull] this string s)
+        {
+            return s.StartsWith("{") && s.EndsWith("}");
         }
     }
 }

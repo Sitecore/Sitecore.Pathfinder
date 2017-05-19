@@ -144,7 +144,7 @@ namespace Sitecore.Pathfinder.Tasks
                 var projectItem1 = i;
                 Header = projectItem1.QualifiedName;
 
-                var projectItem2 = project2.FindQualifiedItem<IProjectItem>(projectItem1.Uri);
+                var projectItem2 = project2.Indexes.FindQualifiedItem<IProjectItem>(projectItem1.Uri);
                 if (projectItem2 == null)
                 {
                     var file = projectItem1 as Projects.Files.File;
@@ -245,7 +245,7 @@ namespace Sitecore.Pathfinder.Tasks
 
                 Header = projectItem2.QualifiedName;
 
-                var projectItem1 = project1.FindQualifiedItem<IProjectItem>(projectItem2.Uri);
+                var projectItem1 = project1.Indexes.FindQualifiedItem<IProjectItem>(projectItem2.Uri);
                 if (projectItem1 == null)
                 {
                     var file = projectItem2 as Projects.Files.File;

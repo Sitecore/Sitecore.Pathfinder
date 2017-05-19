@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class TemplateField : TextNodeSourcePropertyBag
     {
         [NotNull]
-        public static readonly TemplateField Empty = new TemplateField(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"));
+        public static readonly TemplateField Empty = new TemplateField();
 
         [CanBeNull]
         private ID _id;
@@ -31,6 +31,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
             Uri = new ProjectItemUri(template.DatabaseName, guid);
         }
 
+        private TemplateField() : this(Template.Empty, new Guid("{D269BE69-A982-4415-ABC6-A870F286435A}"))
+        {              
+            Shared = true;
+        }
+
         [NotNull]
         public Database Database => Template.Database;
 
@@ -40,8 +45,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string FieldName
         {
-            get { return FieldNameProperty.GetValue(); }
-            set { FieldNameProperty.SetValue(value); }
+            get => FieldNameProperty.GetValue();
+            set => FieldNameProperty.SetValue(value);
         }
 
         [NotNull]
@@ -50,8 +55,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string Icon
         {
-            get { return IconProperty.GetValue(); }
-            set { IconProperty.SetValue(value); }
+            get => IconProperty.GetValue();
+            set => IconProperty.SetValue(value);
         }
 
         [NotNull]
@@ -65,8 +70,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string LongHelp
         {
-            get { return LongHelpProperty.GetValue(); }
-            set { LongHelpProperty.SetValue(value); }
+            get => LongHelpProperty.GetValue();
+            set => LongHelpProperty.SetValue(value);
         }
 
         [NotNull]
@@ -81,8 +86,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string ShortHelp
         {
-            get { return ShortHelpProperty.GetValue(); }
-            set { ShortHelpProperty.SetValue(value); }
+            get => ShortHelpProperty.GetValue();
+            set => ShortHelpProperty.SetValue(value);
         }
 
         [NotNull]
@@ -90,8 +95,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         public int Sortorder
         {
-            get { return SortorderProperty.GetValue(); }
-            set { SortorderProperty.SetValue(value); }
+            get => SortorderProperty.GetValue();
+            set => SortorderProperty.SetValue(value);
         }
 
         [NotNull]
@@ -100,8 +105,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string Source
         {
-            get { return SourceProperty.GetValue(); }
-            set { SourceProperty.SetValue(value); }
+            get => SourceProperty.GetValue();
+            set => SourceProperty.SetValue(value);
         }
 
         [NotNull]
@@ -113,8 +118,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string Type
         {
-            get { return TypeProperty.GetValue(); }
-            set { TypeProperty.SetValue(value); }
+            get => TypeProperty.GetValue();
+            set => TypeProperty.SetValue(value);
         }
 
         [NotNull]

@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual IReference Reference(IProjectItem projectItem, ITextNode textNode, string referenceText, string databaseName) => new Reference(projectItem, textNode, referenceText, databaseName);
 
-        public virtual Rendering Rendering(IProjectBase project, ISnapshot snapshot, string databaseName, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(project, snapshot, databaseName, itemPath, itemName, filePath, templateIdOrPath);
+        public virtual Rendering Rendering(Database database, ISnapshot snapshot, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Rendering(database, snapshot, itemPath, itemName, filePath, templateIdOrPath);
 
         public virtual SerializationFile SerializationFile(IProjectBase project, ISnapshot snapshot, string filePath) => new SerializationFile(project, snapshot, filePath);
 

@@ -138,7 +138,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return;
             }
 
-            var item = context.Project.FindQualifiedItem<IProjectItem>(dataSource);
+            var item = context.Project.Indexes.FindQualifiedItem<IProjectItem>(dataSource);
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1028, Texts.Datasource_not_found, dataSource);
@@ -187,7 +187,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (!string.IsNullOrEmpty(layout))
             {
-                var l = context.Project.FindQualifiedItem<IProjectItem>(layout);
+                var l = context.Project.Indexes.FindQualifiedItem<IProjectItem>(layout);
 
                 if (l == null)
                 {
@@ -253,7 +253,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var databaseName = context.Database.DatabaseName;
 
-            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Project.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
+            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Project.Indexes.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
             renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(r => r.IsImport && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && (string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase) || string.Equals(r.TemplateIdOrPath, Constants.Templates.ViewRenderingId, StringComparison.OrdinalIgnoreCase))));
 
             var devices = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
@@ -307,9 +307,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
 
             Item renderingItem;
-            if (renderingItemId.IsGuid())
+            if (Guid.TryParse(renderingItemId, out Guid guid))
             {
-                renderingItem = context.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.Uri.Guid.Format() == renderingItemId);
+                renderingItem = context.Project.ProjectItems.OfType<Item>().FirstOrDefault(i => i.Uri.Guid == guid && i.Database == context.Database);
             }
             else
             {
@@ -365,7 +365,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var fields = new Dictionary<string, string>();
 
             var parametersTemplateItemId = renderingItem.Fields.FirstOrDefault(f => f.FieldName == "Parameters Template")?.Value ?? string.Empty;
-            var parametersTemplateItem = context.Project.FindQualifiedItem<Template>(parametersTemplateItemId);
+            var parametersTemplateItem = context.Project.Indexes.FindQualifiedItem<Template>(parametersTemplateItemId);
             if (parametersTemplateItem != null)
             {
                 foreach (var field in parametersTemplateItem.GetAllFields())
@@ -430,7 +430,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                 if (value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
                 {
-                    var item = context.Project.FindQualifiedItem<IProjectItem>(value);
+                    var item = context.Project.Indexes.FindQualifiedItem<IProjectItem>(value);
                     if (item != null)
                     {
                         value = item.Uri.Guid.Format();

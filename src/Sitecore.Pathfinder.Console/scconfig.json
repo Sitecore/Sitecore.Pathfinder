@@ -289,9 +289,6 @@
     // default database name (master, core or web)
     "database": "master",
 
-    // specifies the default language
-    "default-language": "en",
-
     "extensions": {
         // if true, disable all extensions and just load Sitecore.Pathfinder.Core.dll
         "disabled": false,

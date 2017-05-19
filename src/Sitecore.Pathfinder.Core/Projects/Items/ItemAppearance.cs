@@ -23,14 +23,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string ReadOnly => _item[Constants.Fields.ReadOnly];
 
-        [NotNull]
-        public int SortOrder
-        {
-            get
-            {
-                int sortorder;
-                return int.TryParse(_item[Constants.Fields.Sortorder], out sortorder) ? sortorder : 0;
-            }
-        }
+        public int SortOrder => int.TryParse(_item[Constants.Fields.Sortorder], out int sortorder) ? sortorder : 0;
     }
 }

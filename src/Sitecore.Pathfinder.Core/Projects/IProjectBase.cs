@@ -10,11 +10,17 @@ namespace Sitecore.Pathfinder.Projects
 {
     public interface IProjectBase : ILockable
     {
+        [NotNull]
+        ProjectContext Context { get; }
+
         [ItemNotNull, NotNull]
         IEnumerable<Database> Databases { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<File> Files { get; }
+
+        [NotNull]
+        ProjectIndexes.ProjectIndexes Indexes { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<Item> Items { get; }
@@ -34,40 +40,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         IEnumerable<Template> Templates { get; }
 
-        [CanBeNull]
-        T FindByIdOrPath<T>([NotNull] Database database, [NotNull] string idOrPath) where T : DatabaseProjectItem;
-
-        [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] IProjectItemUri uri) where T : class, IProjectItem;
-
-        [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
-
-        [CanBeNull]
-        T FindQualifiedItem<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> GetByFileName<T>([NotNull] string fileName) where T : File;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> GetByQualifiedName<T>([NotNull] string qualifiedName) where T : class, IProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> GetByQualifiedName<T>([NotNull] Database database, [NotNull] string qualifiedName) where T : DatabaseProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> GetByShortName<T>([NotNull] string shortName) where T : class, IProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<T> GetByShortName<T>([NotNull] Database database, [NotNull] string shortName) where T : DatabaseProjectItem;
-
-        [NotNull, ItemNotNull]
-        IEnumerable<Item> GetChildren([NotNull] Item item);
-
         [NotNull]
         Database GetDatabase([NotNull] string databaseName);
-
-        [NotNull, ItemNotNull]
-        IEnumerable<IProjectItem> GetUsages([NotNull] string qualifiedName);
     }
 }

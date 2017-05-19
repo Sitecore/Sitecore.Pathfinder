@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
-            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(value);
+            var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(value);
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);

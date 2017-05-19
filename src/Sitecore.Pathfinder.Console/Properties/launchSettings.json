@@ -2,7 +2,7 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "generate-code --pause",
+      "commandLineArgs": "b  --pause",
       "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Todo"
     }
   }

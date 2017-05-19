@@ -21,7 +21,6 @@ using Sitecore.Pathfinder.Projects.Files;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
-using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
@@ -54,7 +53,7 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker, [NotNull] IProjectIndexer indexer)
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -64,18 +63,26 @@ namespace Sitecore.Pathfinder.Projects
             ParseService = parseService;
             Pipelines = pipelines;
             Checker = checker;
-            Indexer = indexer;
+
+            Context = new ProjectContext();
+            Indexes = new ProjectIndexes.ProjectIndexes(this);
 
             _projectItems = new LockableList<IProjectItem>(this);
             _diagnostics = new SynchronizedList<Diagnostic>();
 
             Options = ProjectOptions.Empty;
 
+            // load databases from configuration
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Databases))
             {
                 var languageNames = Configuration.GetArray(Constants.Configuration.Databases + ":" + pair.Key + ":languages");
                 _databases[pair.Key.ToUpperInvariant()] = new Database(this, pair.Key, languageNames);
             }
+
+            // set Context language
+            var database = GetDatabase(Configuration.GetString(Constants.Configuration.Database, "master"));
+            Assert.IsNotNull(database, "Database specified in 'database' configuration not found");
+            Context.Language = database.Languages.First();
         }
 
         private Project()
@@ -83,6 +90,8 @@ namespace Sitecore.Pathfinder.Projects
             Options = ProjectOptions.Empty;
             _projectUniqueId = Guid.Empty.Format();
         }
+
+        public ProjectContext Context { get; }
 
         public IEnumerable<Database> Databases => _databases.Values;
 
@@ -102,9 +111,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>().Where(f => f.IsEmittable);
 
-        public IProjectIndexer Indexer { get; }
+        public ProjectIndexes.ProjectIndexes Indexes { get; }
 
-        public IEnumerable<Item> Items => Indexer.Items;
+        public IEnumerable<Item> Items => Indexes.Items;
 
         public override Locking Locking => _locking;
 
@@ -119,7 +128,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public IDictionary<string, ISourceFile> SourceFiles { get; } = new Dictionary<string, ISourceFile>();
 
-        public IEnumerable<Template> Templates => Indexer.Templates;
+        public IEnumerable<Template> Templates => Indexes.Templates;
 
         [NotNull]
         protected ICheckerService Checker { get; }
@@ -229,7 +238,7 @@ namespace Sitecore.Pathfinder.Projects
                 if (addedProjectItem == null)
                 {
                     _projectItems.Add(projectItem);
-                    Indexer.Add(projectItem);
+                    Indexes.Add(projectItem);
                     addedProjectItem = projectItem;
                 }
             }
@@ -270,84 +279,6 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public T FindByIdOrPath<T>(Database database, string idOrPath) where T : DatabaseProjectItem
-        {
-            if (idOrPath.IsGuid())
-            {
-                return FindQualifiedItem<T>(database, idOrPath);
-            }
-
-            if (idOrPath.IndexOf('/') >= 0)
-            {
-                return FindQualifiedItem<T>(database, idOrPath);
-            }
-
-            var items = GetByShortName<T>(database, idOrPath).ToArray();
-            return items.Length == 1 ? items[0] : null;
-        }
-
-        public T FindQualifiedItem<T>(string qualifiedName) where T : class, IProjectItem
-        {
-            if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
-            {
-                return Indexer.FindQualifiedItem<T>(qualifiedName);
-            }
-
-            Guid guid;
-            if (Guid.TryParse(qualifiedName, out guid))
-            {
-                return Indexer.FindQualifiedItem<T>(guid);
-            }
-
-            guid = StringHelper.ToGuid(qualifiedName);
-            return Indexer.FindQualifiedItem<T>(guid);
-        }
-
-        public T FindQualifiedItem<T>(Database database, string qualifiedName) where T : DatabaseProjectItem
-        {
-            if (!qualifiedName.StartsWith("{") || !qualifiedName.EndsWith("}"))
-            {
-                return Indexer.FindQualifiedItem<T>(database, qualifiedName);
-            }
-
-            Guid guid;
-            if (Guid.TryParse(qualifiedName, out guid))
-            {
-                return Indexer.FirstOrDefault<T>(database, guid);
-            }
-
-            guid = StringHelper.ToGuid(qualifiedName);
-            return Indexer.FirstOrDefault<T>(database, guid);
-        }
-
-        public T FindQualifiedItem<T>(IProjectItemUri uri) where T : class, IProjectItem => Indexer.FindQualifiedItem<T>(uri);
-
-        public IEnumerable<T> GetByFileName<T>(string fileName) where T : File
-        {
-            var relativeFileName = PathHelper.NormalizeFilePath(fileName);
-            if (relativeFileName.StartsWith("~\\"))
-            {
-                relativeFileName = relativeFileName.Mid(2);
-            }
-
-            if (relativeFileName.StartsWith("\\"))
-            {
-                relativeFileName = relativeFileName.Mid(1);
-            }
-
-            return ProjectItems.OfType<T>().Where(f => string.Equals(f.FilePath, fileName, StringComparison.OrdinalIgnoreCase) || f.GetSnapshots().Any(s => string.Equals(s.SourceFile.RelativeFileName, relativeFileName, StringComparison.OrdinalIgnoreCase)));
-        }
-
-        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : class, IProjectItem => Indexer.GetByQualifiedName<T>(qualifiedName);
-
-        public IEnumerable<T> GetByQualifiedName<T>(Database database, string qualifiedName) where T : DatabaseProjectItem => Indexer.GetByQualifiedName<T>(database, qualifiedName);
-
-        public IEnumerable<T> GetByShortName<T>(string shortName) where T : class, IProjectItem => Indexer.GetByShortName<T>(shortName);
-
-        public IEnumerable<T> GetByShortName<T>(Database database, string shortName) where T : DatabaseProjectItem => Indexer.GetByShortName<T>(database, shortName);
-
-        public IEnumerable<Item> GetChildren(Item item) => Indexer.GetChildren(item);
-
         public Database GetDatabase(string databaseName)
         {
             var database = _databases[databaseName.ToUpperInvariant()];
@@ -359,7 +290,6 @@ namespace Sitecore.Pathfinder.Projects
             return database;
         }
 
-        public IEnumerable<IProjectItem> GetUsages(string qualifiedName) => Indexer.GetUsages(qualifiedName).Select(r => r.Resolve());
 
         public void Lock(Locking locking)
         {
@@ -385,7 +315,7 @@ namespace Sitecore.Pathfinder.Projects
 
             _projectItems.Remove(projectItem);
 
-            Indexer.Remove(projectItem);
+            Indexes.Remove(projectItem);
         }
 
         public virtual void Remove([NotNull] string absoluteSourceFileName)
@@ -449,23 +379,23 @@ namespace Sitecore.Pathfinder.Projects
 
             if (newItem.MergingMatch == MergingMatch.MatchUsingSourceFile)
             {
-                items = Indexer.Where<Item>(newItem.Snapshot.SourceFile).ToArray();
+                items = Indexes.GetBySourceFile<Item>(newItem.Snapshot.SourceFile).ToArray();
             }
 
             if (items == null || items.Length == 0)
             {
-                items = Indexer.Where<Item>(newItem.Snapshot.SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
+                items = Indexes.GetBySourceFile<Item>(newItem.Snapshot.SourceFile).Where(i => i.MergingMatch == MergingMatch.MatchUsingSourceFile).ToArray();
             }
 
             if (items.Length == 0)
             {
-                items = Indexer.GetByQualifiedName<Item>(newItem.Database, newItem.ItemIdOrPath).ToArray();
+                items = newItem.Database.GetByQualifiedName<Item>(newItem.ItemIdOrPath).ToArray();
             }
 
             if (items.Length == 0)
             {
                 _projectItems.Add(newItem);
-                Indexer.Add(newItem);
+                Indexes.Add(newItem);
                 return newItem;
             }
 
@@ -476,11 +406,11 @@ namespace Sitecore.Pathfinder.Projects
 
             var item = items[0];
 
-            Indexer.Remove(item);
+            Indexes.Remove(item);
 
             item.Merge(newItem);
 
-            Indexer.Add(item);
+            Indexes.Add(item);
 
             return item;
         }
@@ -488,12 +418,12 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected virtual IProjectItem MergeTemplate<T>([NotNull] T newTemplate) where T : Template
         {
-            var templates = Indexer.GetByQualifiedName<Template>(newTemplate.Database, newTemplate.ItemIdOrPath).ToArray();
+            var templates = newTemplate.Database.GetByQualifiedName<Template>(newTemplate.ItemIdOrPath).ToArray();
 
             if (templates.Length == 0)
             {
                 _projectItems.Add(newTemplate);
-                Indexer.Add(newTemplate);
+                Indexes.Add(newTemplate);
                 return newTemplate;
             }
 
@@ -504,11 +434,11 @@ namespace Sitecore.Pathfinder.Projects
 
             var template = templates[0];
 
-            Indexer.Remove(template);
+            Indexes.Remove(template);
 
             template.Merge(newTemplate);
 
-            Indexer.Add(template);
+            Indexes.Add(template);
 
             return template;
         }

@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Configuration
         IReference Reference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> sourceSourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        Rendering Rendering([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
+        Rendering Rendering([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         SerializationFile SerializationFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath);

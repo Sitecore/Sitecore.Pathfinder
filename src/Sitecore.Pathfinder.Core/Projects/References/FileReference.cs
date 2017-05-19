@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public override IProjectItem Resolve()
         {
-            return Owner.Project.GetByFileName<File>(ReferenceText).FirstOrDefault();
+            return Owner.Project.Indexes.GetByFileName<File>(ReferenceText).FirstOrDefault();
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Projects.References
 
         public virtual IProjectItem Resolve()
         {
-            return Owner.Project.FindQualifiedItem<IProjectItem>(ReferenceText);
+            return Owner.Project.Indexes.FindQualifiedItem<IProjectItem>(ReferenceText);
         }
     }
 }

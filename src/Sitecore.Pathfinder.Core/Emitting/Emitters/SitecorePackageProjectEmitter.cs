@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                                 output.WriteStartElement("fields");
 
-                                foreach (var field in item.Fields.GetFields(language, version))
+                                foreach (var field in item.Fields.GetFieldsInVersion(language, version))
                                 {
                                     output.WriteStartElement("field");
                                     output.WriteAttributeString("tfid", field.FieldId.Format());
@@ -207,7 +207,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                             writer.WriteLine("language=" + language.LanguageName);
                             writer.WriteLine("version=" + version.Number);
                             writer.WriteLine("revision=" + Guid.NewGuid().ToString("D"));
-                            writer.WriteLine("fieldproperties=" + string.Join("|", item.Fields.GetFields(language, version).Select(f => f.FieldId.Format() + ":" + (f.TemplateField.Shared ? "Shared" : f.TemplateField.Unversioned ? "Unversioned" : "Versioned"))));
+                            writer.WriteLine("fieldproperties=" + string.Join("|", item.Fields.GetFieldsInVersion(language, version).Select(f => f.FieldId.Format() + ":" + (f.TemplateField.Shared ? "Shared" : f.TemplateField.Unversioned ? "Unversioned" : "Versioned"))));
                         }
 
                         Zip.AddEntry("properties/items/" + NormalizeZipPath(fileName), stream.ToArray());
@@ -421,7 +421,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 return;
             }
 
-            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
                 context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);

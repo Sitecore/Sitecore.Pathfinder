@@ -5,32 +5,31 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 
-namespace Sitecore.Pathfinder.Projects
+namespace Sitecore.Pathfinder.Projects.ProjectIndexes
 {
-    public class ProjectIndex<TV> : Dictionary<string, List<TV>> where TV : class, IProjectItem
+    public class Index<TV> : Dictionary<string, List<TV>> where TV : class, IProjectItem
     {
+        public Index([NotNull] Func<TV, string> getKey)
+        {
+            GetKey = key => getKey(key).ToUpperInvariant();
+        }
+
+        public Index()
+        {
+        }
+
         [NotNull]
-        private readonly Func<TV, string> _getKey;
-
-        public ProjectIndex([NotNull] Func<TV, string> getKey)
-        {
-            _getKey = getKey;
-        }
-
-        public ProjectIndex()
-        {
-        }
+        protected Func<TV, string> GetKey { get; }
 
         public void Add([NotNull] TV projectItem)
         {
-            Add(_getKey(projectItem), projectItem);
+            Add(GetKey(projectItem), projectItem);
         }
 
         public void Add([NotNull] string key, [NotNull] TV projectItem)
         {
-            List<TV> projectItemList;
-
-            if (!TryGetValue(key, out projectItemList))
+            key = key.ToUpperInvariant();
+            if (!TryGetValue(key, out List<TV> projectItemList))
             {
                 projectItemList = new List<TV>();
                 this[key] = projectItemList;
@@ -42,21 +41,18 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         public T FirstOrDefault<T>([NotNull] string key) where T : class, TV
         {
-            List<TV> projectItemList;
-            return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>().FirstOrDefault() : null;
+            return TryGetValue(key.ToUpperInvariant(), out List<TV> projectItemList) ? projectItemList.OfType<T>().FirstOrDefault() : null;
         }
 
         public void Remove([NotNull] TV projectItem)
         {
-            var key = _getKey(projectItem);
-            Remove(key, projectItem);
+            Remove(GetKey(projectItem), projectItem);
         }
 
         public void Remove([NotNull] string key, [NotNull] TV projectItem)
         {
-            List<TV> projectItemList;
-
-            if (!TryGetValue(key, out projectItemList))
+            key = key.ToUpperInvariant();
+            if (!TryGetValue(key, out List<TV> projectItemList))
             {
                 return;
             }
@@ -71,8 +67,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull, ItemNotNull]
         public IEnumerable<T> Where<T>([NotNull] string key) where T : class, TV
         {
-            List<TV> projectItemList;
-            return TryGetValue(key, out projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();
+            return TryGetValue(key.ToUpperInvariant(), out List<TV> projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();
         }
     }
 }

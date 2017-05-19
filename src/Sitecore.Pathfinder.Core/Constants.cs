@@ -70,8 +70,6 @@ namespace Sitecore.Pathfinder
 
             public const string Debug = "debug";
 
-            public const string DefaultLanguage = "default-language";
-
             public const string Description = "description";
 
             public const string HostName = "host-name";

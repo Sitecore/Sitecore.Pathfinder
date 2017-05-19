@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             if (n >= 0)
             {
                 var parentPath = item.ItemIdOrPath.Left(n);
-                var parent = item.Project.FindQualifiedItem<IProjectItem>(parentPath);
+                var parent = item.Project.Indexes.FindQualifiedItem<IProjectItem>(parentPath);
 
                 if (parent != null)
                 {

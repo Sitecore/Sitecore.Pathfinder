@@ -156,7 +156,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var path = "/sitecore/layout/Layouts/" + Layer;
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
-                let item = context.Project.FindQualifiedItem<Item>(rendering.RenderingItemUri)
+                let item = context.Project.Indexes.FindQualifiedItem<Item>(rendering.RenderingItemUri)
                 where item != null && item.ItemIdOrPath.StartsWith("/sitecore/layout/Layouts/") && !item.ItemIdOrPath.StartsWith(path)
                 select Error(Msg.C1080, $"Layout items should be located in the correct layer '{path}'. To fix, move the layout item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
@@ -166,7 +166,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var path = "/sitecore/layout/Layouts/" + Layer + "/" + Module;
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
-                let item = context.Project.FindQualifiedItem<Item>(rendering.RenderingItemUri)
+                let item = context.Project.Indexes.FindQualifiedItem<Item>(rendering.RenderingItemUri)
                 where item != null && item.ItemIdOrPath.StartsWith("/sitecore/layout/Layouts/") && !item.ItemIdOrPath.StartsWith(path)
                 select Error(Msg.C1081, $"Layout items should be located in the correct module '{path}'. To fix, move the layout item into the '{path}' module", TraceHelper.GetTextNode(item));
         }
@@ -311,7 +311,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var path = "/sitecore/layout/Renderings/" + Layer;
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
-                let item = context.Project.FindQualifiedItem<Item>(rendering.RenderingItemUri)
+                let item = context.Project.Indexes.FindQualifiedItem<Item>(rendering.RenderingItemUri)
                 where item != null && item.ItemIdOrPath.StartsWith("/sitecore/layout/Renderings/") && !item.ItemIdOrPath.StartsWith(path)
                 select Error(Msg.C1097, $"Rendering items should be located in the correct layer '{path}'. To fix, move the rendering item into the '{path}' layer", TraceHelper.GetTextNode(item));
         }
@@ -321,7 +321,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             var path = "/sitecore/layout/Renderings/" + Layer + "/" + Module;
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
-                let item = context.Project.FindQualifiedItem<Item>(rendering.RenderingItemUri)
+                let item = context.Project.Indexes.FindQualifiedItem<Item>(rendering.RenderingItemUri)
                 where item != null && item.ItemIdOrPath.StartsWith("/sitecore/layout/Renderings/") && !item.ItemIdOrPath.StartsWith(path)
                 select Error(Msg.C1098, $"Rendering items should be located in the correct module '{path}'. To fix, move the rendering item into the '{path}' module", TraceHelper.GetTextNode(item));
         }

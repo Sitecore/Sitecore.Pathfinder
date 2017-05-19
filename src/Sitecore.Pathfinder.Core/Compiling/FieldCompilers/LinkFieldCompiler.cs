@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
-            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
+            var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(qualifiedName);
 
             if (item == null)
             {

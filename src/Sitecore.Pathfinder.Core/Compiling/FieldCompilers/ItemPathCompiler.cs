@@ -76,7 +76,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return value;
             }
 
-            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(value);
+            var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(value);
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return value;
             }
 
-            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
+            var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {
                 context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
@@ -143,7 +143,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                 if (PathHelper.IsProbablyItemPath(path) && !ReferenceParser.IsIgnoredReference(value))
                 {
-                    var i = field.Item.Project.FindQualifiedItem<IProjectItem>(path);
+                    var i = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(path);
                     if (i != null)
                     {
                         path = i.Uri.Guid.Format();
@@ -188,7 +188,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                 if (PathHelper.IsProbablyItemPath(v) && !ReferenceParser.IsIgnoredReference(v))
                 {
-                    var i = database == null ? project.FindQualifiedItem<IProjectItem>(v) : project.FindQualifiedItem<DatabaseProjectItem>(database, v);
+                    var i = database == null ? project.Indexes.FindQualifiedItem<IProjectItem>(v) : database.FindQualifiedItem<DatabaseProjectItem>(v);
                     if (i != null)
                     {
                         v = i.Uri.Guid.Format();

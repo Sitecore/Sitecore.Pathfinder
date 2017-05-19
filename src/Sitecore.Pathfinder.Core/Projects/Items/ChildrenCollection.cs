@@ -21,12 +21,18 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Item this[[NotNull] string childName]
         {
-            get { return _item.GetChildren().FirstOrDefault(i => string.Equals(i.ItemName, childName, StringComparison.OrdinalIgnoreCase)); }
+            get { return GetChildren().FirstOrDefault(i => string.Equals(i.ItemName, childName, StringComparison.OrdinalIgnoreCase)); }
         }
 
         public IEnumerator<Item> GetEnumerator()
         {
-            return _item.GetChildren().GetEnumerator();
+            return GetChildren().GetEnumerator();
+        }
+
+        [ItemNotNull, NotNull]
+        protected virtual IEnumerable<Item> GetChildren()
+        {
+            return _item.Project.Indexes.ChildrenIndex.Where<Item>(_item.Database, _item.ItemIdOrPath);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

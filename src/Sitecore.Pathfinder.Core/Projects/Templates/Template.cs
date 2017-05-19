@@ -104,7 +104,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
                                 continue;
                             }
 
-                            var baseTemplate = Project.FindQualifiedItem<Template>(Database, baseTemplateId);
+                            var baseTemplate = Database.FindQualifiedItem<Template>(baseTemplateId);
                             if (baseTemplate == null)
                             {
                                 continue;
@@ -135,7 +135,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
             foreach (var baseTemplate in baseTemplates)
             {
-                var template = Project.FindQualifiedItem<Template>(new ProjectItemUri(Database.DatabaseName, new Guid(baseTemplate)));
+                var template = Project.Indexes.FindQualifiedItem<Template>(new ProjectItemUri(Database.DatabaseName, new Guid(baseTemplate)));
                 if (template != null)
                 {
                     yield return template;

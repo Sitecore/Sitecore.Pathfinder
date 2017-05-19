@@ -49,7 +49,8 @@ namespace Sitecore.Pathfinder.Languages.Renderings
                 return;
             }
 
-            var rendering = context.Factory.Rendering(context.Project, context.Snapshot, context.DatabaseName, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
+            var database = context.Project.GetDatabase(context.DatabaseName);
+            var rendering = context.Factory.Rendering(database, context.Snapshot, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
             context.Project.AddOrMerge(rendering);
 
             var contents = context.Snapshot.SourceFile.ReadAsText();

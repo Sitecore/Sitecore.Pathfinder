@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 for (var index = parts.Length - 2; index >= 0; index--)
                 {
                     var partialPath = "/" + string.Join("/", parts.Take(index + 1));
-                    parent = item.Project.FindQualifiedItem<Item>(item.Database, partialPath);
+                    parent = item.Database.FindQualifiedItem<Item>(partialPath);
 
                     if (parent == null)
                     {

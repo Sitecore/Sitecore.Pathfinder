@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
                 return;
             }
 
-            var item = context.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+            var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
                 context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);

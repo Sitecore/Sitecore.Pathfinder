@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         public IEnumerable<Diagnostic> AvoidManyChildren([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
-                let count = item.GetChildren().Count()
+                let count = item.Children.Count()
                 where count > 100
                 select Warning(Msg.C1009, "Avoid items with many children", TraceHelper.GetTextNode(item), $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children");
         }
@@ -75,7 +75,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 parents.Add(parent);
 
-                var children = parent.GetChildren().ToArray();
+                var children = parent.Children.ToArray();
                 for (var i0 = 0; i0 < children.Length - 2; i0++)
                 {
                     var child0 = children[i0];
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 parents.Add(parent);
 
-                var children = parent.GetChildren().ToArray();
+                var children = parent.Children.ToArray();
                 for (var i0 = 0; i0 < children.Length - 2; i0++)
                 {
                     var child0 = children[i0];

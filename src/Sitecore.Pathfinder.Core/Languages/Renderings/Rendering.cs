@@ -10,9 +10,9 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class Rendering : ContentFile
     {
-        public Rendering([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath) : base(project, snapshot, filePath)
+        public Rendering([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath) : base(database.Project, snapshot, filePath)
         {
-            DatabaseName = databaseName;
+            Database = database;
             ItemPath = itemPath;
             ItemName = itemName;
             TemplateIdOrPath = templateIdOrPath;
@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         }
 
         [NotNull]
-        public string DatabaseName { get; }
+        public Database Database { get; }
 
         [NotNull]
         public string ItemName { get; }

@@ -38,14 +38,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
-            var item = field.Item.Project.FindQualifiedItem<IProjectItem>(qualifiedName);
+            var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(qualifiedName);
 
             if (item == null)
             {
                 var mediaFile = field.Item.Project.Files.FirstOrDefault(f => string.Equals(f.FilePath, qualifiedName, StringComparison.OrdinalIgnoreCase)) as MediaFile;
                 if (mediaFile != null)
                 {
-                    item = field.Item.Project.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
+                    item = field.Item.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
                 }
             }
 

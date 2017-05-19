@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var template in templates)
             {
-                if (pipeline.Context.Project.FindQualifiedItem<Item>(template.Uri) == null)
+                if (pipeline.Context.Project.Indexes.FindQualifiedItem<Item>(template.Uri) == null)
                 {
                     CreateItems(pipeline.Context, pipeline.Context.Project, template);
                 }
