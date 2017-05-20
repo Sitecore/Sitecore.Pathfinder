@@ -7,6 +7,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
+using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
 {
@@ -49,8 +50,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
                 return;
             }
 
-            var database = context.Project.GetDatabase(context.DatabaseName);
-            var rendering = context.Factory.Rendering(database, context.Snapshot, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
+            var rendering = context.Factory.Rendering(context.Database, context.Snapshot, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
             context.Project.AddOrMerge(rendering);
 
             var contents = context.Snapshot.SourceFile.ReadAsText();

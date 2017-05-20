@@ -41,30 +41,17 @@ namespace Sitecore.Pathfinder.Projects.Items
             return Equals((Version)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Number;
-        }
+        public override int GetHashCode() => Number;
 
-        public static bool operator ==([CanBeNull] Version left, [CanBeNull] Version right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==([CanBeNull] Version left, [CanBeNull] Version right) => Equals(left, right);
 
-        public static bool operator !=([CanBeNull] Version left, [CanBeNull] Version right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=([CanBeNull] Version left, [CanBeNull] Version right) => !Equals(left, right);
 
-        public override string ToString()
-        {
-            return Number.ToString();
-        }
+        public override string ToString() => Number.ToString();
 
         public static bool TryParse([NotNull] string value, [NotNull] out Version version)
         {
-            int number;
-            if (!int.TryParse(value, out number))
+            if (!int.TryParse(value, out int number))
             {
                 version = Undefined;
                 return false;
@@ -74,9 +61,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             return true;
         }
 
-        protected bool Equals([NotNull] Version other)
-        {
-            return Number == other.Number;
-        }
+        protected bool Equals([NotNull] Version other) => Number == other.Number;
     }
 }

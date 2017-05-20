@@ -9,9 +9,9 @@ namespace Sitecore.Pathfinder.Languages.Media
 {
     public class MediaFile : File
     {
-        public MediaFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath) : base(project, snapshot, filePath)
+        public MediaFile([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath) : base(database.Project, snapshot, filePath)
         {
-            DatabaseName = databaseName;
+            Database = database;
             ItemName = itemName;
             ItemPath = itemPath;
 
@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Languages.Media
         }
 
         [NotNull]
-        public string DatabaseName { get; }
+        public Database Database { get; }
 
         [NotNull]
         public string ItemName { get; }

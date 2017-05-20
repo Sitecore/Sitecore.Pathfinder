@@ -35,11 +35,9 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual bool GetOptionBoolValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
         {
             // get from configuration
-            string value;
-            if (context.Configuration.TryGet(attribute.Name, out value))
+            if (context.Configuration.TryGet(attribute.Name, out var value))
             {
-                bool b;
-                if (bool.TryParse(value, out b))
+                if (bool.TryParse(value, out var b))
                 {
                     return b;
                 }
@@ -50,8 +48,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 if (context.Configuration.TryGet(attribute.Alias, out value))
                 {
-                    bool b;
-                    if (bool.TryParse(value, out b))
+                    if (bool.TryParse(value, out var b))
                     {
                         return b;
                     }
@@ -63,8 +60,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
                 {
-                    bool b;
-                    if (bool.TryParse(value, out b))
+                    if (bool.TryParse(value, out var b))
                     {
                         return b;
                     }
@@ -93,8 +89,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected virtual string GetOptionStringValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
         {
             // get from configuration
-            string value;
-            if (context.Configuration.TryGet(attribute.Name, out value))
+            if (context.Configuration.TryGet(attribute.Name, out var value))
             {
                 return value ?? string.Empty;
             }

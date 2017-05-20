@@ -24,7 +24,7 @@ namespace Sitecore.Pathfinder.Parsing
         }
 
         [NotNull]
-        public string DatabaseName { get; private set; } = string.Empty;
+        public Database Database { get; private set; } = Database.Empty;
 
         [NotNull]
         public string FilePath { get; private set; } = string.Empty;
@@ -46,24 +46,19 @@ namespace Sitecore.Pathfinder.Parsing
         public PathMappingContext Parse([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile)
         {
             ItemName = PathHelper.GetItemName(sourceFile);
-            DatabaseName = project.Options.DatabaseName;
+            Database = project.GetDatabase(project.Options.DatabaseName);
 
             var projectFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
 
-            string filePath;
-            if (PathMapper.TryGetWebsiteFileName(projectFileName, out filePath))
+            if (PathMapper.TryGetWebsiteFileName(projectFileName, out var filePath))
             {
                 FilePath = filePath;
                 IsMapped = true;
             }
 
-            string itemPath;
-            string databaseName;
-            bool isImport;
-            bool uploadMedia;
-            if (PathMapper.TryGetWebsiteItemPath(projectFileName, out databaseName, out itemPath, out isImport, out uploadMedia))
+            if (PathMapper.TryGetWebsiteItemPath(projectFileName, out var databaseName, out var itemPath, out var isImport, out var uploadMedia))
             {
-                DatabaseName = databaseName;
+                Database = project.GetDatabase(databaseName);
                 ItemPath = itemPath;
                 UploadMedia = uploadMedia;
                 IsMapped = true;

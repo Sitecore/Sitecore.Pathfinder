@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Parsing
 
         public CultureInfo Culture { get; }
 
-        public virtual string DatabaseName { get; private set; }
+        public virtual Database Database { get; private set; } = Database.Empty;
 
         public IFactoryService Factory { get; }
 
@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Parsing
             FilePath = pathMappingContext.FilePath;
             ItemName = pathMappingContext.ItemName;
             ItemPath = pathMappingContext.ItemPath;
-            DatabaseName = pathMappingContext.DatabaseName;
+            Database = pathMappingContext.Database;
             UploadMedia = pathMappingContext.UploadMedia;
 
             Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(diagnosticColletor);

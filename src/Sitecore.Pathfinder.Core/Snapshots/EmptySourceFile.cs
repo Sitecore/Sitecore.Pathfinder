@@ -20,29 +20,14 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string RelativeFileName { get; } = string.Empty;
 
-        public string GetFileNameWithoutExtensions()
-        {
-            return string.Empty;
-        }
+        public string GetFileNameWithoutExtensions() => string.Empty;
 
-        public string[] ReadAsLines()
-        {
-            throw new InvalidOperationException("Cannot read from empty source file");
-        }
+        public string[] ReadAsLines() => throw new InvalidOperationException("Cannot read from empty source file");
 
-        public string[] ReadAsLines(IDictionary<string, string> tokens)
-        {
-            throw new InvalidOperationException("Cannot read from empty source file");
-        }
+        public string[] ReadAsLines(IDictionary<string, string> tokens) => throw new InvalidOperationException("Cannot read from empty source file");
 
-        public string ReadAsText()
-        {
-            throw new InvalidOperationException("Cannot read from empty source file");
-        }
+        public string ReadAsText() => throw new InvalidOperationException("Cannot read from empty source file");
 
-        public string ReadAsText(IDictionary<string, string> tokens)
-        {
-            throw new InvalidOperationException("Cannot read from empty source file");
-        }
+        public string ReadAsText(IDictionary<string, string> tokens) => throw new InvalidOperationException("Cannot read from empty source file");
     }
 }

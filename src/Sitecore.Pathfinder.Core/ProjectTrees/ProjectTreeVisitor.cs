@@ -19,8 +19,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         protected virtual void Visit([NotNull, ItemNotNull] ICollection<string> sourceFileNames, [NotNull] IProjectTreeItem projectTreeItem)
         {
-            var sourceFile = projectTreeItem as IProjectTreeSourceFile;
-            if (sourceFile != null)
+            if (projectTreeItem is IProjectTreeSourceFile sourceFile)
             {
                 sourceFileNames.Add(sourceFile.FileName);
             }

@@ -65,15 +65,9 @@ namespace Sitecore.Pathfinder.ProjectTrees
             return sourceFileNames;
         }
 
-        public virtual bool IsDirectoryIncluded(string directory)
-        {
-            return !PathMatcher.IsExcluded(directory);
-        }
+        public virtual bool IsDirectoryIncluded(string directory) => !PathMatcher.IsExcluded(directory);
 
-        public virtual bool IsFileIncluded(string fileName)
-        {
-            return PathMatcher.IsMatch(fileName);
-        }
+        public virtual bool IsFileIncluded(string fileName) => PathMatcher.IsMatch(fileName);
 
         public virtual IProjectTree With(string toolsDirectory, string projectDirectory)
         {

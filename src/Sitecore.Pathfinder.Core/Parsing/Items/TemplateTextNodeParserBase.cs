@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
-            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var databaseName = textNode.GetAttributeValue("Database", context.Database.DatabaseName);
             var database = context.ParseContext.Project.GetDatabase(databaseName);
 
             var template = context.ParseContext.Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath).With(textNode);

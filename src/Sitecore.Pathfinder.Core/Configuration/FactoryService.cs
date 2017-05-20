@@ -70,13 +70,13 @@ namespace Sitecore.Pathfinder.Configuration
 
         public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
-        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, string databaseName, string parentItemPath, bool isImport) => new ItemParseContext(context, itemParser, databaseName, parentItemPath, isImport);
+        public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, Database database, string parentItemPath, bool isImport) => new ItemParseContext(context, itemParser, database, parentItemPath, isImport);
 
         public virtual LayoutReference LayoutReference(IProjectItem projectItem, SourceProperty<string> layoutSourceProperty, string databaseName) => new LayoutReference(projectItem, layoutSourceProperty, layoutSourceProperty.GetValue(), databaseName);
 
         public virtual LayoutRenderingReference LayoutRenderingReference(IProjectItem projectItem, SourceProperty<string> renderingTextNode, string databaseName) => new LayoutRenderingReference(projectItem, renderingTextNode, renderingTextNode.GetValue(), databaseName);
 
-        public virtual MediaFile MediaFile(IProjectBase project, ISnapshot snapshot, string databaseName, string itemName, string itemPath, string filePath) => new MediaFile(project, snapshot, databaseName, itemName, itemPath, filePath);
+        public virtual MediaFile MediaFile(Database database, ISnapshot snapshot, string itemName, string itemPath, string filePath) => new MediaFile(database, snapshot, itemName, itemPath, filePath);
 
         public virtual ProjectOptions ProjectOptions(string databaseName) => new ProjectOptions(databaseName);
 

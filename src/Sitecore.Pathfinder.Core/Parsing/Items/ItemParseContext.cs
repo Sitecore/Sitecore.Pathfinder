@@ -1,23 +1,24 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
     public class ItemParseContext
     {
-        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isImport)
+        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] Database database, [NotNull] string parentItemPath, bool isImport)
         {
             ParseContext = parseContext;
             Parser = parser;
-            DatabaseName = databaseName;
+            Database = database;
             ParentItemPath = parentItemPath;
             IsImport = isImport;
         }
 
         [NotNull]
-        public string DatabaseName { get; }
+        public Database Database { get; }
 
         public bool IsImport { get; }
 

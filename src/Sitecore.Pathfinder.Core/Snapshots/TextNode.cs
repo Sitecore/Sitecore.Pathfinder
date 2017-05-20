@@ -33,10 +33,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Value { get; protected set; }
 
-        public virtual ITextNode GetAttribute(string attributeName)
-        {
-            return Attributes.FirstOrDefault(a => a.Key == attributeName);
-        }
+        public virtual ITextNode GetAttribute(string attributeName) => Attributes.FirstOrDefault(a => a.Key == attributeName);
 
         public virtual string GetAttributeValue(string attributeName, string defaultValue = "")
         {
@@ -44,10 +41,7 @@ namespace Sitecore.Pathfinder.Snapshots
             return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
-        public virtual ITextNode GetInnerTextNode()
-        {
-            return null;
-        }
+        public virtual ITextNode GetInnerTextNode() => null;
 
         public virtual ITextNode GetSnapshotLanguageSpecificChildNode(string name)
         {
@@ -55,9 +49,6 @@ namespace Sitecore.Pathfinder.Snapshots
             return this;
         }
 
-        public bool HasAttribute(string attributeName)
-        {
-            return GetAttribute(attributeName) != null;
-        }
+        public bool HasAttribute(string attributeName) => GetAttribute(attributeName) != null;
     }
 }

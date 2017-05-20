@@ -25,15 +25,9 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public int LinePosition { get; }
 
-        public bool Equals(TextSpan other)
-        {
-            return Length == other.Length && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
-        }
+        public bool Equals(TextSpan other) => Length == other.Length && LineNumber == other.LineNumber && LinePosition == other.LinePosition;
 
-        public override string ToString()
-        {
-            return Length == 0 ? $"({LineNumber},{LinePosition})" : $"({LineNumber},{LinePosition},{LineNumber},{LinePosition + Length})";
-        }
+        public override string ToString() => Length == 0 ? $"({LineNumber},{LinePosition})" : $"({LineNumber},{LinePosition},{LineNumber},{LinePosition + Length})";
 
         public override bool Equals([CanBeNull] object obj)
         {
@@ -56,15 +50,9 @@ namespace Sitecore.Pathfinder.Snapshots
             }
         }
 
-        public static bool operator ==(TextSpan c1, TextSpan c2)
-        {
-            return c1.Equals(c2);
-        }
+        public static bool operator ==(TextSpan c1, TextSpan c2) => c1.Equals(c2);
 
-        public static bool operator !=(TextSpan c1, TextSpan c2)
-        {
-            return !c1.Equals(c2);
-        }
+        public static bool operator !=(TextSpan c1, TextSpan c2) => !c1.Equals(c2);
 
         public static bool TryParse([NotNull] string text, out TextSpan span)
         {

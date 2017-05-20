@@ -24,10 +24,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
-        public virtual bool ValidateSchema(IParseContext context)
-        {
-            return true;
-        }
+        public virtual bool ValidateSchema(IParseContext context) => true;
 
         public override ISnapshot With(ISourceFile sourceFile)
         {

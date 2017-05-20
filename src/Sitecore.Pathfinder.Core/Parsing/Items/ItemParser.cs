@@ -59,7 +59,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
-            var itemParseContext = context.Factory.ItemParseContext(context, this, context.DatabaseName, parentItemPath, false);
+            var itemParseContext = context.Factory.ItemParseContext(context, this, context.Database, parentItemPath, false);
 
             ParseTextNode(itemParseContext, textNode);
         }

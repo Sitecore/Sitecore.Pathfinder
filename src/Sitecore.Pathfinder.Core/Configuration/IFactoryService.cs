@@ -58,7 +58,7 @@ namespace Sitecore.Pathfinder.Configuration
         ItemBuilder ItemBuilder();
 
         [NotNull]
-        ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] string databaseName, [NotNull] string parentItemPath, bool isImport);
+        ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] Database database, [NotNull] string parentItemPath, bool isImport);
 
         [NotNull]
         LayoutReference LayoutReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutSourceProperty, [NotNull] string databaseName);
@@ -67,7 +67,7 @@ namespace Sitecore.Pathfinder.Configuration
         LayoutRenderingReference LayoutRenderingReference([NotNull] IProjectItem projectItem, [NotNull] SourceProperty<string> layoutTextNode, [NotNull] string databaseName);
 
         [NotNull]
-        MediaFile MediaFile([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string databaseName, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
+        MediaFile MediaFile([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
         ProjectOptions ProjectOptions([NotNull] string databaseName);

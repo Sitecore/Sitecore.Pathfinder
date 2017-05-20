@@ -35,11 +35,9 @@ namespace Sitecore.Pathfinder.Languages.Media
 
             var project = context.Project;
             var snapshot = mediaFile.Snapshot;
-
-            var database = project.GetDatabase(mediaFile.DatabaseName);
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);
 
-            var item = context.Factory.Item(database, guid, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
+            var item = context.Factory.Item(mediaFile.Database, guid, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
             item.IsEmittable = false;
             item.OverwriteWhenMerging = true;
             item.MergingMatch = MergingMatch.MatchUsingSourceFile;

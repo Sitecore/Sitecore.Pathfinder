@@ -73,39 +73,18 @@ namespace Sitecore.Pathfinder.Snapshots
 
         ICollection<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
 
-        public ITextNode GetAttribute(string attributeName)
-        {
-            return null;
-        }
+        public ITextNode GetAttribute(string attributeName) => null;
 
-        public string GetAttributeValue(string attributeName, string defaultValue = "")
-        {
-            return string.Empty;
-        }
+        public string GetAttributeValue(string attributeName, string defaultValue = "") => string.Empty;
 
-        public ITextNode GetInnerTextNode()
-        {
-            return null;
-        }
+        public ITextNode GetInnerTextNode() => null;
 
-        public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            return null;
-        }
+        public ITextNode GetSnapshotLanguageSpecificChildNode(string name) => null;
 
-        public bool HasAttribute(string attributeName)
-        {
-            return false;
-        }
+        public bool HasAttribute(string attributeName) => false;
 
-        bool IMutableTextNode.SetKey(string newKey)
-        {
-            return ((IMutableTextNode)this).SetValue(newKey);
-        }
+        bool IMutableTextNode.SetKey(string newKey) => ((IMutableTextNode)this).SetValue(newKey);
 
-        bool IMutableTextNode.SetValue(string newValue)
-        {
-            return false;
-        }
+        bool IMutableTextNode.SetValue(string newValue) => false;
     }
 }

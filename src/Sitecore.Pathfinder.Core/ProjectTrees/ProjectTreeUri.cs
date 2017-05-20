@@ -34,14 +34,8 @@ namespace Sitecore.Pathfinder.ProjectTrees
             return Equals((ProjectTreeUri)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return Uri.GetHashCode();
-        }
+        public override int GetHashCode() => Uri.GetHashCode();
 
-        protected bool Equals([NotNull] ProjectTreeUri other)
-        {
-            return string.Equals(Uri, other.Uri);
-        }
+        protected bool Equals([NotNull] ProjectTreeUri other) => string.Equals(Uri, other.Uri);
     }
 }

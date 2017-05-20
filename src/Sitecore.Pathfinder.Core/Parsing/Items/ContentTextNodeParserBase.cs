@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
-            var databaseName = textNode.GetAttributeValue("Database", context.DatabaseName);
+            var databaseName = textNode.GetAttributeValue("Database", context.Database.DatabaseName);
             var database = context.ParseContext.Project.GetDatabase(databaseName);
             var templateIdOrPath = textNode.GetAttributeValue("TemplateName", textNode.Key.UnescapeXmlElementName());
 
@@ -142,7 +142,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             foreach (var childNode in itemsTextNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.DatabaseName, item.ItemIdOrPath, item.IsImport).With(sortorder);
+                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.Database, item.ItemIdOrPath, item.IsImport).With(sortorder);
                 context.Parser.ParseTextNode(newContext, childNode);
             }
         }

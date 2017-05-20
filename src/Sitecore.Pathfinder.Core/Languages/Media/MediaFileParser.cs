@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 
         public override void Parse(IParseContext context)
         {
-            var mediaFile = context.Factory.MediaFile(context.Project, context.Snapshot, context.DatabaseName, context.ItemName, context.ItemPath, context.FilePath);
+            var mediaFile = context.Factory.MediaFile(context.Database, context.Snapshot, context.ItemName, context.ItemPath, context.FilePath);
             mediaFile.UploadMedia = context.UploadMedia;
             context.Project.AddOrMerge(mediaFile);
 

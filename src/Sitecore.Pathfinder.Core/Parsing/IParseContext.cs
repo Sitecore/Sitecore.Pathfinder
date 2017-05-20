@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Parsing
         CultureInfo Culture { get; }
 
         [NotNull]
-        string DatabaseName { get; }
+        Database Database { get; }
 
         [NotNull]
         IFactoryService Factory { get; }

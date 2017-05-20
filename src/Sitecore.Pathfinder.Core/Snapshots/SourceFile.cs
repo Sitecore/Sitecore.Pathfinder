@@ -37,15 +37,9 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string RelativeFileName { get; }
 
-        public virtual string GetFileNameWithoutExtensions()
-        {
-            return _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
-        }
+        public virtual string GetFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
 
-        public virtual string[] ReadAsLines()
-        {
-            return FileSystem.ReadAllLines(AbsoluteFileName);
-        }
+        public virtual string[] ReadAsLines() => FileSystem.ReadAllLines(AbsoluteFileName);
 
         public virtual string[] ReadAsLines(IDictionary<string, string> tokens)
         {
@@ -59,17 +53,9 @@ namespace Sitecore.Pathfinder.Snapshots
             return lines;
         }
 
-        public virtual string ReadAsText()
-        {
-            return FileSystem.ReadAllText(AbsoluteFileName);
-        }
+        public virtual string ReadAsText() => FileSystem.ReadAllText(AbsoluteFileName);
 
-        public virtual string ReadAsText(IDictionary<string, string> tokens)
-        {
-            var contents = ReadAsText();
-
-            return ReplaceTokens(contents, tokens);
-        }
+        public virtual string ReadAsText(IDictionary<string, string> tokens) => ReplaceTokens(ReadAsText(), tokens);
 
         [NotNull]
         protected virtual string ReplaceTokens([NotNull] string text, [NotNull] IDictionary<string, string> tokens)

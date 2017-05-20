@@ -430,7 +430,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             EmitItem(context, item);
 
-            Zip.AddEntry("blob/" + mediaFile.DatabaseName + "/" + mediaFile.Uri.Guid.ToString("D"), mediaFile.Snapshot.SourceFile.AbsoluteFileName);
+            Zip.AddEntry("blob/" + mediaFile.Database.DatabaseName + "/" + mediaFile.Uri.Guid.ToString("D"), mediaFile.Snapshot.SourceFile.AbsoluteFileName);
         }
 
         protected override void EmitProjectItems(IEmitContext context, IEnumerable<IProjectItem> projectItems, List<IEmitter> emitters, ICollection<Tuple<IProjectItem, Exception>> retries)

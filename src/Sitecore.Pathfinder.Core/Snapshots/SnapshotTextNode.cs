@@ -25,29 +25,14 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Value => Snapshot.SourceFile.ProjectFileName;
 
-        public ITextNode GetAttribute(string attributeName)
-        {
-            return null;
-        }
+        public ITextNode GetAttribute(string attributeName) => null;
 
-        public string GetAttributeValue(string attributeName, string defaultValue = "")
-        {
-            return string.Empty;
-        }
+        public string GetAttributeValue(string attributeName, string defaultValue = "") => string.Empty;
 
-        public ITextNode GetInnerTextNode()
-        {
-            return null;
-        }
+        public ITextNode GetInnerTextNode() => null;
 
-        public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            return null;
-        }
+        public ITextNode GetSnapshotLanguageSpecificChildNode(string name) => null;
 
-        public bool HasAttribute(string attributeName)
-        {
-            return false;
-        }
+        public bool HasAttribute(string attributeName) => false;
     }
 }

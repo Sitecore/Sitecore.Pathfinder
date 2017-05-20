@@ -42,29 +42,14 @@ namespace Sitecore.Pathfinder.Projects.Items
             return Equals((Language)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return LanguageName.GetHashCode();
-        }
+        public override int GetHashCode() => LanguageName.GetHashCode();
 
-        public static bool operator ==([CanBeNull] Language left, [CanBeNull] Language right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==([CanBeNull] Language left, [CanBeNull] Language right) => Equals(left, right);
 
-        public static bool operator !=([CanBeNull] Language left, [CanBeNull] Language right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=([CanBeNull] Language left, [CanBeNull] Language right) => !Equals(left, right);
 
-        public override string ToString()
-        {
-            return LanguageName;
-        }
+        public override string ToString() => LanguageName;
 
-        protected bool Equals([NotNull] Language other)
-        {
-            return string.Equals(LanguageName, other.LanguageName);
-        }
+        protected bool Equals([NotNull] Language other) => string.Equals(LanguageName, other.LanguageName);
     }
 }
