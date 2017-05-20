@@ -25,7 +25,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             FieldIdProperty = NewSourceProperty("Id", Guid.Empty);
             FieldNameProperty = NewSourceProperty("Name", string.Empty);
             LanguageProperty = NewSourceProperty("Language", Language.Undefined);
-            ValueHintProperty = NewSourceProperty("Value.Hint", string.Empty);
             ValueProperty = NewSourceProperty("Value", string.Empty);
             VersionProperty = NewSourceProperty("Version", Version.Undefined);
 
@@ -33,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public string CompiledValue { get; private set; }
+        public string CompiledValue { get; private set; } = string.Empty;
 
         [NotNull]
         public Database Database => Item.Database;
@@ -94,13 +93,14 @@ namespace Sitecore.Pathfinder.Projects.Items
 
                 return templateField.FieldName;
             }
-            set { FieldNameProperty.SetValue(value); }
+            set => FieldNameProperty.SetValue(value);
         }
 
         [NotNull]
         public SourceProperty<string> FieldNameProperty { get; }
 
         [NotNull, Obsolete("Use FieldId instead", false)]
+        // ReSharper disable once InconsistentNaming
         public ID ID => new ID(FieldId);
 
         public bool IsCompiled { get; set; }
@@ -110,8 +110,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         public Language Language
         {
-            get { return LanguageProperty.GetValue(); }
-            set { LanguageProperty.SetValue(value); }
+            get => LanguageProperty.GetValue();
+            set => LanguageProperty.SetValue(value);
         }
 
         [NotNull]
@@ -141,27 +141,17 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public string Value
         {
-            get { return ValueProperty.GetValue(); }
-            set { ValueProperty.SetValue(value); }
+            get => ValueProperty.GetValue();
+            set => ValueProperty.SetValue(value);
         }
-
-        [NotNull]
-        public string ValueHint
-        {
-            get { return ValueHintProperty.GetValue(); }
-            set { ValueHintProperty.SetValue(value); }
-        }
-
-        [NotNull]
-        public SourceProperty<string> ValueHintProperty { get; }
 
         [NotNull]
         public SourceProperty<string> ValueProperty { get; }
 
         public Version Version
         {
-            get { return VersionProperty.GetValue(); }
-            set { VersionProperty.SetValue(value); }
+            get => VersionProperty.GetValue();
+            set => VersionProperty.SetValue(value);
         }
 
         [NotNull]

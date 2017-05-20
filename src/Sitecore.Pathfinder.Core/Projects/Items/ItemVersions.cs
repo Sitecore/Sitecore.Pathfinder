@@ -1,0 +1,50 @@
+using System.Collections.Generic;
+using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
+
+namespace Sitecore.Pathfinder.Projects.Items
+{
+    public class ItemVersions
+    {
+        [NotNull]
+        private readonly Item _item;
+
+        public ItemVersions([NotNull] Item item)
+        {
+            _item = item;
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Field> this[[NotNull] Language language, [CanBeNull] Version version = null] => _item.Fields[language, version];
+
+        public int Count([NotNull] Language language)
+        {
+            var versions = _item.Fields.Where(f => f.Language == language).ToArray();
+
+            return versions.Select(f => f.Version.Number).Distinct().Count();
+        }
+
+        [NotNull, ItemNotNull]
+        public IEnumerable<Language> GetLanguages() => _item.Fields.Where(f => f.Language != Language.Undefined && f.Language != Language.Empty).Select(f => f.Language).Distinct();
+
+        [NotNull]
+        public Version GetLatestVersion([NotNull] Language language)
+        {
+            var versions = _item.Fields.Where(f => f.Language == language).ToArray();
+            if (!versions.Any())
+            {
+                return Version.Undefined;
+            }
+
+            return new Version(versions.Max(f => f.Version.Number));
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Version> GetVersions([NotNull] Language language)
+        {
+            var versions = _item.Fields.Where(f => f.Language == language).ToArray();
+
+            return versions.Select(f => f.Version.Number).Distinct().OrderBy(n => n).Select(n => new Version(n));
+        }
+    }
+}

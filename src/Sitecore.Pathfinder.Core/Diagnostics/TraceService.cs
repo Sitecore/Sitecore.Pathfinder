@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Diagnostics
         [NotNull]
         protected IConsoleService Console { get; }
 
-        [NotNull]
+        [NotNull, ItemNotNull]
         protected IEnumerable<string> IgnoredMessages { get; }
 
         public void TraceError(string text, string details = "")

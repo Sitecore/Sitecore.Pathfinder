@@ -6,6 +6,9 @@ using System.IO.Compression;
 using System.Text;
 using Sitecore.Pathfinder.Diagnostics;
 
+#pragma warning disable RNUL // Field is missing nullability annotation.
+#pragma warning disable RINUL // Parameter is missing item nullability annotation.
+
 namespace Sitecore.Pathfinder.IO.Zip
 {
     /// <summary>
@@ -343,3 +346,5 @@ namespace Sitecore.Pathfinder.IO.Zip
         }
     }
 }
+
+#pragma warning restore RNUL // Field is missing nullability annotation.

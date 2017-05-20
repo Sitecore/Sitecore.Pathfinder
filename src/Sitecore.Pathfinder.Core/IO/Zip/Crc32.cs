@@ -3,6 +3,9 @@
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 
+#pragma warning disable RNUL // Field is missing nullability annotation.
+#pragma warning disable RINUL // Parameter is missing item nullability annotation.
+
 namespace Sitecore.Pathfinder.IO.Zip
 {
     /// <summary>

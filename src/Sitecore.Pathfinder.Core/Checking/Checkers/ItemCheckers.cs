@@ -29,8 +29,8 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         public IEnumerable<Diagnostic> AvoidManyVersions([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
-                from language in item.GetLanguages()
-                let count = item.GetVersions(language).Count()
+                from language in item.Versions.GetLanguages()
+                let count = item.Versions.GetVersions(language).Count()
                 where count >= 10
                 select Warning(Msg.C1010, "Avoid items with many version", TraceHelper.GetTextNode(item), $"The item has {count} versions in the {language} language. Items with more than 10 version decrease performance. Remove some of the older versions.");
         }
@@ -84,7 +84,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                     {
                         var child1 = children[i1];
 
-                        var languages = child0.GetLanguages().Intersect(child1.GetLanguages());
+                        var languages = child0.Versions.GetLanguages().Intersect(child1.Versions.GetLanguages());
 
                         foreach (var language in languages)
                         {

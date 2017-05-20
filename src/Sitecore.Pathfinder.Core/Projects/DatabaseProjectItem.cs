@@ -55,6 +55,7 @@ namespace Sitecore.Pathfinder.Projects
         public SourceProperty<string> IconProperty { get; }
 
         [NotNull, Obsolete("Use Uri.Guid instead", false)]
+        // ReSharper disable once InconsistentNaming
         public ID ID => _id ?? (_id = new ID(Uri.Guid));
 
         /// <summary>Indicates if the item or template will saved to the database during installation.</summary>

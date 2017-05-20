@@ -48,10 +48,7 @@ namespace Sitecore.Pathfinder.Projects
         /// <summary>The unique identification of the project item. For items the Uri.Guid is the ID of the item.</summary>
         public IProjectItemUri Uri { get; private set; }
 
-        public override string ToString()
-        {
-            return Uri.ToString();
-        }
+        public override string ToString() => Uri.ToString();
 
         [NotNull]
         protected ProjectItem AddAdditionalSnapshot([NotNull] ISnapshot snapshot)

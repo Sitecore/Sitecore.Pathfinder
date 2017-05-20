@@ -168,11 +168,6 @@ namespace Sitecore.Pathfinder.Projects
 
             lock (_sourceFilesSyncObject)
             {
-                if (SourceFiles.ContainsKey(absoluteFileName.ToUpperInvariant()))
-                {
-                    Remove(absoluteFileName);
-                }
-
                 SourceFiles.Add(absoluteFileName.ToUpperInvariant(), sourceFile);
             }
 
@@ -304,58 +299,6 @@ namespace Sitecore.Pathfinder.Projects
             }
 
             _locking = locking;
-        }
-
-        public virtual void Remove([NotNull] IProjectItem projectItem)
-        {
-            if (Locking == Locking.ReadOnly)
-            {
-                throw new InvalidOperationException("Project is locked");
-            }
-
-            _projectItems.Remove(projectItem);
-
-            Indexes.Remove(projectItem);
-        }
-
-        public virtual void Remove([NotNull] string absoluteSourceFileName)
-        {
-            if (Locking == Locking.ReadOnly)
-            {
-                throw new InvalidOperationException("Project is locked");
-            }
-
-            if (string.IsNullOrEmpty(ProjectDirectory))
-            {
-                throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
-            }
-
-            SourceFiles.Remove(absoluteSourceFileName.ToUpperInvariant());
-
-            _diagnostics.RemoveAll(d => string.Equals(d.FileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase));
-
-            foreach (var projectItem in ProjectItems.ToList())
-            {
-                // todo: not working
-                if (!string.Equals(projectItem.Snapshot.SourceFile.AbsoluteFileName, absoluteSourceFileName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                foreach (var item in ProjectItems)
-                {
-                    foreach (var reference in item.References)
-                    {
-                        var target = reference.Resolve();
-                        if (target == projectItem)
-                        {
-                            reference.Invalidate();
-                        }
-                    }
-                }
-
-                _projectItems.Remove(projectItem);
-            }
         }
 
         public virtual IProject With(ProjectOptions projectOptions, IEnumerable<string> sourceFileNames)

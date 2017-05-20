@@ -22,8 +22,10 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     {
         protected static readonly Guid StandardRenderingParametersGuid = new Guid("{8CA06D6A-B353-44E8-BC31-B528C7306971}");
 
+        [CanBeNull]
         private string _layerName;
 
+        [CanBeNull]
         private string _moduleName;
 
         [ImportingConstructor]

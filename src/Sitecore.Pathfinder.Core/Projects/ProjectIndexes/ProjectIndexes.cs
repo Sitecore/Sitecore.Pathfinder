@@ -22,16 +22,16 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
         }
 
         [NotNull]
-        public DatabaseIndex<Item> ChildrenIndex { get; } = new DatabaseIndex<Item>(item => item.ParentItemPath);
+        public DatabaseIndex<Item> ChildrenIndex { get; } = new DatabaseIndex<Item>(item => item.Paths.ParentPath);
 
         [NotNull]
-        public DatabaseIndex<DatabaseProjectItem> DatabaseGuidIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.Uri.Guid.Format());
+        public DatabaseIndex<DatabaseProjectItem> GuidDatabaseIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.Uri.Guid.Format());
 
         [NotNull]
-        public DatabaseIndex<DatabaseProjectItem> DatabaseQualifiedNameIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.QualifiedName);
+        public DatabaseIndex<DatabaseProjectItem> QualifiedNameDatabaseIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.QualifiedName);
 
         [NotNull]
-        public DatabaseIndex<DatabaseProjectItem> DatabaseShortNameIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.ShortName);
+        public DatabaseIndex<DatabaseProjectItem> ShortNameDatabaseIndex { get; } = new DatabaseIndex<DatabaseProjectItem>(item => item.ShortName);
 
         [NotNull]
         public Index<IProjectItem> GuidIndex { get; } = new Index<IProjectItem>(projectItem => projectItem.Uri.Guid.Format());
@@ -73,9 +73,9 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
 
                 if (projectItem is DatabaseProjectItem databaseProjectItem)
                 {
-                    DatabaseGuidIndex.Add(databaseProjectItem);
-                    DatabaseQualifiedNameIndex.Add(databaseProjectItem);
-                    DatabaseShortNameIndex.Add(databaseProjectItem);
+                    GuidDatabaseIndex.Add(databaseProjectItem);
+                    QualifiedNameDatabaseIndex.Add(databaseProjectItem);
+                    ShortNameDatabaseIndex.Add(databaseProjectItem);
                 }
 
                 if (projectItem is Item item)
@@ -157,9 +157,9 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
                 var databaseProjectItem = projectItem as DatabaseProjectItem;
                 if (databaseProjectItem != null)
                 {
-                    DatabaseGuidIndex.Remove(databaseProjectItem);
-                    DatabaseQualifiedNameIndex.Remove(databaseProjectItem);
-                    DatabaseShortNameIndex.Remove(databaseProjectItem);
+                    GuidDatabaseIndex.Remove(databaseProjectItem);
+                    QualifiedNameDatabaseIndex.Remove(databaseProjectItem);
+                    ShortNameDatabaseIndex.Remove(databaseProjectItem);
                 }
 
                 var item = projectItem as Item;

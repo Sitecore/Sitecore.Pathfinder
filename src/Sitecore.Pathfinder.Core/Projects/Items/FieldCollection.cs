@@ -1,6 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -14,16 +12,53 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         private readonly Item _item;
 
-        public FieldCollection([NotNull] Item item) : base(item)
-        {
-            _item = item;
-        }
+        public FieldCollection([NotNull] Item item) : base(item) { _item = item; }
 
         [CanBeNull]
         public Field this[[NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldName, language, version);
 
         [CanBeNull]
         public Field this[Guid fieldId, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldId, language, version);
+
+        [ItemNotNull]
+        [NotNull]
+        public IEnumerable<Field> this[[NotNull] Language language, [CanBeNull] Version version = null]
+        {
+            get
+            {
+                var fields = this.Where(f => f.TemplateField.Shared || f.Language == language).ToArray();
+                foreach (var field in fields)
+                {
+                    if (field.TemplateField.Shared || field.TemplateField.Unversioned)
+                    {
+                        yield return field;
+                        continue;
+                    }
+
+                    if (version != null)
+                    {
+                        if (field.Version == version)
+                        {
+                            yield return field;
+                        }
+
+                        continue;
+                    }
+
+                    if (field.Version == Version.Latest)
+                    {
+                        yield return field;
+                        continue;
+                    }
+
+                    var latest = fields.Where(f => f.FieldName == field.FieldName).Max(f => f.Version.Number);
+                    if (field.Version.Number == latest)
+                    {
+                        yield return field;
+                    }
+                }
+            }
+        }
 
         [CanBeNull]
         public Field GetField([NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null)
@@ -49,12 +84,6 @@ namespace Sitecore.Pathfinder.Projects.Items
             return GetField(fields, language, version);
         }
 
-        [ItemNotNull, NotNull]
-        public IEnumerable<Field> GetFieldsInVersion([NotNull] Language language, [NotNull] Version version)
-        {
-            return this.Where(f => f.TemplateField.Shared || f.TemplateField.Unversioned && f.Language == language || !f.TemplateField.Shared && !f.TemplateField.Unversioned && f.Language == language && f.Version == version);
-        }
-
         [NotNull]
         public string GetFieldValue([NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null)
         {
@@ -68,7 +97,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        protected Field GetField([NotNull, ItemNotNull] Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
+        protected Field GetField([NotNull] [ItemNotNull] Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
         {
             if (!fields.Any())
             {
@@ -91,8 +120,15 @@ namespace Sitecore.Pathfinder.Projects.Items
             if (templateField.Unversioned)
             {
                 var versions = fields.Where(f => f.Language == language).ToArray();
-                var latestVersion = versions.Max(v => v.Version.Number);
-                return versions.First(f => f.Version.Number == latestVersion);
+
+                var latestVersion = versions.FirstOrDefault(f => f.Version == Version.Latest);
+                if (latestVersion != null)
+                {
+                    return latestVersion;
+                }
+
+                var latestVersionNumber = versions.Max(v => v.Version.Number);
+                return versions.First(f => f.Version.Number == latestVersionNumber);
             }
 
             return fields.FirstOrDefault(f => f.Language == language && f.Version == version);

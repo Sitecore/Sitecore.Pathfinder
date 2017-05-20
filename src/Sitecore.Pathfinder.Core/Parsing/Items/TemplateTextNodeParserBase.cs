@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1000, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+                context.ParseContext.Trace.TraceError(Msg.P1034, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));

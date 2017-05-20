@@ -48,7 +48,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             field.ValueProperty.AddSourceTextNode(textNode);
-            field.ValueHintProperty.SetValue("Layout");
 
             item.Fields.Add(field);
         }

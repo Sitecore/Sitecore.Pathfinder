@@ -1,10 +1,6 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -35,9 +31,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         private ItemHelp _help;
 
         [CanBeNull]
-        private string _parentPath;
-
-        [CanBeNull]
         private ItemPath _paths;
 
         [CanBeNull]
@@ -45,6 +38,9 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [CanBeNull]
         private ItemStatistics _statistics;
+
+        [CanBeNull]
+        private ItemVersions _versions;
 
         public Item([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
@@ -79,9 +75,6 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Item Parent => GetParent();
 
         [NotNull]
-        public string ParentItemPath => _parentPath ?? (_parentPath = PathHelper.GetItemParentPath(ItemIdOrPath));
-
-        [NotNull]
         public ItemPath Paths => _paths ?? (_paths = new ItemPath(this));
 
         [NotNull]
@@ -100,24 +93,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         public ItemStatistics Statistics => _statistics ?? (_statistics = new ItemStatistics(this));
 
         [NotNull]
-        public Template Template
-        {
-            get
-            {
-                var templateIdOrPath = TemplateIdOrPath;
-
-                if (templateIdOrPath.Contains('/') || templateIdOrPath.Contains('{'))
-                {
-                    return Database.FindQualifiedItem<Template>(templateIdOrPath) ?? Template.Empty;
-                }
-
-                // resolve by short name
-                var templates = Database.GetByShortName<Template>(templateIdOrPath).ToArray();
-                return templates.Length == 1 ? templates.First() : Template.Empty;
-            }
-        }
+        public Template Template => Database.FindByIdOrPath<Template>(TemplateIdOrPath) ?? Template.Empty;
 
         [NotNull, Obsolete("Use Template.Uri.Guid instead")]
+        // ReSharper disable once InconsistentNaming
         public ID TemplateID => Template.ID;
 
         [NotNull]
@@ -134,29 +113,17 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string TemplateName => Template.ItemName;
 
         [NotNull]
+        public ItemVersions Versions => _versions ?? (_versions = new ItemVersions(this));
+
+        [NotNull]
         public string GetDisplayName([NotNull] Language language, [NotNull] Version version)
         {
             var displayName = Fields.GetFieldValue("__Display Name", language, version);
             return string.IsNullOrEmpty(displayName) ? ItemName : displayName;
         }
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<Language> GetLanguages()
-        {
-            return Fields.Where(f => f.Language != Language.Undefined && f.Language != Language.Empty).Select(f => f.Language).Distinct();
-        }
-
         [CanBeNull]
-        public Item GetParent()
-        {
-            return Database.FindQualifiedItem<Item>(ParentItemPath);
-        }
-
-        [NotNull, ItemNotNull]
-        public IEnumerable<Version> GetVersions([NotNull] Language language)
-        {
-            return Fields.Where(f => f.Language == language && f.Version != Version.Undefined).Select(f => f.Version).Distinct();
-        }
+        public Item GetParent() => Database.FindQualifiedItem<Item>(Paths.ParentPath);
 
         public void Merge([NotNull] Item newProjectItem)
         {

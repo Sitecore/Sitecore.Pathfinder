@@ -112,12 +112,6 @@ namespace Sitecore.Pathfinder.Compiling.Builders
                 field.ValueProperty.AddSourceTextNode(ValueTextNode);
             }
 
-            field.ValueHint = Value;
-            if (ValueHintTextNode != TextNode.Empty)
-            {
-                field.ValueHintProperty.AddSourceTextNode(ValueHintTextNode);
-            }
-
             return field;
         }
 

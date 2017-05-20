@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return false;
             }
 
-            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) || field.ValueHint.Contains("Layout");
+            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

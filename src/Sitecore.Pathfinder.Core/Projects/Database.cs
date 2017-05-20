@@ -86,7 +86,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             if (!qualifiedName.IsGuidOrSoftGuid())
             {
-                return Project.Indexes.DatabaseQualifiedNameIndex.FirstOrDefault<T>(this, qualifiedName);
+                return Project.Indexes.QualifiedNameDatabaseIndex.FirstOrDefault<T>(this, qualifiedName);
             }
 
             if (!Guid.TryParse(qualifiedName, out Guid guid))
@@ -94,19 +94,19 @@ namespace Sitecore.Pathfinder.Projects
                 guid = StringHelper.ToGuid(qualifiedName);
             }
 
-            return Project.Indexes.DatabaseGuidIndex.FirstOrDefault<T>(this, guid.Format());
+            return Project.Indexes.GuidDatabaseIndex.FirstOrDefault<T>(this, guid.Format());
         }
 
         [ItemNotNull, NotNull]
         public IEnumerable<T> GetByQualifiedName<T>([NotNull] string qualifiedName) where T : DatabaseProjectItem
         {
-            return Project.Indexes.DatabaseQualifiedNameIndex.Where<T>(this, qualifiedName);
+            return Project.Indexes.QualifiedNameDatabaseIndex.Where<T>(this, qualifiedName);
         }
 
         [ItemNotNull, NotNull]
         public IEnumerable<T> GetByShortName<T>([NotNull] string shortName) where T : DatabaseProjectItem
         {
-            return Project.Indexes.DatabaseShortNameIndex.Where<T>(this, shortName);
+            return Project.Indexes.ShortNameDatabaseIndex.Where<T>(this, shortName);
         }
 
         public override int GetHashCode()

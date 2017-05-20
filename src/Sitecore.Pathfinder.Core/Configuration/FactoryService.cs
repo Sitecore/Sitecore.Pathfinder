@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual FileReference FileReference(IProjectItem owner, ITextNode textNode, string referenceText) => new FileReference(owner, textNode, referenceText);
 
-        public Item Item([NotNull] Database database, Guid guid, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
+        public Item Item(Database database, Guid guid, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
 
         public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
@@ -109,3 +109,4 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual TextNode TextNode(ISnapshot snapshot, TextSpan span, string name, string value) => new TextNode(snapshot, name, value, span);
     }
 }
+

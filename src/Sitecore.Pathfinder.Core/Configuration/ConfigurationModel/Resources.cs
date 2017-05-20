@@ -4,6 +4,9 @@ using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
+#pragma warning disable RNUL // Field is missing nullability annotation.
+#pragma warning disable RINUL // Parameter is missing item nullability annotation.
+
 namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
 {
     internal static class Resources
@@ -153,7 +156,7 @@ namespace Sitecore.Pathfinder.Configuration.ConfigurationModel
             });
         }
 
-        /// <summary>A duplicate key '{0}' was found.</summary>
+                            /// <summary>A duplicate key '{0}' was found.</summary>
         internal static string FormatError_KeyIsDuplicated(object p0)
         {
             return string.Format(CultureInfo.CurrentCulture, GetString("Error_KeyIsDuplicated"), new object[1]

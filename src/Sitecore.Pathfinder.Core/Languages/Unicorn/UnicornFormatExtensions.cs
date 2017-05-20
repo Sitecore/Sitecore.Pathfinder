@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
 
             if (unversionedFields.Any() || versionedFields.Any())
             {
-                var languages = item.GetLanguages().OrderBy(l => l.LanguageName).ToArray();
+                var languages = item.Versions.GetLanguages().OrderBy(l => l.LanguageName).ToArray();
 
                 foreach (var language in languages)
                 {

@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Projects.Items
     public class Version
     {
         [NotNull]
-        public static Version Latest = new Version(0);
+        public static Version Latest = new Version(int.MaxValue);
 
         [NotNull]
         public static Version Undefined = new Version(int.MinValue);

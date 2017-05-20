@@ -1,14 +1,10 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Composition;
-using System.Linq;
-using System.Xml;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -36,7 +32,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return false;
             }
 
-            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase) || field.ValueHint.Contains("Layout");
+            return string.Equals(field.TemplateField.Type, "layout", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string Compile(IFieldCompileContext context, Field field)

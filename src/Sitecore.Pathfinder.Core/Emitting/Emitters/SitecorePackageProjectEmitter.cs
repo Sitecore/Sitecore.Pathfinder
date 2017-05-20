@@ -107,7 +107,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             var hasVersions = item.Fields.Any(f => !f.TemplateField.Shared && !f.TemplateField.Unversioned);
 
-            var languages = item.GetLanguages().ToList();
+            var languages = item.Versions.GetLanguages().ToList();
             if (!languages.Any())
             {
                 var language = item.Database.Languages.FirstOrDefault();
@@ -125,7 +125,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             foreach (var language in languages)
             {
-                var versions = item.GetVersions(language).ToList();
+                var versions = item.Versions.GetVersions(language).ToList();
                 if (!versions.Any())
                 {
                     versions = new List<Projects.Items.Version>
@@ -163,7 +163,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                                 output.WriteStartElement("fields");
 
-                                foreach (var field in item.Fields.GetFieldsInVersion(language, version))
+                                foreach (var field in item.Fields[language, version])
                                 {
                                     output.WriteStartElement("field");
                                     output.WriteAttributeString("tfid", field.FieldId.Format());
@@ -207,7 +207,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                             writer.WriteLine("language=" + language.LanguageName);
                             writer.WriteLine("version=" + version.Number);
                             writer.WriteLine("revision=" + Guid.NewGuid().ToString("D"));
-                            writer.WriteLine("fieldproperties=" + string.Join("|", item.Fields.GetFieldsInVersion(language, version).Select(f => f.FieldId.Format() + ":" + (f.TemplateField.Shared ? "Shared" : f.TemplateField.Unversioned ? "Unversioned" : "Versioned"))));
+                            writer.WriteLine("fieldproperties=" + string.Join("|", item.Fields[language, version].Select(f => f.FieldId.Format() + ":" + (f.TemplateField.Shared ? "Shared" : f.TemplateField.Unversioned ? "Unversioned" : "Versioned"))));
                         }
 
                         Zip.AddEntry("properties/items/" + NormalizeZipPath(fileName), stream.ToArray());
