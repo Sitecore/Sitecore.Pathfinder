@@ -54,7 +54,12 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                             WriteItem(output, database, "/sitecore/content");
                             WriteItem(output, database, "/sitecore/content/Home");
                             WriteItem(output, database, "/sitecore/layout");
+                            WriteItem(output, database, "/sitecore/layout/Controllers");
                             WriteItems(output, database, "/sitecore/layout/devices");
+                            WriteItem(output, database, "/sitecore/layout/Layouts");
+                            WriteItem(output, database, "/sitecore/layout/Models");
+                            WriteItem(output, database, "/sitecore/layout/Renderings");
+                            WriteItem(output, database, "/sitecore/layout/Sublayouts");
                             WriteItem(output, database, "/sitecore/media library");
                             WriteItem(output, database, "/sitecore/system");
                             WriteItems(output, database, "/sitecore/system/languages");
@@ -67,7 +72,12 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                             WriteItem(output, database, "/sitecore/client");
                             WriteItem(output, database, "/sitecore/client/Applications");
                             WriteItem(output, database, "/sitecore/layout");
+                            WriteItem(output, database, "/sitecore/layout/Controllers");
                             WriteItems(output, database, "/sitecore/layout/devices");
+                            WriteItem(output, database, "/sitecore/layout/Layouts");
+                            WriteItem(output, database, "/sitecore/layout/Models");
+                            WriteItem(output, database, "/sitecore/layout/Renderings");
+                            WriteItem(output, database, "/sitecore/layout/Sublayouts");
                             WriteItem(output, database, "/sitecore/media library");
                             WriteItem(output, database, "/sitecore/system");
                             WriteItems(output, database, "/sitecore/system/field types");

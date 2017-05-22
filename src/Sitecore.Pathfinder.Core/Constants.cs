@@ -240,6 +240,11 @@ namespace Sitecore.Pathfinder
                     public const string FileName = "output:package:filename";
                 }
 
+                public static class Update
+                {
+                    public const string FileName = "output:update:filename";
+                }
+
                 public static class Unicorn
                 {
                     public const string ItemsDirectory = "output:unicorn:items-directory";

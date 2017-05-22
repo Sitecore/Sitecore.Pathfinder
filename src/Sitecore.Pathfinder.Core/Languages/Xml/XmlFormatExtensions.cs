@@ -111,60 +111,88 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 output.WriteEndElement();
             }
         }
-
-        public static void WriteAsExportXml([NotNull] this Item item, [NotNull] XmlWriter output, [NotNull, ItemNotNull]  IEnumerable<string> fieldsToWrite)
+        public static void WriteAsUpdatePackageXml([NotNull] this Item item, [NotNull] TextWriter writer)
         {
-            output.WriteStartElement("Item");
-            output.WriteAttributeString("Id", item.Uri.Guid.Format());
-            output.WriteAttributeString("Database", item.DatabaseName);
-            output.WriteAttributeString("Name", item.ItemName);
-            output.WriteAttributeString("Path", item.ItemIdOrPath);
-            output.WriteAttributeString("Template", item.TemplateIdOrPath);
-
-            foreach (var field in item.Fields)
+            void WriteField(XmlWriter output, Field field)
             {
-                if (!fieldsToWrite.Contains(field.FieldName.ToLowerInvariant()))
-                {
-                    continue;
-                }
-
-                output.WriteStartElement("Field");
-                output.WriteAttributeString("Name", field.FieldName);
-                output.WriteAttributeString("Value", field.Value);
+                output.WriteStartElement("field");
+                output.WriteFullElementString("fieldid", field.FieldId.Format());
+                output.WriteFullElementString("fieldname", field.FieldName);
+                output.WriteFullElementString("fieldkey", field.FieldName.ToLowerInvariant());
+                output.WriteFullElementString("fieldvalue", field.CompiledValue);
                 output.WriteEndElement();
             }
 
-            output.WriteEndElement();
-        }
-
-        public static void WriteAsExportXml([NotNull] this Template template, [NotNull] XmlWriter output)
-        {
-            output.WriteStartElement("Template");
-            output.WriteAttributeString("Id", template.Uri.Guid.Format());
-            output.WriteAttributeString("Database", template.DatabaseName);
-            output.WriteAttributeString("Name", template.ItemName);
-            output.WriteAttributeString("Path", template.ItemIdOrPath);
-            output.WriteAttributeString("BaseTemplates", template.BaseTemplates);
-
-            foreach (var section in template.Sections)
+            var settings = new XmlWriterSettings
             {
-                output.WriteStartElement("Section");
-                output.WriteAttributeString("Id", section.Uri.Guid.Format());
-                output.WriteAttributeString("Name", section.SectionName);
+                Indent = true
+            };
 
-                foreach (var field in section.Fields)
+            using (var output = XmlWriter.Create(writer, settings))
+            {
+                var parent = item.GetParent();
+                var parentId = parent != null ? parent.Uri.Guid.Format() : string.Empty;
+
+                output.WriteStartElement("addItemCommand");
+
+                output.WriteFullElementString("collisionbehavior", string.Empty);
+                output.WriteFullElementString("databasename", item.Database.DatabaseName);
+                output.WriteFullElementString("itemid", item.Uri.Guid.Format());
+                output.WriteFullElementString("itempath", item.ItemIdOrPath);
+                output.WriteFullElementString("parent", parentId);
+
+                output.WriteStartElement("item");
+
+                output.WriteFullElementString("parent", parentId);
+                output.WriteFullElementString("name", item.ItemName);
+                output.WriteFullElementString("master", Constants.NullGuidString);
+                output.WriteFullElementString("template", item.Template.Uri.Guid.Format());
+                output.WriteFullElementString("templatekey", item.Template.ItemName);
+
+                output.WriteStartElement("sharedfields");
+                foreach (var sharedField in item.Fields.Where(f => f.TemplateField.Shared).ToArray())
                 {
-                    output.WriteStartElement("Field");
-                    output.WriteAttributeString("Id", field.Uri.Guid.Format());
-                    output.WriteAttributeString("Name", field.FieldName);
-                    output.WriteAttributeString("Type", field.Type);
-                    output.WriteEndElement();
+                    WriteField(output, sharedField);
                 }
 
                 output.WriteEndElement();
-            }
 
-            output.WriteEndElement();
+                output.WriteStartElement("versions");
+                foreach (var language in item.Versions.GetLanguages())
+                {
+                    foreach (var version in item.Versions.GetVersions(language))
+                    {
+                        var isLatestVersion = item.Versions.IsLatestVersion(language, version);
+                        var versionedFields = item.Fields.Where(f => !f.TemplateField.Shared && f.Language == language && (f.Version == version || isLatestVersion && f.Version == Projects.Items.Version.Latest));
+
+                        var first = versionedFields.FirstOrDefault();
+                        if (first == null)
+                        {
+                            continue;
+                        }
+
+                        output.WriteStartElement("itemversion");
+                        output.WriteFullElementString("version", first.Version.Number.ToString());
+                        output.WriteFullElementString("language", first.Language.LanguageName);
+                        output.WriteFullElementString("revision", Guid.NewGuid().Format());
+
+                        output.WriteStartElement("fields");
+
+                        foreach (var versionedField in versionedFields)
+                        {
+                            WriteField(output, versionedField);
+                        }
+
+                        output.WriteEndElement();
+                        output.WriteEndElement();
+                    }
+                }
+
+                output.WriteEndElement();
+
+                output.WriteEndElement(); // "item"
+                output.WriteEndElement(); // "addItemCommand"
+            }
         }
 
         public static void WriteAsXml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer, [NotNull] string databaseName)

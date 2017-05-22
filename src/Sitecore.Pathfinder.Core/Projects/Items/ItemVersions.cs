@@ -1,3 +1,5 @@
+// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -44,7 +46,12 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             var versions = _item.Fields.Where(f => f.Language == language).ToArray();
 
-            return versions.Select(f => f.Version.Number).Distinct().OrderBy(n => n).Select(n => new Version(n));
+            return versions.Select(f => f.Version.Number).Where(n => n != Version.Latest.Number).Distinct().OrderBy(n => n).Select(n => new Version(n));
+        }
+
+        public bool IsLatestVersion([NotNull] Language language, [NotNull] Version version)
+        {
+            return version == GetLatestVersion(language);
         }
     }
 }

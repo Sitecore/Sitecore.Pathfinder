@@ -3,10 +3,15 @@
     <Item Id="{0DE95AE4-41AB-4D01-9EB0-67441B7C2450}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/content" />
     <Item Id="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}" Template="{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}" Path="/sitecore/content/Home" />
     <Item Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/layout" />
+    <Item Id="{75D27C2B-5F88-4CC8-B1DE-8412A1628408}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Controllers" />
     <Item Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Devices" />
     <Item Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Default" />
     <Item Id="{46D2F427-4CE5-4E1F-BA10-EF3636F43534}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Print" />
     <Item Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Feed" />
+    <Item Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Layouts" />
+    <Item Id="{B87CD5F0-4E72-429D-90A3-B285F1D038CA}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Models" />
+    <Item Id="{32566F0E-7686-45F1-A12F-D7260BD78BC3}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Renderings" />
+    <Item Id="{EB443C0B-F923-409E-85F3-E7893C8C30C2}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Sublayouts" />
     <Item Id="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/media library" />
     <Item Id="{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/system" />
     <Item Id="{64C4F646-A3FA-4205-B98E-4DE2C609B60F}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/system/Languages" />

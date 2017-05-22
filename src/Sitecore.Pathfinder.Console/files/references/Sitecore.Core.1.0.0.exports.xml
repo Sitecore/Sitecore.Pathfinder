@@ -3,6 +3,7 @@
     <Item Id="{31056D46-2FAA-4EA2-8759-BE93EAE10001}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/client" />
     <Item Id="{9CBE9270-1377-48CC-87B6-263F4C705C7D}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/client/Applications" />
     <Item Id="{EB2E4FFD-2761-4653-B052-26A64D385227}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/layout" />
+    <Item Id="{75D27C2B-5F88-4CC8-B1DE-8412A1628408}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Controllers" />
     <Item Id="{E18F4BC6-46A2-4842-898B-B6613733F06F}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Devices" />
     <Item Id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Internet Explorer" />
     <Item Id="{ACEFF38C-03E4-4110-BF32-CFFCDFB317D9}" Template="{6A10B7B1-48F6-48F2-B3AE-4AE3061F3448}" Path="/sitecore/layout/Devices/Internet Explorer/Console" />
@@ -21,6 +22,10 @@
     <Item Id="{07FCB08E-0BFA-43D2-BF9C-6D3F48891888}" Template="{6A10B7B1-48F6-48F2-B3AE-4AE3061F3448}" Path="/sitecore/layout/Devices/Firefox/Prototype" />
     <Item Id="{DD043655-405F-45F5-9F3B-F9705F02513F}" Template="{6A10B7B1-48F6-48F2-B3AE-4AE3061F3448}" Path="/sitecore/layout/Devices/Firefox/Browser" />
     <Item Id="{14394E82-80FE-4B27-B269-5CD39D7A5888}" Template="{6A10B7B1-48F6-48F2-B3AE-4AE3061F3448}" Path="/sitecore/layout/Devices/Firefox/Default" />
+    <Item Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Layouts" />
+    <Item Id="{B87CD5F0-4E72-429D-90A3-B285F1D038CA}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Models" />
+    <Item Id="{32566F0E-7686-45F1-A12F-D7260BD78BC3}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Renderings" />
+    <Item Id="{EB443C0B-F923-409E-85F3-E7893C8C30C2}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Sublayouts" />
     <Item Id="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/media library" />
     <Item Id="{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/system" />
     <Item Id="{76E6D8C7-1F93-4712-872B-DA3C96B808F2}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/system/Field types" />

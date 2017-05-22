@@ -36,5 +36,17 @@ namespace Sitecore.Pathfinder.Extensions
 
             textWriter.WriteAttributeString(localName, value ? "True" : "False");
         }
+
+        public static void WriteFullElementString([NotNull] this XmlWriter textWriter, [NotNull] string localName, [NotNull] string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                textWriter.WriteElementString(localName, value);
+                return;
+            }
+
+            textWriter.WriteStartElement(localName);
+            textWriter.WriteFullEndElement();
+        }
     }
 }

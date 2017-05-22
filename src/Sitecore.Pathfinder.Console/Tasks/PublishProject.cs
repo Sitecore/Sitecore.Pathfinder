@@ -101,6 +101,7 @@ namespace Sitecore.Pathfinder.Tasks
             yield return ("Package", "package");
             yield return ("Nuget", "nuget");
             yield return ("Unicorn", "unicorn");
+            yield return ("Update", "update");
             yield return ("Yaml", "yaml");
             yield return ("Json", "json");
             yield return ("Xml", "xml");

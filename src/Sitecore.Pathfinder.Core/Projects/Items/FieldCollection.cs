@@ -1,4 +1,6 @@
-﻿using System;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,7 +14,10 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         private readonly Item _item;
 
-        public FieldCollection([NotNull] Item item) : base(item) { _item = item; }
+        public FieldCollection([NotNull] Item item) : base(item)
+        {
+            _item = item;
+        }
 
         [CanBeNull]
         public Field this[[NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldName, language, version);
@@ -20,8 +25,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         public Field this[Guid fieldId, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldId, language, version);
 
-        [ItemNotNull]
-        [NotNull]
+        [ItemNotNull, NotNull]
         public IEnumerable<Field> this[[NotNull] Language language, [CanBeNull] Version version = null]
         {
             get
@@ -32,12 +36,14 @@ namespace Sitecore.Pathfinder.Projects.Items
                     if (field.TemplateField.Shared || field.TemplateField.Unversioned)
                     {
                         yield return field;
+
                         continue;
                     }
 
                     if (version != null)
                     {
-                        if (field.Version == version)
+                        var isLatestVersion = _item.Versions.IsLatestVersion(language, version);
+                        if (field.Version == version || isLatestVersion && field.Version == Version.Latest)
                         {
                             yield return field;
                         }
@@ -48,6 +54,7 @@ namespace Sitecore.Pathfinder.Projects.Items
                     if (field.Version == Version.Latest)
                     {
                         yield return field;
+
                         continue;
                     }
 
@@ -97,7 +104,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        protected Field GetField([NotNull] [ItemNotNull] Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
+        protected Field GetField([NotNull, ItemNotNull]  Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
         {
             if (!fields.Any())
             {
