@@ -29,6 +29,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
+            if (value == "00010101T000000")
+            {
+                return value;
+            }
+
             // check if value is an ISO date
             if (value.FromIsoToDateTime() != DateTime.MinValue)
             {

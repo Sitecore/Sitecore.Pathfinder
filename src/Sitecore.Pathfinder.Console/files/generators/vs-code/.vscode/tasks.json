@@ -46,16 +46,6 @@
                     "message": 5
                 }
             }
-        },
-        {
-            "taskName": "reset-website",
-            "args": [ ],
-            "isBuildCommand": false
-        },
-        {
-            "taskName": "sync-website",
-            "args": [ ],
-            "isBuildCommand": false
         }
     ]
 }

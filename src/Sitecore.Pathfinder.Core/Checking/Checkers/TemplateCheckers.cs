@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                         if (string.Equals(field0.FieldName, field1.FieldName, StringComparison.OrdinalIgnoreCase))
                         {
-                            yield return Warning(Msg.C1023, "Avoid duplicate template field names", TraceHelper.GetTextNode(field0.FieldNameProperty, field1.FieldNameProperty, field0, field1, template), $"The template contains two or more field with the same name \"{field0.FieldName}\". Even if these fields are located in different sections, it is still not recommended as the name is ambiguous. Rename one or more of the fields");
+                            yield return Warning(Msg.C1023, "Avoid duplicate template field names", TraceHelper.GetTextNode(field0.FieldNameProperty, field1.FieldNameProperty, field0, field1, template), $"The template contains two or more fields with the same name \"{field0.FieldName}\". Even if these fields are located in different sections, it is still not recommended as the name is ambiguous. Rename one or more of the fields");
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -70,13 +71,13 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 if (n < 0)
                 {
                     var key = line.Mid(keyStartIndex).Trim();
-                    var keyTextSpan = new TextSpan(_lineNumber, keyStartIndex, key.Length);
+                    var keyTextSpan = new TextSpan(_lineNumber + 1, keyStartIndex + 1, key.Length);
                     token = new Token(key, keyTextSpan, indent, isNested);
                 }
                 else
                 {
                     var key = line.Mid(keyStartIndex, n - keyStartIndex).Trim();
-                    var keyTextSpan = new TextSpan(_lineNumber, keyStartIndex, key.Length);
+                    var keyTextSpan = new TextSpan(_lineNumber + 1, keyStartIndex + 1, key.Length);
                     var value = line.Mid(n + 1).Trim();
                     TextSpan valueTextSpan;
 
@@ -90,7 +91,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                     }
                     else
                     {
-                        valueTextSpan = new TextSpan(_lineNumber, n + 1, line.Length - n);
+                        valueTextSpan = new TextSpan(_lineNumber + 1, n + 1, line.Length - n);
                     }
 
                     token = new Token(key, keyTextSpan, value, valueTextSpan, tabbedIndent, isNested);
@@ -103,6 +104,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
             private void ParseValue([NotNull] out string value, out TextSpan valueTextSpan, [NotNull] string delimiter)
             {
+                var startIndent = _lines[_lineNumber].IndexOfNotWhitespace();
+
                 _lineNumber++;
                 if (_lineNumber >= _lines.Length)
                 {
@@ -112,23 +115,23 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 }
 
                 var startLineNumber = _lineNumber;
-                var startIndent = _lines[_lineNumber].IndexOfNotWhitespace();
                 var length = 0;
                 var sb = new StringBuilder();
 
                 do
                 {
                     var line = _lines[_lineNumber];
-                    length += line.Length + 2;
+                    length += line.Length + Environment.NewLine.Length;
 
                     if (string.IsNullOrWhiteSpace(line))
                     {
+                        sb.Append(delimiter);
                         _lineNumber++;
                         continue;
                     }
 
                     var indent = line.IndexOfNotWhitespace();
-                    if (indent < startIndent)
+                    if (indent <= startIndent)
                     {
                         _lineNumber--;
                         break;
@@ -142,7 +145,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 while (_lineNumber < _lines.Length);
 
                 value = sb.ToString().Trim();
-                valueTextSpan = new TextSpan(startLineNumber, startLineNumber, length);
+                valueTextSpan = new TextSpan(startLineNumber + 1, 0, length);
             }
         }
     }

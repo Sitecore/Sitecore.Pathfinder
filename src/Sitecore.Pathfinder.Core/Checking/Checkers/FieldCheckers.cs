@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
@@ -15,6 +16,14 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     [Export(typeof(IChecker)), Shared]
     public class FieldCheckers : Checker
     {
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> CheckboxMustBeTrueOrFalse([NotNull] ICheckerContext context)
+        {
+            return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Checkbox", StringComparison.OrdinalIgnoreCase))
+                where !string.Equals(field.Value, "true", StringComparison.OrdinalIgnoreCase) && !string.Equals(field.Value, "false", StringComparison.OrdinalIgnoreCase)
+                select Error(Msg.C1066, Texts.Checkbox_field_value_must_be__true__or__false__, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Checkbox', but the value is not a valid boolean. Set the value to 'true' or 'false'.");
+        }
+
         [ItemNotNull, NotNull, Check]
         public IEnumerable<Diagnostic> DateIsNotValid([NotNull] ICheckerContext context)
         {
@@ -44,28 +53,15 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> NumberIsNotValid([NotNull] ICheckerContext context)
-        {
-            foreach (var field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Number", StringComparison.OrdinalIgnoreCase)))
-            {
-                if (string.IsNullOrEmpty(field.Value))
-                {
-                    continue;
-                }
-
-                int value;
-                if (!int.TryParse(field.Value, out value))
-                {
-                    yield return Warning(Msg.C1057, "Number is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Number', but the value is not a valid number. Replace or remove the value.");
-                }
-            }
-        }
-
-        [ItemNotNull, NotNull, Check]
         public IEnumerable<Diagnostic> FieldSharing([NotNull] ICheckerContext context)
         {
             foreach (var field in context.Project.Items.SelectMany(i => i.Fields))
             {
+                if (field.TemplateField == TemplateField.Empty)
+                {
+                    continue;
+                }
+
                 if (field.TemplateField.Shared)
                 {
                     if (field.Language != Language.Empty && field.Language != Language.Undefined)
@@ -102,7 +98,24 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         yield return Warning(Msg.P1033, "Field is versioned, but no version is specified", field.SourceTextNode, field.FieldName);
                     }
                 }
+            }
+        }
 
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> NumberIsNotValid([NotNull] ICheckerContext context)
+        {
+            foreach (var field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Number", StringComparison.OrdinalIgnoreCase)))
+            {
+                if (string.IsNullOrEmpty(field.Value))
+                {
+                    continue;
+                }
+
+                int value;
+                if (!int.TryParse(field.Value, out value))
+                {
+                    yield return Warning(Msg.C1057, "Number is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Number', but the value is not a valid number. Replace or remove the value.");
+                }
             }
         }
     }

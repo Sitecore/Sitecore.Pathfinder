@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
-            if (qualifiedName == "<link />")
+            if (qualifiedName == "<link />" || qualifiedName == "<link/>")
             {
                 return string.Empty;
             }

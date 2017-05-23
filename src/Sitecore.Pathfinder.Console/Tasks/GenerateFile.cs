@@ -104,6 +104,12 @@ namespace Sitecore.Pathfinder.Tasks
                     bool isImport;
                     bool uploadMedia;
                     PathMapper.TryGetWebsiteItemPath(projectFileName, out databaseName, out itemPath, out isImport, out uploadMedia);
+
+                    if (string.IsNullOrEmpty(itemPath))
+                    {
+                        itemPath = "/sitecore/content/Home/" + macros["name"];
+                    }
+
                     macros["itemPath"] = itemPath;
                     macros["database"] = databaseName;
 

@@ -40,6 +40,9 @@ namespace Sitecore.Pathfinder.Tasks
                 case "items":
                     ListItems(context);
                     break;
+                case "templates":
+                    ListTemplates(context);
+                    break;
                 case "files":
                     ListFiles(context);
                     break;
@@ -65,6 +68,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IEnumerable<(string Name, string Value)> GetInformationOptions([NotNull] ITaskContext context)
         {
             yield return ("Items", "items");
+            yield return ("Templates", "templates");
             yield return ("Files", "files");
             yield return ("Output", "output");
             yield return ("Project", "project");
@@ -96,6 +100,16 @@ namespace Sitecore.Pathfinder.Tasks
             var project = context.LoadProject();
 
             foreach (var item in project.Items.OrderBy(i => i.ItemIdOrPath))
+            {
+                context.Trace.WriteLine(item.ItemIdOrPath);
+            }
+        }
+
+        protected void ListTemplates([NotNull] IBuildContext context)
+        {
+            var project = context.LoadProject();
+
+            foreach (var item in project.Templates.OrderBy(t => t.ItemIdOrPath))
             {
                 context.Trace.WriteLine(item.ItemIdOrPath);
             }

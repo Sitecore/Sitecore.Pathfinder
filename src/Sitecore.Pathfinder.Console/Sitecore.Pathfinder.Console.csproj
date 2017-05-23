@@ -23,6 +23,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="files\generators\vs-code\.vscode\tasks.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ResharperCodeContractNullability" Version="1.0.7" />
     <PackageReference Include="System.Composition" Version="1.0.31" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
@@ -211,6 +217,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="scconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Sitecore.Pathfinder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

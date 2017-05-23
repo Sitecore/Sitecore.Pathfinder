@@ -149,6 +149,9 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
                             using (var output = XmlWriter.Create(writer, settings))
                             {
+                                var parent = item.GetParent();
+                                var parentId = parent != null ? parent.Uri.Guid.Format() : string.Empty;
+
                                 output.WriteStartElement("item");
                                 output.WriteAttributeString("name", item.ItemName);
                                 output.WriteAttributeString("key", item.ItemName.ToLowerInvariant());
@@ -159,7 +162,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                                 output.WriteAttributeString("language", language.LanguageName);
                                 output.WriteAttributeString("version", version.ToString());
                                 output.WriteAttributeString("template", item.TemplateName.ToLowerInvariant());
-                                output.WriteAttributeString("parentid", item.GetParent().Uri.Guid.Format());
+                                output.WriteAttributeString("parentid", parentId);
 
                                 output.WriteStartElement("fields");
 

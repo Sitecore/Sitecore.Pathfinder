@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -81,51 +82,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull, ItemNotNull]
         public virtual IEnumerable<TemplateField> GetAllFields()
         {
-            // ReSharper disable once InvertIf
-            if (_allFields == null)
-            {
-                lock (_syncObject)
-                {
-                    // ReSharper disable once InvertIf
-                    if (_allFields == null)
-                    {
-                        var allFields = new List<TemplateField>();
-
-                        foreach (var field in Sections.SelectMany(s => s.Fields))
-                        {
-                            allFields.Add(field);
-                        }
-
-                        var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
-                        foreach (var baseTemplateId in baseTemplates)
-                        {
-                            if (baseTemplateId == Constants.NullGuidString)
-                            {
-                                continue;
-                            }
-
-                            var baseTemplate = Database.FindQualifiedItem<Template>(baseTemplateId);
-                            if (baseTemplate == null)
-                            {
-                                continue;
-                            }
-
-                            foreach (var templateField in baseTemplate.GetAllFields())
-                            {
-                                var guid = templateField.Uri.Guid;
-                                if (allFields.All(f => f.Uri.Guid != guid))
-                                {
-                                    allFields.Add(templateField);
-                                }
-                            }
-                        }
-
-                        _allFields = allFields;
-                    }
-                }
-            }
-
-            return _allFields;
+            return InternalGetAllFields(true, new List<string>());
         }
 
         [ItemNotNull, NotNull]
@@ -215,6 +172,68 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
                 section.Merge(newSection, overwrite);
             }
+        }
+
+        [ItemNotNull, NotNull]
+        private IEnumerable<TemplateField> InternalGetAllFields(bool cacheTemplate, [ItemNotNull, NotNull] ICollection<string> recursionGuard)
+        {
+            if (recursionGuard.Contains(Uri.Guid.Format()))
+            {
+                return Enumerable.Empty<TemplateField>();
+            }
+
+            recursionGuard.Add(Uri.Guid.Format());
+
+            // ReSharper disable once InvertIf
+            if (_allFields == null)
+            {
+                lock (_syncObject)
+                {
+                    // ReSharper disable once InvertIf
+                    if (_allFields == null)
+                    {
+                        var allFields = new List<TemplateField>();
+
+                        foreach (var field in Sections.SelectMany(s => s.Fields))
+                        {
+                            allFields.Add(field);
+                        }
+
+                        var baseTemplates = BaseTemplates.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var baseTemplateId in baseTemplates)
+                        {
+                            if (baseTemplateId == Constants.NullGuidString)
+                            {
+                                continue;
+                            }
+
+                            var baseTemplate = Database.FindQualifiedItem<Template>(baseTemplateId);
+                            if (baseTemplate == null)
+                            {
+                                continue;
+                            }
+
+                            foreach (var templateField in baseTemplate.InternalGetAllFields(false, recursionGuard))
+                            {
+                                var guid = templateField.Uri.Guid;
+                                if (allFields.All(f => f.Uri.Guid != guid))
+                                {
+                                    allFields.Add(templateField);
+                                }
+                            }
+                        }
+
+                        if (cacheTemplate)
+                        {
+                            _allFields = allFields;
+                        }
+
+                        return allFields;
+                    }
+                }
+            }
+
+            return _allFields;
         }
     }
 }

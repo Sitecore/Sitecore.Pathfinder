@@ -3,11 +3,13 @@
     Database: master
     - Fields:
         - en:
-            Title: Sitecore
-            Text: Welcome to Sitecore
+            - 1: 
+                Title: Sitecore
+                Text: Welcome to Sitecore
         - da:
-            Title: Sitecore
-            Text: Velkommen til Sitecore
+            - 1: 
+                Title: Sitecore
+                Text: Velkommen til Sitecore
     - Layout:
         - Default: Sample Layout
             - main:
@@ -20,20 +22,19 @@
         - Sample Item: Subitem
             - Fields:
                 - en:
-                    Title: Sitecore
-                    Text: Welcome to Sitecore
+                    - 1:
+                        Title: Sitecore
+                        Text: Welcome to Sitecore
                 - da:
-                   Title: Sitecore
-                   Text: Velkommen til Sitecore
+                    - 1:
+                       Title: Sitecore
+                       Text: Velkommen til Sitecore
         - Template:
             Name: MyTemplate
-            - Section:
-                Name: Fields
-                - Field:
-                    Name: IsActive
+            - Section: Fields
+                - Field: IsActive
                     Type: Checkbox
                     Sharing: Shared
-                - Field:
-                    Name: Text
+                - Field: Text
                     Type: Single-Line Text
                     Sharing: Unversioned

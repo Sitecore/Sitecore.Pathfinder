@@ -9,16 +9,14 @@
     <Item Id="{46D2F427-4CE5-4E1F-BA10-EF3636F43534}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Print" />
     <Item Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Feed" />
     <Item Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Layouts" />
+    <Item Id="{14030E9F-CE92-49C6-AD87-7D49B50E42EA}" Template="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Path="/sitecore/layout/Layouts/Sample Layout" />
     <Item Id="{B87CD5F0-4E72-429D-90A3-B285F1D038CA}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Models" />
     <Item Id="{32566F0E-7686-45F1-A12F-D7260BD78BC3}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Renderings" />
     <Item Id="{EB443C0B-F923-409E-85F3-E7893C8C30C2}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Sublayouts" />
     <Item Id="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/media library" />
     <Item Id="{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/system" />
     <Item Id="{64C4F646-A3FA-4205-B98E-4DE2C609B60F}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/system/Languages" />
-    <Item Id="{B52EB1DD-E501-44D9-8FD5-328453426369}" Template="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" Path="/sitecore/system/Languages/da-DK" />
-    <Item Id="{3A821BBA-7D8B-4689-B256-9506C3454351}" Template="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" Path="/sitecore/system/Languages/de-DE" />
     <Item Id="{AF584191-45C9-4201-8740-5409F4CF8BDD}" Template="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" Path="/sitecore/system/Languages/en" />
-    <Item Id="{5B73FBE4-53EA-48B2-A973-0A2E9EBE1CC5}" Template="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" Path="/sitecore/system/Languages/sv-SE" />
     <Item Id="{05592656-56D7-4D85-AACF-30919EE494F9}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/system/Workflows" />
     <Item Id="{2BAE793F-7392-4790-9E67-9C60B6BF7D7B}" Template="{1C0ACC50-37BE-4742-B43C-96A07A7410A5}" Path="/sitecore/system/Workflows/Analytics Testing Workflow" />
     <Item Id="{0649FDB7-3E01-4543-9D70-DE0F8CCB5304}" Template="{4B7E2DA9-DE43-4C83-88C3-02F042031D04}" Path="/sitecore/system/Workflows/Analytics Testing Workflow/Draft" />
@@ -214,14 +212,6 @@
     <Item Id="{2E5892C5-A529-4646-989B-1F15DE10453E}" Template="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" Path="/sitecore/templates/Common" />
     <Template Id="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/templates/Common/Folder" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}" />
     <Item Id="{FC118F80-8638-483C-A810-214E91F69CA4}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/templates/Common/Folder/__Standard Values" />
-    <Template Id="{ED3C3803-B2BB-C531-EAF3-1DEBC6FDAB32}" Path="/sitecore/templates/HelloWorldTemplate" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
-        <Section Id="{3366EF8D-4FF5-CF92-26EF-2D70AAEBD9EB}" Name="Data">
-            <Field Id="{E4BBAE43-06F2-0C8E-9E6E-A7902E24EB95}" Name="Title" Sharing="Versioned" />
-            <Field Id="{61C42927-626B-55B3-7EB0-944299EFA372}" Name="Text" Type="Rich Text" Sharing="Versioned" />
-            <Field Id="{4B8689ED-F40C-157F-FAE1-477972619542}" Name="Image" Type="Image" />
-        </Section>
-    </Template>
-    <Item Id="{57782C55-5AE5-2E15-066C-69345DB8231F}" Template="{ED3C3803-B2BB-C531-EAF3-1DEBC6FDAB32}" Path="/sitecore/templates/HelloWorldTemplate/__Standard Values" />
     <Item Id="{D2833213-CB77-431A-9108-55E62E4E47FD}" Template="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" Path="/sitecore/templates/List Manager" />
     <Template Id="{8288D4EA-6576-486F-AAEC-4680329A2D5C}" Path="/sitecore/templates/List Manager/Contact List" BaseTemplates="{1930BBEB-7805-471A-A3BE-4858AC7CF696}">
         <Section Id="{03F96C3A-2E20-4418-BB08-01859B831B22}" Name="Data">
@@ -251,11 +241,6 @@
         <Section Id="{AE76A034-9491-4B83-99F5-39F227D6FB59}" Name="Data">
             <Field Id="{75577384-3C97-45DA-A847-81B00500E250}" Name="Title" Sharing="Versioned" />
             <Field Id="{A60ACD61-A6DB-4182-8329-C957982CEC74}" Name="Text" Type="Rich Text" Sharing="Versioned" />
-            <Field Id="{5F99816A-B0E2-4E05-8702-9F48350F630C}" Name="Image" Type="Image" Sharing="Versioned" />
-            <Field Id="{8C7157E0-E12B-4454-958E-851B52C7A194}" Name="Droptree" Type="Droptree" Sharing="Versioned" />
-            <Field Id="{152B09A9-6BED-438E-896D-1BC2B264267E}" Name="Lookup" Type="lookup" Sharing="Versioned" />
-            <Field Id="{FE53119D-25E2-4E2E-B0CE-26F29B6F1B0D}" Name="Valuelookup" Type="valuelookup" Sharing="Versioned" />
-            <Field Id="{FA12C584-E955-41E6-B27A-C9A2A13D6CAC}" Name="Multilist" Type="Multilist" Sharing="Versioned" />
         </Section>
     </Template>
     <Item Id="{9DFBB778-512F-4BA7-8293-C01503572D30}" Template="{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}" Path="/sitecore/templates/Sample/Sample Item/__Standard Values" />
@@ -2450,7 +2435,6 @@
     <Item Id="{264BE84E-C140-4097-B771-D1A37189C5B3}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/templates/System/Templates/Sections" />
     <Template Id="{646F4B34-708C-41C2-9F4B-2661849777F3}" Path="/sitecore/templates/System/Templates/Sections/Advanced" BaseTemplates="{00000000-0000-0000-0000-000000000000}">
         <Section Id="{1AD573E7-F081-4714-AA19-945EDDB7C15A}" Name="Advanced">
-            <Field Id="{B16E9157-4AD0-48A9-AE99-A052EB06472C}" Name="__PathfinderProjectUniqueIds" Type="" />
             <Field Id="{1B86697D-60CA-4D80-83FB-7555A2E6CE1C}" Name="__Source" Type="Version Link" Sharing="Versioned" />
             <Field Id="{19B597D3-2EDD-4AE2-AEFE-4A94C7F10E31}" Name="__Source Item" Type="Version Link" />
             <Field Id="{FD4E2050-186C-4375-8B99-E8A85DD7436E}" Name="__Enable item fallback" Type="Checkbox" />

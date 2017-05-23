@@ -3,7 +3,7 @@
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
       "commandLineArgs": "b  --pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Todo"
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Rocks"
     }
   }
 }

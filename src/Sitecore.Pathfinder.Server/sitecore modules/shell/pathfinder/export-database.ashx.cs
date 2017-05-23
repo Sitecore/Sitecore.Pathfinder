@@ -57,6 +57,7 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                             WriteItem(output, database, "/sitecore/layout/Controllers");
                             WriteItems(output, database, "/sitecore/layout/devices");
                             WriteItem(output, database, "/sitecore/layout/Layouts");
+                            WriteItem(output, database, "/sitecore/layout/Layouts/Sample Layout");
                             WriteItem(output, database, "/sitecore/layout/Models");
                             WriteItem(output, database, "/sitecore/layout/Renderings");
                             WriteItem(output, database, "/sitecore/layout/Sublayouts");

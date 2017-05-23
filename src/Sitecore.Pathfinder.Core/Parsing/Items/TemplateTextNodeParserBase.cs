@@ -86,22 +86,23 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
 
-            var fieldNameTextNode = GetItemNameTextNode(context.ParseContext, templateFieldTextNode);
-            if (string.IsNullOrEmpty(fieldNameTextNode.Value))
+            GetName(context.ParseContext, templateFieldTextNode, out string fieldName, out ITextNode fieldNameTextNode, "Field", "Name");
+            if (string.IsNullOrEmpty(fieldName))
             {
                 context.ParseContext.Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
                 return;
             }
 
-            var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldNameTextNode.Value, StringComparison.OrdinalIgnoreCase));
+            var templateField = templateSection.Fields.FirstOrDefault(f => string.Equals(f.FieldName, fieldName, StringComparison.OrdinalIgnoreCase));
             if (templateField == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldNameTextNode.Value;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldName;
                 var guid = StringHelper.GetGuid(template.Project, templateFieldTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateField = context.ParseContext.Factory.TemplateField(template, guid).With(templateFieldTextNode);
                 templateSection.Fields.Add(templateField);
                 templateField.FieldNameProperty.SetValue(fieldNameTextNode);
+                templateField.FieldName = fieldName;
             }
 
             templateField.TypeProperty.Parse(templateFieldTextNode, "Single-Line Text");
@@ -139,21 +140,22 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
 
-            var sectionNameTextNode = GetItemNameTextNode(context.ParseContext, templateSectionTextNode);
-            if (string.IsNullOrEmpty(sectionNameTextNode.Value))
+            GetName(context.ParseContext, templateSectionTextNode, out string sectionName, out ITextNode sectionNameTextNode, "Section", "Name");
+            if (string.IsNullOrEmpty(sectionName))
             {
                 context.ParseContext.Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);
                 return;
             }
 
-            var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionNameTextNode.Value, StringComparison.OrdinalIgnoreCase));
+            var templateSection = template.Sections.FirstOrDefault(s => string.Equals(s.SectionName, sectionName, StringComparison.OrdinalIgnoreCase));
             if (templateSection == null)
             {
-                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionNameTextNode.Value;
+                var itemIdOrPath = template.ItemIdOrPath + "/" + sectionName;
                 var guid = StringHelper.GetGuid(template.Project, templateSectionTextNode.GetAttributeValue("Id", itemIdOrPath));
 
                 templateSection = context.ParseContext.Factory.TemplateSection(template, guid).With(templateSectionTextNode);
                 templateSection.SectionNameProperty.SetValue(sectionNameTextNode);
+                templateSection.SectionName = sectionName;
 
                 template.Sections.Add(templateSection);
             }

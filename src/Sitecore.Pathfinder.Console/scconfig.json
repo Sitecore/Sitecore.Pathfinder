@@ -88,6 +88,10 @@
 
             // unicorn requires item files for all parent items - set to true to emit missing items
             "emit-missing-items": false
+        },
+
+        "update": {
+            "filename": "Package.update"
         }
     },
 
@@ -201,11 +205,8 @@
             "Field-childnodes": "",
             "Field-attributes": "Name, Value, Field.Type, Field.SortOrder, Field.Sharing, Field.Source, Field.ShortHelp, Field.LongHelp",
             "Template-attributes": "Name, Id, Database, ItemPath, Icon, IsEmittable, IsExternalReference, ShortHelp, LongHelp, BaseTemplates",
-            "Template-childnodes": "Section",
             "TemplateSection-attributes": "Name, Id, Icon",
-            "TemplateSection-childnodes": "Field",
             "TemplateField-attributes": "Name, Id, Type, Sharing, Source, ShortHelp, LongHelp, SortOrder",
-            "TemplateField-childnodes": ""
         }
     },
 

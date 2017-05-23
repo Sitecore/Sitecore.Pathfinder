@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
         [NotNull]
         public string Uri { get; }
 
-        public override bool Equals(object obj)
+        public override bool Equals([CanBeNull] object obj)
         {
             if (ReferenceEquals(null, obj))
             {

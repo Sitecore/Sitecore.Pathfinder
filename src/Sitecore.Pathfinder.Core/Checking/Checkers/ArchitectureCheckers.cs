@@ -257,7 +257,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
             {
                 if (!schemaChildNodes.Any(c => IsMatch(child, c)))
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Unexpected item '{child.ItemIdOrPath}' [ArchitectureSchema]");
+                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(child).TextSpan, Severity.Error, $"Unexpected item '{child.ItemIdOrPath}' [ArchitectureSchema]");
                 }
             }
         }
