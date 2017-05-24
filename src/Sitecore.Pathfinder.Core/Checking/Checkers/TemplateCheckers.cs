@@ -145,7 +145,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         protected IEnumerable<Diagnostic> AvoidSettingSharedAndUnversionedInItems([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.TemplateName.Equals("Template field") && item["Shared"].Equals("True") && item["Unversioned"].Equals("True")
+                where item.TemplateName.Equals("Template field") && item[Constants.FieldNames.Shared].Equals("True") && item[Constants.FieldNames.Unversioned].Equals("True")
                 select Warning(Msg.C1119, "In a template field, the 'Shared' field overrides the 'Unversioned' field. To fix, clear the 'Unversioned' field (the field remains shared)", TraceHelper.GetTextNode(item), item.ItemName);
         }
 

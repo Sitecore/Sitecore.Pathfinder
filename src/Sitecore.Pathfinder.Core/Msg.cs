@@ -267,6 +267,7 @@ namespace Sitecore.Pathfinder
         public const int C1130 = C + 130; 
         public const int C1131 = C + 131; 
         public const int C1133 = C + 133; 
+        public const int C1134 = C + 134; 
 
         private const int D = 4000;
 

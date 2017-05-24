@@ -314,11 +314,9 @@ namespace Sitecore.Pathfinder.IO.Zip
             Write2Bytes(bytes, ref i, 0);
 
             // internal file attrs
-            // TODO: figure out what is required here. 
             Write2Bytes(bytes, ref i, 1);
 
             // external file attrs
-            // TODO: figure out what is required here. 
             Write4Bytes(bytes, ref i, 0x81b60020);
 
             // relative offset of local header (I think this can be zero)

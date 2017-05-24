@@ -245,7 +245,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode layoutTextNode)
         {
-            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => r.Database == context.Database).Select(r => context.Project.Indexes.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
+            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => r.Database == context.Database).Select(r => context.Project.Indexes.FindQualifiedItem<Item>(r.RenderingItemUri)).Where(i => i != null).ToList();
             renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(i => i.IsImport && i.Database == context.Database && !i.Paths.IsStandardValuesHolder && !i.Paths.IsBranch && RenderingIdOrPaths.Any(id => string.Equals(id, i.TemplateIdOrPath, StringComparison.OrdinalIgnoreCase))));
 
             var devices = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");

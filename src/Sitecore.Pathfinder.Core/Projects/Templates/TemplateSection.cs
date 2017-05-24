@@ -28,20 +28,22 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public string Icon
         {
-            get { return IconProperty.GetValue(); }
-            set { IconProperty.SetValue(value); }
+            get => IconProperty.GetValue();
+            set => IconProperty.SetValue(value);
         }
 
         [NotNull]
         public SourceProperty<string> IconProperty { get; }
+
+        public bool IsSynthetic { get; set; }
 
         public override Locking Locking => Template.Locking;
 
         [NotNull]
         public string SectionName
         {
-            get { return SectionNameProperty.GetValue(); }
-            set { SectionNameProperty.SetValue(value); }
+            get => SectionNameProperty.GetValue();
+            set => SectionNameProperty.SetValue(value);
         }
 
         [NotNull]
@@ -49,8 +51,8 @@ namespace Sitecore.Pathfinder.Projects.Templates
 
         public int Sortorder
         {
-            get { return SortorderProperty.GetValue(); }
-            set { SortorderProperty.SetValue(value); }
+            get => SortorderProperty.GetValue();
+            set => SortorderProperty.SetValue(value);
         }
 
         [NotNull]
@@ -60,7 +62,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         public Template Template { get; }
 
         [NotNull]
-        public IProjectItemUri Uri { get; private set; }
+        public IProjectItemUri Uri { get; }
 
         public void Merge([NotNull] TemplateSection newSection, bool overwrite)
         {
@@ -72,6 +74,11 @@ namespace Sitecore.Pathfinder.Projects.Templates
             if (newSection.Sortorder != 0)
             {
                 SortorderProperty.SetValue(newSection.SortorderProperty);
+            }
+
+            if (IsSynthetic && !newSection.IsSynthetic)
+            {
+                IsSynthetic = false;
             }
 
             foreach (var newField in newSection.Fields)

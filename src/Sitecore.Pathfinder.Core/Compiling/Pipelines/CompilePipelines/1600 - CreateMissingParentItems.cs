@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 var path = item.ItemIdOrPath;
                 if (path.IndexOf('/') < 0)
                 {
-                    // todo: report missing parent
+                    pipeline.Context.Trace.TraceWarning(Msg.C1134, "Item has no parent and no path", path);
                     continue;
                 }
 
@@ -63,6 +63,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         var newItem = pipeline.Context.Factory.Item(item.Database, guid, parts[newIndex], newPath, Constants.Templates.Folder.Format());
                         newItem.IsEmittable = false;
                         newItem.IsImport = item.IsImport;
+                        newItem.IsSynthetic = true;
                         newItem.OverwriteWhenMerging = true;
                         pipeline.Context.Project.AddOrMerge(newItem);
 

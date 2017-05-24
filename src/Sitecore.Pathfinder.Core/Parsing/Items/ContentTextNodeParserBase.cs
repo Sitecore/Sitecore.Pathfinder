@@ -46,9 +46,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var item = context.ParseContext.Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
-            item.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            item.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
             item.SortorderProperty.Parse(textNode, context.Sortorder);
+            item.IsEmittable = textNode.GetAttributeBool(Constants.Fields.IsEmittable, true);
+            item.IsImport = textNode.GetAttributeBool(Constants.Fields.IsImport, context.IsImport);
 
             if (!item.IsImport)
             {

@@ -5,6 +5,7 @@ using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -51,9 +52,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.ShortHelpProperty.Parse(textNode);
             template.LongHelpProperty.Parse(textNode);
 
-            // todo: yuck
-            template.IsEmittable = !string.Equals(textNode.GetAttributeValue(Constants.Fields.IsEmittable), "False", StringComparison.OrdinalIgnoreCase);
-            template.IsImport = string.Equals(textNode.GetAttributeValue(Constants.Fields.IsImport, context.IsImport.ToString()), "True", StringComparison.OrdinalIgnoreCase);
+            template.IsEmittable = textNode.GetAttributeBool(Constants.Fields.IsEmittable, true);
+            template.IsImport = textNode.GetAttributeBool(Constants.Fields.IsImport, context.IsImport);
 
             template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 

@@ -24,14 +24,15 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
         {
             var template = context.Factory.Template(templateItem.Database, templateItem.Uri.Guid, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
+            template.IsSynthetic = true;
 
-            var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Base template");
+            var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.BaseTemplate);
             if (baseTemplateField != null)
             {
                 template.BaseTemplatesProperty.SetValue(baseTemplateField.ValueProperty);
             }
 
-            var iconField = templateItem.Fields.FirstOrDefault(f => f.FieldName == "__Icon");
+            var iconField = templateItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.Icon);
             if (iconField != null)
             {
                 template.IconProperty.SetValue(iconField.ValueProperty);
@@ -40,20 +41,20 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             foreach (var sectionItem in templateItem.Children)
             {
                 var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
+                templateSection.IsSynthetic = true;
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue(sectionItem.ItemNameProperty);
 
-                var sectionIconField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == "__Icon");
+                var sectionIconField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.Icon);
                 if (sectionIconField != null)
                 {
                     templateSection.IconProperty.SetValue(sectionIconField.ValueProperty);
                 }
 
-                var sectionSortorderField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == "__Sort order");
+                var sectionSortorderField = sectionItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.SortOrder);
                 if (sectionSortorderField != null)
                 {
-                    int sortorder;
-                    if (int.TryParse(sectionSortorderField.Value, out sortorder))
+                    if (int.TryParse(sectionSortorderField.Value, out var sortorder))
                     {
                         templateSection.SortorderProperty.SetValue(sortorder);
                     }
@@ -62,10 +63,11 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 foreach (var fieldItem in sectionItem.Children)
                 {
                     var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
+                    templateField.IsSynthetic = true;
                     templateSection.Fields.Add(templateField);
                     templateField.FieldNameProperty.SetValue(fieldItem.ItemNameProperty);
 
-                    var typeField = fieldItem.Fields.FirstOrDefault(f => f.FieldName == "Type");
+                    var typeField = fieldItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.Type);
                     if (typeField != null)
                     {
                         templateField.TypeProperty.SetValue(typeField.ValueProperty);
@@ -83,12 +85,10 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var templateItem in templateItems)
             {
-                if (pipeline.Context.Project.Indexes.FindQualifiedItem<Template>(templateItem.Uri) != null)
+                if (pipeline.Context.Project.Indexes.FindQualifiedItem<Template>(templateItem.Uri) == null)
                 {
-                    continue;
+                    CreateTemplate(pipeline.Context, pipeline.Context.Project, templateItem);
                 }
-
-                CreateTemplate(pipeline.Context, pipeline.Context.Project, templateItem);
             }
         }
     }

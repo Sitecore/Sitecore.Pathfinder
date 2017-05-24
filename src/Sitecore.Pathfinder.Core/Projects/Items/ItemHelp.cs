@@ -15,12 +15,12 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [NotNull]
-        public string Link => _item["__Help link"];
+        public string Link => _item[Constants.FieldNames.HelpLink];
 
         [NotNull]
-        public string Text => _item["__Long description"];
+        public string Text => _item[Constants.FieldNames.LongDescription];
 
         [NotNull]
-        public string ToolTip => _item["__Short description"];
+        public string ToolTip => _item[Constants.FieldNames.ShortDescription];
     }
 }

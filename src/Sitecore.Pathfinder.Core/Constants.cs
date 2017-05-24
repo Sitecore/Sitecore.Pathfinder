@@ -318,6 +318,29 @@ namespace Sitecore.Pathfinder
             public const double Normal = 2000;
         }
 
+        public static class FieldNames
+        {
+            public const string BaseTemplate = "__Base template";
+
+            public const string HelpLink = "__Help link";
+
+            public const string Icon = "__Icon";
+
+            public const string LongDescription = "__Long description";
+
+            public const string Shared = "Shared";
+
+            public const string ShortDescription = "__Short description";
+
+            public const string SortOrder = "__Sort order";
+
+            public const string Source = "Source";
+
+            public const string Type = "Type";
+
+            public const string Unversioned = "Unversioned";
+        }
+
         public static class Fields
         {
             public const string InsertOptionsFieldId = "{1172F251-DAD4-4EFB-A329-0C63500E4F1E}";
@@ -506,7 +529,11 @@ namespace Sitecore.Pathfinder
 
         public static class Templates
         {
+            public const string ItemRenderingId = "{86776923-ECA5-4310-8DC0-AE65FE88D078}";
+
             public const string LayoutId = "{3A45A723-64EE-4919-9D41-02FD40FD1466}";
+
+            public const string MethodRenderingId = "{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}";
 
             public const string StandardTemplateId = "{1930BBEB-7805-471A-A3BE-4858AC7CF696}";
 
@@ -518,13 +545,15 @@ namespace Sitecore.Pathfinder
 
             public const string TemplatePathId = "/sitecore/templates/System/Templates/Template";
 
-            public const string ItemRenderingId = "{86776923-ECA5-4310-8DC0-AE65FE88D078}";
-            public const string MethodRenderingId = "{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}";
             public const string UrlRenderingId = "{83E993C5-C0FC-4472-86A9-2F6CFED694E4}";
-            public const string WebControlId = "{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}";
-            public const string XmlControlId = "{B658CE99-894A-4CB1-936B-F23F17C63B5B}";
-            public const string XslRenderingId = "{F1F1D639-4F54-40C2-8BE0-81266B392CEB}";
+
             public const string ViewRenderingId = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
+
+            public const string WebControlId = "{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}";
+
+            public const string XmlControlId = "{B658CE99-894A-4CB1-936B-F23F17C63B5B}";
+
+            public const string XslRenderingId = "{F1F1D639-4F54-40C2-8BE0-81266B392CEB}";
 
             public static readonly Guid Alias = new Guid("{54BCFFB7-8F46-4948-AE74-DA5B6B5AFA86}");
 

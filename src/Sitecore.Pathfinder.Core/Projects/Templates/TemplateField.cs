@@ -130,10 +130,16 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [NotNull]
         public IProjectItemUri Uri { get; }
 
+        public bool IsSynthetic { get; set; }
+
         public void Merge([NotNull] TemplateField newField, bool overwrite)
         {
             base.Merge(newField, overwrite);
 
+            if (IsSynthetic && !newField.IsSynthetic)
+            {
+                IsSynthetic = false;
+            }
             // todo: consider making a strict and loose mode
             if (!string.IsNullOrEmpty(newField.Type))
             {
