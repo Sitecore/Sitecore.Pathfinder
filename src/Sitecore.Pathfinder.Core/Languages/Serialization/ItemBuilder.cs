@@ -1,5 +1,3 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
@@ -8,7 +6,7 @@ using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
-namespace Sitecore.Pathfinder.Compiling.Builders
+namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class ItemBuilder
     {

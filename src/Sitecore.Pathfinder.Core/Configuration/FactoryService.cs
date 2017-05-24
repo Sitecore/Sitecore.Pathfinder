@@ -2,7 +2,6 @@
 
 using System;
 using System.Composition;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
@@ -60,15 +59,11 @@ namespace Sitecore.Pathfinder.Configuration
             return field;
         }
 
-        public FieldBuilder FieldBuilder() => new FieldBuilder(this);
-
         public virtual FileReference FileReference(IProjectItem owner, SourceProperty<string> sourceSourceProperty, string referenceText) => new FileReference(owner, sourceSourceProperty, referenceText);
 
         public virtual FileReference FileReference(IProjectItem owner, ITextNode textNode, string referenceText) => new FileReference(owner, textNode, referenceText);
 
         public Item Item(Database database, Guid guid, string itemName, string itemIdOrPath, string templateIdOrPath) => new Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
-
-        public ItemBuilder ItemBuilder() => new ItemBuilder(this);
 
         public virtual ItemParseContext ItemParseContext(IParseContext context, ItemParser itemParser, Database database, string parentItemPath, bool isImport) => new ItemParseContext(context, itemParser, database, parentItemPath, isImport);
 

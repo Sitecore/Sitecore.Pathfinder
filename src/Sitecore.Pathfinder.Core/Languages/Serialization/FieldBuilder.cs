@@ -6,7 +6,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
-namespace Sitecore.Pathfinder.Compiling.Builders
+namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class FieldBuilder
     {

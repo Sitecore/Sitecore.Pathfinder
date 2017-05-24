@@ -25,10 +25,7 @@ namespace Sitecore.Pathfinder
 
         public Stopwatch Stopwatch { get; private set; }
 
-        public T GetTaskRunner<T>() where T : ITaskRunner
-        {
-            return CompositionService.Resolve<T>();
-        }
+        public T GetTaskRunner<T>() where T : ITaskRunner => CompositionService.Resolve<T>();
 
         public IHostService With(Stopwatch stopwatch)
         {

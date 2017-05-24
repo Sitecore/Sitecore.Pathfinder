@@ -1,7 +1,6 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -35,9 +34,6 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             return false;
         }
 
-        public override string Compile(IFieldCompileContext context, Field field)
-        {
-            return field.Value.TrimStart('~');
-        }
+        public override string Compile(IFieldCompileContext context, Field field) => PathHelper.NormalizeItemPath(field.Value.TrimStart('~'));
     }
 }

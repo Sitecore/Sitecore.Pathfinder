@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -195,34 +194,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
             }
         }
 
-        public static void WriteAsXml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer, [NotNull] string databaseName)
-        {
-            var settings = new XmlWriterSettings()
-            {
-              Indent = true
-            };
-            var output = XmlWriter.Create(writer, settings);
-
-            output.WriteStartElement("Layout");
-            output.WriteAttributeString("xmlns", "http://www.sitecore.net/pathfinder/layouts/" + databaseName);
-
-            foreach (var deviceBuilder in layoutBuilder.Devices)
-            {
-                output.WriteStartElement("Device");
-                output.WriteAttributeString("Name", deviceBuilder.DeviceName);
-                output.WriteAttributeStringIf("Layout", deviceBuilder.LayoutItemPath);
-
-                foreach (var renderingBuilder in deviceBuilder.Renderings.Where(r => r.ParentRendering == null))
-                {
-                    WriteAsXml(output, deviceBuilder, renderingBuilder);
-                }
-
-                output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
-        }
-
         public static void WriteAsXml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
         {
             var settings = new XmlWriterSettings()
@@ -382,45 +353,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 }
 
                 output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
-        }
-
-        private static void WriteAsXml([NotNull] XmlWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
-        {
-            if (!renderingBuilder.UnsafeName)
-            {
-                output.WriteStartElement(renderingBuilder.Name);
-            }
-            else
-            {
-                output.WriteStartElement("Rendering");
-                output.WriteAttributeString("RenderingName", renderingBuilder.Name);
-            }
-
-            output.WriteAttributeStringIf("Placeholder", renderingBuilder.Placeholder);
-            output.WriteAttributeStringIf("Cacheable", renderingBuilder.Cacheable);
-            output.WriteAttributeStringIf("VaryByData", renderingBuilder.VaryByData);
-            output.WriteAttributeStringIf("VaryByDevice", renderingBuilder.VaryByDevice);
-            output.WriteAttributeStringIf("VaryByLogin", renderingBuilder.VaryByLogin);
-            output.WriteAttributeStringIf("VaryByParameters", renderingBuilder.VaryByParameters);
-            output.WriteAttributeStringIf("VaryByQueryString", renderingBuilder.VaryByQueryString);
-            output.WriteAttributeStringIf("VaryByUser", renderingBuilder.VaryByUser);
-
-            foreach (var attribute in renderingBuilder.Attributes)
-            {
-                output.WriteAttributeString(attribute.Key, attribute.Value);
-            }
-
-            output.WriteAttributeStringIf("DataSource", renderingBuilder.DataSource);
-
-            foreach (var child in deviceBuilder.Renderings)
-            {
-                if (child.ParentRendering == renderingBuilder)
-                {
-                    WriteAsXml(output, deviceBuilder, child);
-                }
             }
 
             output.WriteEndElement();

@@ -15,10 +15,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public override bool IsExclusive => true;
 
-        public override bool CanCompile(IFieldCompileContext context, Field field)
-        {
-            return string.Equals(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanCompile(IFieldCompileContext context, Field field) => string.Equals(field.TemplateField.Type, "checkbox", StringComparison.OrdinalIgnoreCase);
 
         public override string Compile(IFieldCompileContext context, Field field)
         {

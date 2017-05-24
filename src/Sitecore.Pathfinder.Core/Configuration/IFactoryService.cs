@@ -1,7 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
@@ -43,9 +42,6 @@ namespace Sitecore.Pathfinder.Configuration
         Field Field([NotNull] Item item, [NotNull] string fieldName, [NotNull] string fieldValue);
 
         [NotNull]
-        FieldBuilder FieldBuilder();
-
-        [NotNull]
         FileReference FileReference([NotNull] IProjectItem owner, [NotNull] ITextNode textNode, [NotNull] string referenceText);
 
         [NotNull]
@@ -53,9 +49,6 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         Item Item([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
-
-        [NotNull]
-        ItemBuilder ItemBuilder();
 
         [NotNull]
         ItemParseContext ItemParseContext([NotNull] IParseContext context, [NotNull] ItemParser itemParser, [NotNull] Database database, [NotNull] string parentItemPath, bool isImport);

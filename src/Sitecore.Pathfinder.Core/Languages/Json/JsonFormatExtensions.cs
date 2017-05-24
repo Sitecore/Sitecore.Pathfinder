@@ -4,7 +4,6 @@ using System;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -81,37 +80,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             {
                 writeInner(writer);
             }
-        }
-
-        public static void WriteAsJson([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
-        {
-            var output = new JsonTextWriter(writer)
-            {
-                Formatting = Formatting.Indented
-            };
-
-            output.WriteStartObject("Layout");
-            output.WriteStartArray("Devices");
-
-            foreach (var deviceBuilder in layoutBuilder.Devices)
-            {
-                output.WriteStartObject();
-                output.WritePropertyStringIf("Name", deviceBuilder.DeviceName);
-                output.WritePropertyStringIf("Layout", deviceBuilder.LayoutItemPath);
-
-                output.WriteStartArray("Renderings");
-
-                foreach (var renderingBuilder in deviceBuilder.Renderings.Where(r => r.ParentRendering == null))
-                {
-                    WriteAsJson(output, deviceBuilder, renderingBuilder);
-                }
-
-                output.WriteEndArray();
-                output.WriteEndObject();
-            }
-
-            output.WriteEndArray();
-            output.WriteEndObject();
         }
 
         public static void WriteAsJson([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter> writeInner = null)
@@ -256,44 +224,6 @@ namespace Sitecore.Pathfinder.Languages.Json
 
             output.WriteEndObject();
 
-            output.WriteEndObject();
-        }
-
-        private static void WriteAsJson([NotNull] JsonTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
-        {
-            output.WriteStartObject();
-            output.WriteStartObject(renderingBuilder.Name);
-
-            output.WritePropertyStringIf("Placeholder", renderingBuilder.Placeholder);
-            output.WritePropertyStringIf("Cacheable", renderingBuilder.Cacheable);
-            output.WritePropertyStringIf("VaryByData", renderingBuilder.VaryByData);
-            output.WritePropertyStringIf("VaryByDevice", renderingBuilder.VaryByDevice);
-            output.WritePropertyStringIf("VaryByLogin", renderingBuilder.VaryByLogin);
-            output.WritePropertyStringIf("VaryByParameters", renderingBuilder.VaryByParameters);
-            output.WritePropertyStringIf("VaryByQueryString", renderingBuilder.VaryByQueryString);
-            output.WritePropertyStringIf("VaryByUser", renderingBuilder.VaryByUser);
-
-            foreach (var attribute in renderingBuilder.Attributes)
-            {
-                output.WritePropertyString(attribute.Key, attribute.Value);
-            }
-
-            output.WritePropertyStringIf("DataSource", renderingBuilder.DataSource);
-
-            var children = deviceBuilder.Renderings.Where(c => c.ParentRendering == renderingBuilder);
-            if (children.Any())
-            {
-                output.WriteStartArray("Renderings");
-
-                foreach (var child in children)
-                {
-                    WriteAsJson(output, deviceBuilder, child);
-                }
-
-                output.WriteEndArray();
-            }
-
-            output.WriteEndObject();
             output.WriteEndObject();
         }
     }

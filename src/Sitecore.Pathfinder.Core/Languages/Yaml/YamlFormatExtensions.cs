@@ -3,7 +3,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -70,29 +69,6 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             {
                 writeInner(writer, output.Indent);
             }
-        }
-
-        public static void WriteAsYaml([NotNull] this LayoutBuilder layoutBuilder, [NotNull] TextWriter writer)
-        {
-            var output = new YamlTextWriter(writer);
-
-            output.WriteStartElement("Layout");
-
-            foreach (var deviceBuilder in layoutBuilder.Devices)
-            {
-                output.WriteStartElement("Device");
-                output.WriteAttributeString("Name", deviceBuilder.DeviceName);
-                output.WriteAttributeStringIf("Layout", deviceBuilder.LayoutItemPath);
-
-                foreach (var renderingBuilder in deviceBuilder.Renderings.Where(r => r.ParentRendering == null))
-                {
-                    WriteAsYaml(output, deviceBuilder, renderingBuilder);
-                }
-
-                output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
         }
 
         public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
@@ -209,45 +185,6 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 }
 
                 output.WriteEndElement();
-            }
-
-            output.WriteEndElement();
-        }
-
-        private static void WriteAsYaml([NotNull] YamlTextWriter output, [NotNull] DeviceBuilder deviceBuilder, [NotNull] RenderingBuilder renderingBuilder)
-        {
-            if (!renderingBuilder.UnsafeName)
-            {
-                output.WriteStartElement(renderingBuilder.Name);
-            }
-            else
-            {
-                output.WriteStartElement("Rendering");
-                output.WriteAttributeString("RenderingName", renderingBuilder.Name);
-            }
-
-            output.WriteAttributeStringIf("Placeholder", renderingBuilder.Placeholder);
-            output.WriteAttributeStringIf("Cacheable", renderingBuilder.Cacheable);
-            output.WriteAttributeStringIf("VaryByData", renderingBuilder.VaryByData);
-            output.WriteAttributeStringIf("VaryByDevice", renderingBuilder.VaryByDevice);
-            output.WriteAttributeStringIf("VaryByLogin", renderingBuilder.VaryByLogin);
-            output.WriteAttributeStringIf("VaryByParameters", renderingBuilder.VaryByParameters);
-            output.WriteAttributeStringIf("VaryByQueryString", renderingBuilder.VaryByQueryString);
-            output.WriteAttributeStringIf("VaryByUser", renderingBuilder.VaryByUser);
-
-            foreach (var attribute in renderingBuilder.Attributes)
-            {
-                output.WriteAttributeString(attribute.Key, attribute.Value);
-            }
-
-            output.WriteAttributeStringIf("DataSource", renderingBuilder.DataSource);
-
-            foreach (var child in deviceBuilder.Renderings)
-            {
-                if (child.ParentRendering == renderingBuilder)
-                {
-                    WriteAsYaml(output, deviceBuilder, child);
-                }
             }
 
             output.WriteEndElement();

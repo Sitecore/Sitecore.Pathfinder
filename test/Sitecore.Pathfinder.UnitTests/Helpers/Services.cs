@@ -32,9 +32,6 @@ namespace Sitecore.Pathfinder.Helpers
         public IFileSystemService FileSystem { get; private set; }
 
         [NotNull]
-        public ILanguageService LanguageService { get; private set; }
-
-        [NotNull]
         public IParseService ParseService { get; private set; }
 
         [NotNull]
@@ -58,7 +55,6 @@ namespace Sitecore.Pathfinder.Helpers
             ConfigurationService = CompositionService.Resolve<IConfigurationService>();
             SnapshotService = CompositionService.Resolve<ISnapshotService>();
             CheckerService = CompositionService.Resolve<ICheckerService>();
-            LanguageService = CompositionService.Resolve<ILanguageService>();
 
             return this;
         }

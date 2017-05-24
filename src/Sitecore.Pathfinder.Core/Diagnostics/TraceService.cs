@@ -22,6 +22,9 @@ namespace Sitecore.Pathfinder.Diagnostics
     [Export(typeof(ITraceService)), Shared]
     public class TraceService : ITraceService
     {
+        [NotNull]
+        public static readonly ITraceService Empty = new EmptyTraceService();
+
         [ImportingConstructor]
         public TraceService([NotNull] IConfiguration configuration, [NotNull] IConsoleService console)
         {

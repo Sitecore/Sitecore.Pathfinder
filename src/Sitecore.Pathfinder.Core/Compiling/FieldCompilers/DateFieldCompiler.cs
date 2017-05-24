@@ -29,6 +29,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                 return string.Empty;
             }
 
+            if (value == "00010101T000000")
+            {
+                return value;
+            }
+
             // check if value is an ISO date
             if (value.FromIsoToDateTime() != DateTime.MinValue)
             {
@@ -38,7 +43,6 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             DateTime dateTime;
             if (!DateTime.TryParse(value, context.Culture, DateTimeStyles.None, out dateTime))
             {
-                context.Trace.TraceError(Msg.C1058, Texts.Date_field_must_contain_a_valid_date_value, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
                 return string.Empty;
             }
 

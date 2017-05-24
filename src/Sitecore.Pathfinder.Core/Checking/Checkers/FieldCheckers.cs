@@ -1,8 +1,7 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
 using System;
 using System.Collections.Generic;
 using System.Composition;
+using System.Globalization;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -10,6 +9,7 @@ using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
+using Version = Sitecore.Pathfinder.Projects.Items.Version;
 
 namespace Sitecore.Pathfinder.Checking.Checkers
 {
@@ -25,6 +25,16 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> DateCannotBeParsed([NotNull] ICheckerContext context)
+        {
+            DateTime dateTime;
+            return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Date", StringComparison.OrdinalIgnoreCase))
+                where !string.IsNullOrEmpty(field.Value) && field.Value != "00010101T000000" && field.Value.FromIsoToDateTime() == DateTime.MinValue
+                where !DateTime.TryParse(field.Value, context.Culture, DateTimeStyles.None, out dateTime)
+                select Warning(Msg.C1133, "Date cannot be parsed", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
+        }
+
+        [ItemNotNull, NotNull, Check]
         public IEnumerable<Diagnostic> DateIsNotValid([NotNull] ICheckerContext context)
         {
             return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Date", StringComparison.OrdinalIgnoreCase))
@@ -32,6 +42,16 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 let dateTime = field.Value.FromIsoToDateTime(DateTime.MaxValue)
                 where dateTime == DateTime.MaxValue
                 select Warning(Msg.C1066, "Date is not valid", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Date', but the value is not a valid date. Replace or remove the value.");
+        }
+
+        [ItemNotNull, NotNull, Check]
+        public IEnumerable<Diagnostic> DateTimeCannotBeParsed([NotNull] ICheckerContext context)
+        {
+            DateTime dateTime;
+            return from field in context.Project.Items.SelectMany(i => i.Fields).Where(f => string.Equals(f.TemplateField.Type, "Datetime", StringComparison.OrdinalIgnoreCase))
+                where !string.IsNullOrEmpty(field.Value) && field.Value != "00010101T000000" && field.Value.FromIsoToDateTime() == DateTime.MinValue
+                where !DateTime.TryParse(field.Value, context.Culture, DateTimeStyles.None, out dateTime)
+                select Warning(Msg.C1058, "Datetime cannot be parsed", TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), $"The field \"{field.FieldName}\" has a type of 'Datetime', but the value is not a valid date. Replace or remove the value.");
         }
 
         [ItemNotNull, NotNull, Check]
@@ -69,7 +89,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         yield return Warning(Msg.P1028, "Field is shared, but is specified in the language", field.SourceTextNode, field.FieldName);
                     }
 
-                    if (field.Version != Projects.Items.Version.Undefined)
+                    if (field.Version != Version.Undefined)
                     {
                         yield return Warning(Msg.P1029, "Field is shared, but has a version", field.SourceTextNode, field.FieldName);
                     }
@@ -81,7 +101,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         yield return Warning(Msg.P1030, "Field is unversioned, but no language is specified", field.SourceTextNode, field.FieldName);
                     }
 
-                    if (field.Version != Projects.Items.Version.Undefined)
+                    if (field.Version != Version.Undefined)
                     {
                         yield return Warning(Msg.P1031, "Field is unversioned, but has a version", field.SourceTextNode, field.FieldName);
                     }
@@ -93,7 +113,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         yield return Warning(Msg.P1032, "Field is versioned, but no language is specified", field.SourceTextNode, field.FieldName);
                     }
 
-                    if (field.Version == Projects.Items.Version.Undefined)
+                    if (field.Version == Version.Undefined)
                     {
                         yield return Warning(Msg.P1033, "Field is versioned, but no version is specified", field.SourceTextNode, field.FieldName);
                     }

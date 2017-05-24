@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public IEnumerable<IFieldCompiler> FieldCompilers { get; }
 
-        public ITraceService Trace { get; private set; }
+        public ITraceService Trace { get; private set; } = TraceService.Empty; 
 
         [NotNull]
         protected IConsoleService Console { get; }

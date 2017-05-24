@@ -16,11 +16,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
         }
 
-        public override bool CanCompile(IFieldCompileContext context, Field field)
-        {
-            var type = field.TemplateField.Type;
-            return string.Equals(type, "reference", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanCompile(IFieldCompileContext context, Field field) => string.Equals(field.TemplateField.Type, "reference", StringComparison.OrdinalIgnoreCase);
 
         public override string Compile(IFieldCompileContext context, Field field)
         {

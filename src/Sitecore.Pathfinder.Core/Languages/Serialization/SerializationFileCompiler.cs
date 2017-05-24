@@ -2,7 +2,6 @@
 
 using System.Composition;
 using System.Text;
-using Sitecore.Pathfinder.Compiling.Builders;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -38,7 +37,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             }
 
             var lines = textDocument.SourceFile.ReadAsLines();
-            var itemBuilder = context.Factory.ItemBuilder();
+            var itemBuilder = new ItemBuilder(context.Factory);
 
             ParseItem(context, textDocument, itemBuilder, lines);
 
@@ -64,7 +63,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         {
             var textNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, 0), string.Empty, string.Empty);
 
-            var fieldBuilder = context.Factory.FieldBuilder().With(itemBuilder, textNode);
+            var fieldBuilder = new FieldBuilder(context.Factory).With(itemBuilder, textNode);
             itemBuilder.Fields.Add(fieldBuilder);
 
             fieldBuilder.Language = languageVersionBuilder.Language;

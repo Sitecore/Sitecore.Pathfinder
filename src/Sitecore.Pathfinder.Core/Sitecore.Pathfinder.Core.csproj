@@ -24,6 +24,13 @@
 
   <ItemGroup>
     <Compile Remove="Configuration\FileContext.cs" />
+    <Compile Remove="Languages\ILanguage.cs" />
+    <Compile Remove="Languages\ILanguageService.cs" />
+    <Compile Remove="Languages\Json\JsonLanguage.cs" />
+    <Compile Remove="Languages\LanguageBase.cs" />
+    <Compile Remove="Languages\LanguageService.cs" />
+    <Compile Remove="Languages\Xml\XmlLanguage.cs" />
+    <Compile Remove="Languages\Yaml\YamlLanguage.cs" />
   </ItemGroup>
 
   <ItemGroup>

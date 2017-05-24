@@ -5,7 +5,6 @@ using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -16,10 +15,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
         }
 
-        public override bool CanCompile(IFieldCompileContext context, Field field)
-        {
-            return string.Equals(field.TemplateField.Type, "datetime", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanCompile(IFieldCompileContext context, Field field) => string.Equals(field.TemplateField.Type, "datetime", StringComparison.OrdinalIgnoreCase);
 
         public override string Compile(IFieldCompileContext context, Field field)
         {
@@ -41,13 +37,12 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
 
             DateTime dateTime;
-            if (!DateTime.TryParse(value, context.Culture, DateTimeStyles.None, out dateTime))
+            if (DateTime.TryParse(value, context.Culture, DateTimeStyles.None, out dateTime))
             {
-                context.Trace.TraceError(Msg.C1058, Texts.DateTime_field_must_contain_a_valid_date_time_value, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), value);
-                return string.Empty;
+                return dateTime.ToString(@"yyyyMMddTHHmmss") + "Z";
             }
 
-            return dateTime.ToString(@"yyyyMMddTHHmmss") + "Z";
+            return string.Empty;
         }
     }
 }
