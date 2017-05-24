@@ -13,6 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentat
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Console", "src\Sitecore.Pathfinder.Console\Sitecore.Pathfinder.Console.csproj", "{C73D309B-6D61-42BD-A5B1-661710F1CDC7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1} = {42808013-7A25-4C07-91FA-BE4F7AA8E0B1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Core", "src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj", "{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}"
 EndProject

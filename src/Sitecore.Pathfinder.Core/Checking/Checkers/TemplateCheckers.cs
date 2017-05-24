@@ -174,7 +174,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         {
             return from item in context.Project.Items
                 let parent = item.GetParent()
-                where parent != null && item.ItemName.Equals("__Standard Values") && item.Template.Uri.Guid != parent.Uri.Guid
+                where parent != null && item.Paths.IsStandardValuesHolder && item.Template.Uri.Guid != parent.Uri.Guid
                 select Error(Msg.C1122, "The Template ID of a Standard Values item should be match the ID of the parent item. To fix, moved the Standard Values item under the correct template", TraceHelper.GetTextNode(item), item.ItemName);
         }
 
@@ -198,7 +198,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         protected IEnumerable<Diagnostic> TemplateSectionShouldOnlyContainTemplates([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && item.ItemIdOrPath.IndexOf("Branches", StringComparison.Ordinal) < 0 && !item.ItemName.Equals("__Standard Values") && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template Folder") && !item.TemplateName.Equals("Node") && !item.TemplateName.Equals("Folder") && !item.TemplateName.Equals("Command Template")
+                where item.ItemIdOrPath.StartsWith("/sitecore/templates/") && item.ItemIdOrPath.IndexOf("Branches", StringComparison.Ordinal) < 0 && !item.Paths.IsStandardValuesHolder && !item.TemplateName.Equals("Template") && !item.TemplateName.Equals("Template section") && !item.TemplateName.Equals("Template field") && !item.TemplateName.Equals("Template Folder") && !item.TemplateName.Equals("Node") && !item.TemplateName.Equals("Folder") && !item.TemplateName.Equals("Command Template")
                 select Warning(Msg.C1125, "The '/sitecore/templates' section should only contain item with template 'Template', 'Template section', 'Template field', 'Template folder' or standard values items. To fix, move the item outside the '/sitecore/templates' section", TraceHelper.GetTextNode(item), item.TemplateName);
         }
 

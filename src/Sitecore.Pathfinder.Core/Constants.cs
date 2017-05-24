@@ -64,6 +64,7 @@ namespace Sitecore.Pathfinder
             public const string Culture = "culture";
 
             public const string Database = "database";
+
             public const string Databases = "databases";
 
             public const string DataFolderDirectory = "data-folder-directory";
@@ -108,6 +109,8 @@ namespace Sitecore.Pathfinder
 
             public const string SystemConfigFileName = "system:config";
 
+            public const string Tasks = "tasks";
+
             public const string ToolsDirectory = "system:toolspath";
 
             public const string UserName = "user-name";
@@ -115,8 +118,6 @@ namespace Sitecore.Pathfinder
             public const string Version = "version";
 
             public const string WebsiteDirectory = "website-directory";
-
-            public const string Tasks = "tasks";
 
             public static class BuildProject
             {
@@ -147,9 +148,9 @@ namespace Sitecore.Pathfinder
 
             public static class Extensions
             {
-                public const string Disabled = "extensions:disabled";
-
                 public const string Directory = "extensions:project-extensions-directory";
+
+                public const string Disabled = "extensions:disabled";
             }
 
             public static class Files
@@ -161,12 +162,15 @@ namespace Sitecore.Pathfinder
 
             public static class GenerateCode
             {
+                public const string Exclude = "generate-code:exclude";
+
+                public const string Extension = "generate-code:extension";
+
                 public const string Imports = "generate-code:imports";
 
-                public const string NameToken = "generate-code:name-replacement-token";
                 public const string Include = "generate-code:include";
-                public const string Exclude = "generate-code:exclude";
-                public const string Extension = "generate-code:extension";
+
+                public const string NameToken = "generate-code:name-replacement-token";
             }
 
             public static class GenerateFile
@@ -220,6 +224,8 @@ namespace Sitecore.Pathfinder
 
             public static class Output
             {
+                public const string CopyToDataFolderDirectory = "output:copy-to-data-folder-directory";
+
                 public const string Directory = "output:directory";
 
                 public const string Format = "output:format";
@@ -240,13 +246,10 @@ namespace Sitecore.Pathfinder
                     public const string FileName = "output:package:filename";
                 }
 
-                public static class Update
-                {
-                    public const string FileName = "output:update:filename";
-                }
-
                 public static class Unicorn
                 {
+                    public const string EmitMissingItems = "output:unicorn:emit-missing-items";
+
                     public const string ItemsDirectory = "output:unicorn:items-directory";
 
                     public const string MirrorItems = "output:unicorn:mirror-items-to-unicorn-physicalRootPath";
@@ -254,8 +257,11 @@ namespace Sitecore.Pathfinder
                     public const string MirrorItemsSourceDirectory = "output:unicorn:mirror-items-source-directory";
 
                     public const string UnicornRootPath = "output:unicorn:unicorn-physicalRootPath";
+                }
 
-                    public const string EmitMissingItems = "output:unicorn:emit-missing-items";
+                public static class Update
+                {
+                    public const string FileName = "output:update:filename";
                 }
             }
 
@@ -512,6 +518,12 @@ namespace Sitecore.Pathfinder
 
             public const string TemplatePathId = "/sitecore/templates/System/Templates/Template";
 
+            public const string ItemRenderingId = "{86776923-ECA5-4310-8DC0-AE65FE88D078}";
+            public const string MethodRenderingId = "{39587D7D-F06D-4CB4-A25E-AA7D847EDDD0}";
+            public const string UrlRenderingId = "{83E993C5-C0FC-4472-86A9-2F6CFED694E4}";
+            public const string WebControlId = "{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}";
+            public const string XmlControlId = "{B658CE99-894A-4CB1-936B-F23F17C63B5B}";
+            public const string XslRenderingId = "{F1F1D639-4F54-40C2-8BE0-81266B392CEB}";
             public const string ViewRenderingId = "{99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}";
 
             public static readonly Guid Alias = new Guid("{54BCFFB7-8F46-4948-AE74-DA5B6B5AFA86}");

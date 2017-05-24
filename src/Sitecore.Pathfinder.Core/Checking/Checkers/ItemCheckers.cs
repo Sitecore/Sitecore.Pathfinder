@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         public IEnumerable<Diagnostic> AvoidSpacesInItemNames([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
-                where item.ItemName.IndexOf(' ') >= 0 && item.ItemName != "__Standard Values"
+                where item.ItemName.IndexOf(' ') >= 0 && !item.Paths.IsStandardValuesHolder
                 select Warning(Msg.C1003, "Avoid spaces in item names. Use a display name instead", TraceHelper.GetTextNode(item.ItemNameProperty), item.ItemName);
         }
 

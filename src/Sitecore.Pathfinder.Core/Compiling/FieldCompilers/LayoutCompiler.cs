@@ -34,6 +34,31 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             "VaryByUser"
         };
 
+        [ItemNotNull, NotNull]
+        private static readonly string[] RenderingIdOrPaths =
+        {
+            Constants.Templates.LayoutId,
+            Constants.Templates.XmlLayout.ToString(),
+            Constants.Templates.ItemRenderingId,
+            Constants.Templates.MethodRenderingId,
+            Constants.Templates.SublayoutId,
+            Constants.Templates.UrlRenderingId,
+            Constants.Templates.ViewRenderingId,
+            Constants.Templates.WebControlId,
+            Constants.Templates.XmlControlId,
+            Constants.Templates.XslRenderingId,
+            "/sitecore/templates/System/Layout/Layout",
+            "/sitecore/templates/System/Layout/Xml layout",
+            "/sitecore/templates/System/Layout/Renderings/Item rendering",
+            "/sitecore/templates/System/Layout/Renderings/Method rendering",
+            "/sitecore/templates/System/Layout/Renderings/Sublayout",
+            "/sitecore/templates/System/Layout/Renderings/Url rendering",
+            "/sitecore/templates/System/Layout/Renderings/View rendering",
+            "/sitecore/templates/System/Layout/Renderings/Webcontrol",
+            "/sitecore/templates/System/Layout/Renderings/XmlControl",
+            "/sitecore/templates/System/Layout/Renderings/Xsl Rendering"
+        };
+
         public LayoutCompiler([NotNull] IFileSystemService fileSystem)
         {
             FileSystem = fileSystem;
@@ -218,6 +243,28 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             output.WriteEndElement();
         }
 
+        protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode layoutTextNode)
+        {
+            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => r.Database == context.Database).Select(r => context.Project.Indexes.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
+            renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(i => i.IsImport && i.Database == context.Database && !i.Paths.IsStandardValuesHolder && !i.Paths.IsBranch && RenderingIdOrPaths.Any(id => string.Equals(id, i.TemplateIdOrPath, StringComparison.OrdinalIgnoreCase))));
+
+            var devices = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
+            if (devices == null)
+            {
+                // silent
+                return;
+            }
+
+            output.WriteStartElement("r");
+
+            foreach (var deviceTextNode in devices.ChildNodes)
+            {
+                WriteDevice(context, output, renderingItems, deviceTextNode);
+            }
+
+            output.WriteEndElement();
+        }
+
         protected virtual void WritePlaceholder([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] ITextNode placeholderTextNode)
         {
             var placeholderName = placeholderTextNode.Key;
@@ -249,31 +296,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             }
         }
 
-        protected virtual void WriteLayout([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull] ITextNode layoutTextNode)
-        {
-            var databaseName = context.Database.DatabaseName;
-
-            var renderingItems = context.Project.ProjectItems.OfType<Rendering>().Where(r => string.Equals(r.RenderingItemUri.FileOrDatabaseName, databaseName, StringComparison.OrdinalIgnoreCase)).Select(r => context.Project.Indexes.FindQualifiedItem<Item>(r.RenderingItemUri)).ToList();
-            renderingItems.AddRange(context.Project.ProjectItems.OfType<Item>().Where(r => r.IsImport && string.Equals(r.DatabaseName, databaseName, StringComparison.OrdinalIgnoreCase) && (string.Equals(r.TemplateIdOrPath, "/sitecore/templates/System/Layout/Renderings/View rendering", StringComparison.OrdinalIgnoreCase) || string.Equals(r.TemplateIdOrPath, Constants.Templates.ViewRenderingId, StringComparison.OrdinalIgnoreCase))));
-
-            var devices = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
-            if (devices == null)
-            {
-                // silent
-                return;
-            }
-
-            output.WriteStartElement("r");
-
-            foreach (var deviceTextNode in devices.ChildNodes)
-            {
-                WriteDevice(context, output, renderingItems, deviceTextNode);
-            }
-
-            output.WriteEndElement();
-        }
-
-        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string placeholderName,  [NotNull] ITextNode renderingTextNode)
+        protected virtual void WriteRendering([NotNull] LayoutCompileContext context, [NotNull] XmlWriter output, [NotNull, ItemNotNull] IEnumerable<Item> renderingItems, [NotNull] string placeholderName, [NotNull] ITextNode renderingTextNode)
         {
             string renderingItemId;
 
@@ -421,11 +444,6 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
                             break;
                     }
-                }
-                else
-                {
-                    // todo: reenable this check
-                    // context.Trace.TraceWarning(Msg.C1040, Texts._1___Parameter___0___is_not_defined_in_the_parameters_template_, renderingTextNode, id + "." + attributeName);
                 }
 
                 if (value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))

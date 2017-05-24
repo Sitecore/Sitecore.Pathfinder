@@ -46,10 +46,10 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void GetTaskNames([NotNull] ITaskContext context, [ItemNotNull, NotNull] ICollection<string> taskNames, [NotNull] string taskName)
         {
-            if (taskName == "b" || taskName == "build-project")
+            if (taskName == "b" || taskName == "build")
             {
-                // use the tasks:build configuration 
-                taskName = context.Configuration.GetString(Constants.Configuration.Tasks + ":build");
+                // use the tasks:build-project configuration 
+                taskName = context.Configuration.GetString(Constants.Configuration.Tasks + ":build-project");
             }
 
             var taskNameList = taskName.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();

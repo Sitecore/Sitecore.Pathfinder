@@ -7,14 +7,19 @@
     "publisher": "",
     "version": "1.0.0",
 
+    // website
+    "host-name": "",
+    "website-directory": "",
+    "data-folder-directory": "",
+
     // list of files and directories to compile
     "files": {
-        "include": ["**/*"]
+        "include": [ "**/*" ]
     },
 
     // list of tasks to execute when building
     "tasks": {
-        "build": ["check-project", "clean-output", "write-exports", "publish-project", "show-status"]
+        "build-project": [ "check-project", "clean-output", "write-exports", "publish-project", "show-status" ]
     },
 
     // disabled checkers

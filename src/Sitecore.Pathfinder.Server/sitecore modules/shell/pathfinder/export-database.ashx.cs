@@ -53,14 +53,7 @@ namespace Sitecore.Pathfinder.shell.pathfinder
                             WriteItem(output, database, "/sitecore");
                             WriteItem(output, database, "/sitecore/content");
                             WriteItem(output, database, "/sitecore/content/Home");
-                            WriteItem(output, database, "/sitecore/layout");
-                            WriteItem(output, database, "/sitecore/layout/Controllers");
-                            WriteItems(output, database, "/sitecore/layout/devices");
-                            WriteItem(output, database, "/sitecore/layout/Layouts");
-                            WriteItem(output, database, "/sitecore/layout/Layouts/Sample Layout");
-                            WriteItem(output, database, "/sitecore/layout/Models");
-                            WriteItem(output, database, "/sitecore/layout/Renderings");
-                            WriteItem(output, database, "/sitecore/layout/Sublayouts");
+                            WriteItems(output, database, "/sitecore/layout", "/sitecore/layout/Simulators");
                             WriteItem(output, database, "/sitecore/media library");
                             WriteItem(output, database, "/sitecore/system");
                             WriteItems(output, database, "/sitecore/system/languages");

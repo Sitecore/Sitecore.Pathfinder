@@ -10,9 +10,61 @@
     <Item Id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" Template="{B6F7EEB4-E8D7-476F-8936-5ACE6A76F20B}" Path="/sitecore/layout/Devices/Feed" />
     <Item Id="{75CC5CE4-8979-4008-9D3C-806477D57619}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Layouts" />
     <Item Id="{14030E9F-CE92-49C6-AD87-7D49B50E42EA}" Template="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Path="/sitecore/layout/Layouts/Sample Layout" />
+    <Item Id="{6E14276A-FD7F-40EC-9880-4EA96135AE9D}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Layouts/System" />
+    <Item Id="{A57C19C2-8EE3-4DEC-AA39-0B8D522D59EB}" Template="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Path="/sitecore/layout/Layouts/System/Feed Delivery Layout" />
+    <Item Id="{728EBB00-AF93-4F78-8B43-9395087CB76F}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Layouts/System/FXM" />
+    <Item Id="{C72C238F-018E-469E-9440-3EDD7420A8C8}" Template="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Path="/sitecore/layout/Layouts/System/FXM/ExperienceEditor" />
+    <Item Id="{BE4C2E57-D07D-4982-A6CC-679133913C4F}" Template="{3A45A723-64EE-4919-9D41-02FD40FD1466}" Path="/sitecore/layout/Layouts/System/Simulated Device Layout" />
     <Item Id="{B87CD5F0-4E72-429D-90A3-B285F1D038CA}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Models" />
+    <Item Id="{1CE3B36C-9B0C-4EB5-A996-BFCB4EAA5287}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Placeholder Settings" />
+    <Item Id="{8AE1C245-A4FA-46AE-9B35-4FBC15F63169}" Template="{5C547D4E-7111-4995-95B0-6B561751BF2E}" Path="/sitecore/layout/Placeholder Settings/content" />
+    <Item Id="{809528B1-588A-42A7-93C1-41E73800100A}" Template="{5C547D4E-7111-4995-95B0-6B561751BF2E}" Path="/sitecore/layout/Placeholder Settings/webedit" />
     <Item Id="{32566F0E-7686-45F1-A12F-D7260BD78BC3}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Renderings" />
+    <Item Id="{1936B96E-DA1F-4A3A-8AAF-8C46268E2D84}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Renderings/Sample" />
+    <Item Id="{493B3A83-0FA7-4484-8FC9-4680991CF743}" Template="{F1F1D639-4F54-40C2-8BE0-81266B392CEB}" Path="/sitecore/layout/Renderings/Sample/Sample Rendering" />
+    <Item Id="{F4008F10-BBB2-4565-B652-467491361D5A}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Renderings/System" />
+    <Item Id="{E1AF4AA3-3B5D-4611-8C71-959AD261E5B7}" Template="{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}" Path="/sitecore/layout/Renderings/System/FieldRenderer" />
+    <Item Id="{CDD3F213-81BB-4770-8FEC-4E1DD65EAA66}" Template="{86776923-ECA5-4310-8DC0-AE65FE88D078}" Path="/sitecore/layout/Renderings/System/ItemRenderer" />
+    <Item Id="{B4A0FB13-9758-427C-A7EB-1A406C045192}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Renderings/System/WebEdit" />
+    <Item Id="{683331AD-FF41-442C-9CFE-9872C0A7150E}" Template="{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}" Path="/sitecore/layout/Renderings/System/WebEdit/WebEdit Content Editor" />
+    <Item Id="{054FE55F-E3FB-46C6-8CB0-948F368B6579}" Template="{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}" Path="/sitecore/layout/Renderings/System/WebEdit/WebEdit Ribbon" />
+    <Item Id="{0777B05D-6AC0-44BE-9605-052E0DB5993D}" Template="{F1F1D639-4F54-40C2-8BE0-81266B392CEB}" Path="/sitecore/layout/Renderings/System/WebEdit/Hidden Rendering" />
+    <Item Id="{03ADA6B9-D09F-4552-A1B0-E6AAF9C3FED9}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Renderings/System/Feeds" />
+    <Item Id="{86F838F5-7E87-45BB-876F-C021324AC8B0}" Template="{1DDE3F02-0BD7-4779-867A-DC578ADF91EA}" Path="/sitecore/layout/Renderings/System/Feeds/FeedRenderer" />
+    <Item Id="{0EC72EEF-4363-4D73-9B88-01ADDBC932B4}" Template="{7EE0975B-0698-493E-B3A2-0B2EF33D0522}" Path="/sitecore/layout/Renderings/Social MVC" />
+    <Item Id="{FC15F83F-F3D6-4A33-8FD1-A99B19ED081B}" Template="{7EE0975B-0698-493E-B3A2-0B2EF33D0522}" Path="/sitecore/layout/Renderings/Social MVC/Connector" />
+    <Item Id="{A58672D4-0B34-41B2-9CCF-5A48C275FD40}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Connector/Login with Facebook" />
+    <Item Id="{E49F6EF0-B94B-4927-8B0E-443468249D9B}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Connector/Login with Google" />
+    <Item Id="{22EDCC9B-BD25-442F-B685-4CFC8656F653}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Connector/Login with LinkedIn" />
+    <Item Id="{908BA80C-53C7-4607-99B9-04D28C340156}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Connector/Login with Twitter" />
+    <Item Id="{6601373B-C31A-43D7-8DD8-6429ACA38298}" Template="{7EE0975B-0698-493E-B3A2-0B2EF33D0522}" Path="/sitecore/layout/Renderings/Social MVC/Sharing" />
+    <Item Id="{927F51FD-6A7B-4B7E-B692-1B4A0989228F}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Sharing/Google Plus One Button" />
+    <Item Id="{F276B768-3573-43D9-8998-FAEE0973978D}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Sharing/Like Button" />
+    <Item Id="{20B952F9-99C0-48FA-9151-1B97758DF6C1}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Sharing/LinkedIn Share Button" />
+    <Item Id="{8874EAD7-0897-480D-9B26-644DC30D977C}" Template="{2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}" Path="/sitecore/layout/Renderings/Social MVC/Sharing/Tweet Button" />
     <Item Id="{EB443C0B-F923-409E-85F3-E7893C8C30C2}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/layout/Sublayouts" />
+    <Item Id="{F99DC233-E326-407E-A3A9-36956B5F5CA2}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer" />
+    <Item Id="{BDB71B4C-DDCA-4311-A29D-F23A7A29059D}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/GoalEditor" />
+    <Item Id="{845C7BB0-972A-49A0-922F-EE5B970923CE}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/GoalViewer" />
+    <Item Id="{5988E00C-8F68-4175-B68A-0D538A513EEB}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/OnsiteBehaviour" />
+    <Item Id="{9D6AD28E-1618-46A1-A6DB-9F759445EFC5}" Template="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/OnsiteBehaviour/Profiles" />
+    <Item Id="{E1D03F74-FC26-485C-A042-7828C665F21C}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/OnsiteBehaviour/Profiles/ProfileEditor" />
+    <Item Id="{9330F037-0541-47B3-9145-7BA2E6F6289A}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/OnsiteBehaviour/Profiles/ProfileViewer" />
+    <Item Id="{D25F687D-F5B8-4D74-944A-E8CDBF49AA21}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/ExperienceExplorer/UserViewer" />
+    <Item Id="{9EB73C4C-1AF7-47C7-85B8-93E08176D4D2}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Sample Datasource Sublayout" />
+    <Item Id="{CE4ADCFB-7990-4980-83FB-A00C1E3673DB}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Sample Inner Sublayout" />
+    <Item Id="{885B8314-7D8C-4CBB-8000-01421EA8F406}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Sample Sublayout" />
+    <Item Id="{7C3EBDE2-FE67-4B69-A819-057B3C681410}" Template="{3BAA73E5-6BA9-4462-BF72-C106F8801B11}" Path="/sitecore/layout/Sublayouts/Social" />
+    <Item Id="{E8E2CBDC-B86F-473A-9C34-1F6D145AA81D}" Template="{3BAA73E5-6BA9-4462-BF72-C106F8801B11}" Path="/sitecore/layout/Sublayouts/Social/Connector" />
+    <Item Id="{54C249A4-35C6-4058-B8E0-90168DCB9425}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Connector/Login with Facebook" />
+    <Item Id="{5FB707BA-6254-4074-98A2-DD822D7414A0}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Connector/Login with Google" />
+    <Item Id="{1D66D380-B975-4089-AEE4-8410ED2AF0E1}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Connector/Login with LinkedIn" />
+    <Item Id="{AD486F6B-AA44-49FE-8B66-8D4B63C0E477}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Connector/Login with Twitter" />
+    <Item Id="{EB40A2CF-04D1-42E0-B740-A18559BAC0C0}" Template="{3BAA73E5-6BA9-4462-BF72-C106F8801B11}" Path="/sitecore/layout/Sublayouts/Social/Sharing" />
+    <Item Id="{EA4C4DAA-20A2-4470-B287-B932B8718854}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Sharing/Google Plus One Button" />
+    <Item Id="{9DD96803-28BE-4225-ADCC-1B14D24F10C4}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Sharing/Like Button" />
+    <Item Id="{B41660C9-D68D-49D8-806B-644F0216A724}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Sharing/LinkedIn Share Button" />
+    <Item Id="{7BDBBF0C-FDEB-46EC-8E47-82B75EBB3A7B}" Template="{0A98E368-CDB9-4E1E-927C-8E0C24A003FB}" Path="/sitecore/layout/Sublayouts/Social/Sharing/Tweet Button" />
     <Item Id="{3D6658D8-A0BF-4E75-B3E2-D050FABCF4E1}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/media library" />
     <Item Id="{13D6D6C6-C50B-4BBD-B331-2B04F1A58F21}" Template="{E3E2D58C-DF95-4230-ADC9-279924CECE84}" Path="/sitecore/system" />
     <Item Id="{64C4F646-A3FA-4205-B98E-4DE2C609B60F}" Template="{239F9CF4-E5A0-44E0-B342-0F32CD4C6D8B}" Path="/sitecore/system/Languages" />

@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.zip" Link="files\Sitecore.Pathfinder.Server.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ResharperCodeContractNullability" Version="1.0.7" />
     <PackageReference Include="System.Composition" Version="1.0.31" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
@@ -217,9 +223,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="scconfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Sitecore.Pathfinder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

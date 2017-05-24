@@ -155,11 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\PublishToPathfinder.pubxml" />
-    <Content Include="Sitecore.Pathfinder.package" />
+    <Content Include="Sitecore.Pathfinder.Server.package" />
     <Content Include="sitecore modules\shell\pathfinder\export-database.ashx" />
-    <Content Include="Sitecore.Pathfinder.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Sitecore.Pathfinder.Server.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\include\Sitecore.Pathfinder\Sitecore.Pathfinder.config" />

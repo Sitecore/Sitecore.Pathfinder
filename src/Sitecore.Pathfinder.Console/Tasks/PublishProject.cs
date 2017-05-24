@@ -2,13 +2,11 @@
 
 using System.Collections.Generic;
 using System.Composition;
-using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -17,10 +15,9 @@ namespace Sitecore.Pathfinder.Tasks
     public class PublishProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public PublishProject([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem,  [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
+        public PublishProject([NotNull] ICompositionService compositionService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
         {
             CompositionService = compositionService;
-            FileSystem = fileSystem;
             ProjectEmitters = projectEmitters;
 
             Alias = "publish";
@@ -29,9 +26,6 @@ namespace Sitecore.Pathfinder.Tasks
 
         [NotNull]
         public ICompositionService CompositionService { get; }
-
-        [NotNull]
-        public IFileSystemService FileSystem { get; }
 
         [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
         public string Format { get; set; } = "package";
@@ -65,32 +59,6 @@ namespace Sitecore.Pathfinder.Tasks
                 projectEmitter.Emit(emitContext, project);
 
                 context.OutputFiles.AddRange(emitContext.OutputFiles);
-            }
-
-            CopyToWebsite(context);
-        }
-
-        protected virtual void CopyToWebsite([NotNull] IBuildContext context)
-        {
-            if (string.IsNullOrEmpty(context.DataFolderDirectory))
-            {
-                return;
-            }
-
-            var directory = Path.Combine(context.DataFolderDirectory, "pathfinder");
-
-            foreach (var outputFile in context.OutputFiles)
-            {
-                var destination = Path.Combine(directory, Path.GetFileName(outputFile.FileName));
-
-                try
-                {
-                    FileSystem.CopyIfNewer(outputFile.FileName, destination);
-                }
-                catch
-                {
-                    context.Trace.TraceError(Msg.E1000, "Could not copy package", outputFile.FileName + " => " + destination);
-                }
             }
         }
 
