@@ -118,25 +118,13 @@ namespace Sitecore.Pathfinder.IO
             CreateDirectory(directory);
         }
 
-        public virtual void DeleteDirectory(string directory)
-        {
-            FileHelper.DeleteDirectory(directory, true);
-        }
+        public virtual void DeleteDirectory(string directory) => FileHelper.DeleteDirectory(directory, true);
 
-        public virtual void DeleteFile(string fileName)
-        {
-            FileHelper.DeleteFile(fileName);
-        }
+        public virtual void DeleteFile(string fileName) => FileHelper.DeleteFile(fileName);
 
-        public virtual bool DirectoryExists(string directory)
-        {
-            return FileHelper.DirectoryExists(directory);
-        }
+        public virtual bool DirectoryExists(string directory) => FileHelper.DirectoryExists(directory);
 
-        public virtual bool FileExists(string fileName)
-        {
-            return FileHelper.FileExists(fileName);
-        }
+        public virtual bool FileExists(string fileName) => FileHelper.FileExists(fileName);
 
         public bool FileExistsInPath(string fileName)
         {
@@ -159,20 +147,11 @@ namespace Sitecore.Pathfinder.IO
             return false;
         }
 
-        public virtual IEnumerable<string> GetDirectories(string directory)
-        {
-            return FileHelper.GetDirectories(directory).Select(d => d.FullName).ToArray();
-        }
+        public virtual IEnumerable<string> GetDirectories(string directory) => FileHelper.GetDirectories(directory).Select(d => d.FullName).ToArray();
 
-        public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
-        {
-            return FileHelper.GetFiles(directory, "*", searchOptions).Select(f => f.FullName).ToArray();
-        }
+        public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => FileHelper.GetFiles(directory, "*", searchOptions).Select(f => f.FullName).ToArray();
 
-        public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly)
-        {
-            return FileHelper.GetFiles(directory, pattern, searchOptions).Select(d => d.FullName).ToArray();
-        }
+        public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => FileHelper.GetFiles(directory, pattern, searchOptions).Select(d => d.FullName).ToArray();
 
         public virtual DateTime GetLastWriteTimeUtc(string sourceFileName)
         {
@@ -218,15 +197,9 @@ namespace Sitecore.Pathfinder.IO
             proc.WaitForExit();
         }
 
-        public Stream OpenRead(string fileName)
-        {
-            return new FileStream(fileName, FileMode.Open, FileAccess.Read);
-        }
+        public Stream OpenRead(string fileName) => new FileStream(fileName, FileMode.Open, FileAccess.Read);
 
-        public StreamReader OpenStreamReader(string fileName)
-        {
-            return new StreamReader(new FileStream(fileName, FileMode.Open));
-        }
+        public StreamReader OpenStreamReader(string fileName) => new StreamReader(new FileStream(fileName, FileMode.Open));
 
         public StreamWriter OpenStreamWriter(string fileName)
         {
@@ -240,15 +213,9 @@ namespace Sitecore.Pathfinder.IO
             return new FileStream(fileName, FileMode.Create);
         }
 
-        public virtual string[] ReadAllLines(string fileName)
-        {
-            return FileHelper.ReadAllLines(fileName);
-        }
+        public virtual string[] ReadAllLines(string fileName) => FileHelper.ReadAllLines(fileName);
 
-        public virtual string ReadAllText(string fileName)
-        {
-            return FileHelper.ReadAllText(fileName);
-        }
+        public virtual string ReadAllText(string fileName) => FileHelper.ReadAllText(fileName);
 
         public XDocument ReadXml(string fileName, LoadOptions loadOptions = LoadOptions.None)
         {
@@ -256,10 +223,7 @@ namespace Sitecore.Pathfinder.IO
             return XDocument.Load(fileInfo.OpenRead(), loadOptions);
         }
 
-        public void Rename(string oldFileName, string newFileName)
-        {
-            FileHelper.MoveFile(oldFileName, newFileName);
-        }
+        public void Rename(string oldFileName, string newFileName) => FileHelper.MoveFile(oldFileName, newFileName);
 
         public void Unzip(string zipFileName, string destinationDirectory)
         {
@@ -288,20 +252,11 @@ namespace Sitecore.Pathfinder.IO
             }
         }
 
-        public virtual void WriteAllBytes(string fileName, byte[] bytes)
-        {
-            FileHelper.WriteAllBytes(fileName, bytes);
-        }
+        public virtual void WriteAllBytes(string fileName, byte[] bytes) => FileHelper.WriteAllBytes(fileName, bytes);
 
-        public virtual void WriteAllText(string fileName, string contents)
-        {
-            FileHelper.WriteAllText(fileName, contents, Encoding.UTF8);
-        }
+        public virtual void WriteAllText(string fileName, string contents) => FileHelper.WriteAllText(fileName, contents, Encoding.UTF8);
 
-        public virtual void WriteAllText(string fileName, string contents, Encoding encoding)
-        {
-            FileHelper.WriteAllText(fileName, contents, encoding);
-        }
+        public virtual void WriteAllText(string fileName, string contents, Encoding encoding) => FileHelper.WriteAllText(fileName, contents, encoding);
 
         public virtual void XCopy(string sourceDirectory, string destinationDirectory)
         {

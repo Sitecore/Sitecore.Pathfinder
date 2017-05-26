@@ -8,19 +8,10 @@ namespace Sitecore.Pathfinder.Extensions
     public static class GuidExtensions
     {
         [NotNull]
-        public static string Format(this Guid guid)
-        {
-            return guid.ToString("B").ToUpperInvariant();
-        }
+        public static string Format(this Guid guid) => guid.ToString("B").ToUpperInvariant();
 
-        public static bool IsGuid([NotNull] this string s)
-        {
-            Guid g;
-            return Guid.TryParse(s, out g);
-        }
-        public static bool IsGuidOrSoftGuid([NotNull] this string s)
-        {
-            return s.StartsWith("{") && s.EndsWith("}");
-        }
+        public static bool IsGuid([NotNull] this string s) => Guid.TryParse(s, out var g);
+
+        public static bool IsGuidOrSoftGuid([NotNull] this string s) => s.StartsWith("{") && s.EndsWith("}");
     }
 }

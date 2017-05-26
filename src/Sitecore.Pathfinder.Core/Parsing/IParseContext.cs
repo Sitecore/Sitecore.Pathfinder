@@ -4,7 +4,6 @@ using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -35,9 +34,6 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         string ItemPath { get; }
-
-        [NotNull]
-        IPipelineService Pipelines { get; }
 
         [NotNull]
         IProject Project { get; }

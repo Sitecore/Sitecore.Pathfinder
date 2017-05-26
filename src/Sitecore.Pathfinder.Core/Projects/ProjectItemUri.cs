@@ -61,24 +61,12 @@ namespace Sitecore.Pathfinder.Projects
             }
         }
 
-        public static bool operator ==([CanBeNull] ProjectItemUri left, [CanBeNull] ProjectItemUri right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==([CanBeNull] ProjectItemUri left, [CanBeNull] ProjectItemUri right) => Equals(left, right);
 
-        public static bool operator !=([CanBeNull] ProjectItemUri left, [CanBeNull] ProjectItemUri right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=([CanBeNull] ProjectItemUri left, [CanBeNull] ProjectItemUri right) => !Equals(left, right);
 
-        public override string ToString()
-        {
-            return $"{FileOrDatabaseName}/{Guid.Format()}";
-        }
+        public override string ToString() => $"{FileOrDatabaseName}/{Guid.Format()}";
 
-        private bool Equals([NotNull] IProjectItemUri other)
-        {
-            return Guid == other.Guid && string.Equals(FileOrDatabaseName, other.FileOrDatabaseName, StringComparison.OrdinalIgnoreCase);
-        }
+        private bool Equals([NotNull] IProjectItemUri other) => Guid == other.Guid && string.Equals(FileOrDatabaseName, other.FileOrDatabaseName, StringComparison.OrdinalIgnoreCase);
     }
 }

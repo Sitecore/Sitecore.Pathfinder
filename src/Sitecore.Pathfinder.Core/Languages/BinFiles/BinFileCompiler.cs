@@ -1,10 +1,9 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Composition;
 using System.Runtime.Loader;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles.Pipelines;
@@ -15,14 +14,16 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
     [Export(typeof(ICompiler)), Shared]
     public class BinFileCompiler : CompilerBase
     {
-        public BinFileCompiler() : base(1000)
+        [ImportingConstructor]
+        public BinFileCompiler([NotNull] IPipelineService pipelines) : base(1000)
         {
+            Pipelines = pipelines;
         }
 
-        public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
-        {
-            return projectItem is BinFile;
-        }
+        [NotNull]
+        protected IPipelineService Pipelines { get; }
+
+        public override bool CanCompile(ICompileContext context, IProjectItem projectItem) => projectItem is BinFile;
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
@@ -49,7 +50,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
                 foreach (var type in assembly.GetExportedTypes())
                 {
-                    context.Pipelines.Resolve<BinFileCompilerPipeline>().Execute(context, binFile, type);
+                    Pipelines.Resolve<BinFileCompilerPipeline>().Execute(context, binFile, type);
                 }
             }
             catch (Exception ex)

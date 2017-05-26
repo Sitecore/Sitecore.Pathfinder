@@ -7,12 +7,7 @@ namespace Sitecore.Pathfinder.Projects
 {
     public class ProjectContext
     {
-        public ProjectContext()
-        {
-            Language = Language.Empty;
-        }
-
         [NotNull]
-        public Language Language { get; set; }
+        public Language Language { get; set; } = Language.Empty;
     }
 }

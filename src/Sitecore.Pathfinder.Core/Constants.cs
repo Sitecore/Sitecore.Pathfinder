@@ -59,8 +59,6 @@ namespace Sitecore.Pathfinder
 
             public const string CommandLineConfig = "config";
 
-            public const string CopyPackage = "copy-package";
-
             public const string Culture = "culture";
 
             public const string Database = "database";
@@ -68,8 +66,6 @@ namespace Sitecore.Pathfinder
             public const string Databases = "databases";
 
             public const string DataFolderDirectory = "data-folder-directory";
-
-            public const string Debug = "debug";
 
             public const string Description = "description";
 
@@ -82,8 +78,6 @@ namespace Sitecore.Pathfinder
             public const string Name = "name";
 
             public const string NugetPackageRootDirectory = "system:nuget-package-root-directory";
-
-            public const string NugetRepositories = "nuget-repositories";
 
             public const string Password = "password";
 
@@ -101,11 +95,7 @@ namespace Sitecore.Pathfinder
 
             public const string References = "references";
 
-            public const string Run = "run";
-
             public const string SearchAndReplaceTokens = "search-and-replace-tokens";
-
-            public const string StandardTemplateFields = "standard-template-fields";
 
             public const string SystemConfigFileName = "system:config";
 
@@ -180,23 +170,7 @@ namespace Sitecore.Pathfinder
 
             public static class InstallPackage
             {
-                public const string AddProjectDirectoriesAsFeeds = "install-package:add-project-directories-as-feeds";
-
-                public const string CheckBinFileSizeAndTimestamp = "install-package:check-bin-file-size-and-timestamp";
-
-                public const string CheckBinFileVersion = "install-package:check-bin-file-version";
-
-                public const string DeleteProjectItems = "install-package:delete-project-items";
-
-                public const string InstallUrl = "install-package:install-url";
-
-                public const string MarkItemsWithPathfinderProjectUniqueId = "install-package:mark-items-with-pathfinder-project-unique-id";
-
                 public const string ShowDiagnostics = "install-package:show-diagnostics";
-
-                public const string ThreeWayMerge = "install-package:three-way-merge";
-
-                public const string ThreeWayMergeOverwriteDatabase = "install-package:three-way-merge-overwrite-database";
             }
 
             public static class Items

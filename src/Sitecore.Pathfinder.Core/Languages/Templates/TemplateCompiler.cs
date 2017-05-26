@@ -8,6 +8,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
+using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
 
@@ -35,6 +36,15 @@ namespace Sitecore.Pathfinder.Languages.Templates
         {
             var item = projectItem as Item;
             Assert.Cast(item, nameof(item));
+
+            var standardTemplate = item.Database.FindQualifiedItem<Template>(Constants.Templates.StandardTemplateId);
+            if (standardTemplate == null)
+            {
+                context.Trace.TraceWarning(Msg.C1135, "Standard Template not found - are you missing a reference?");
+                return;
+            }
+
+            var standardFields = standardTemplate.GetAllFields().ToArray();
 
             var templateIdOrPathTextNode = item.GetTextNodes().Select(n => n.GetAttribute("Template")).FirstOrDefault(t => t != null);
             if (templateIdOrPathTextNode == null)
@@ -81,7 +91,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                     var childNode = field.SourceTextNode;
 
                     // ignore standard fields
-                    if (item.Project.Options.StandardTemplateFields.Contains(field.FieldName, StringComparer.OrdinalIgnoreCase))
+                    if (standardFields.Any(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase)))
                     {
                         continue;
                     }

@@ -214,16 +214,10 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string NormalizeFilePath([NotNull] string filePath)
-        {
-            return filePath.Replace("/", "\\").TrimEnd('\\');
-        }
+        public static string NormalizeFilePath([NotNull] string filePath) => filePath.Replace("/", "\\").TrimEnd('\\');
 
         [NotNull]
-        public static string NormalizeItemPath([NotNull] string filePath)
-        {
-            return filePath.Replace("\\", "/").TrimEnd('/');
-        }
+        public static string NormalizeItemPath([NotNull] string filePath) => filePath.Replace("\\", "/").TrimEnd('/');
 
         /// <summary> Replaces the beginning of a file name with the specified destination directory. End slashes are removed.</summary>
         [NotNull]

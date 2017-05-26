@@ -5,19 +5,14 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects
 {
+    // ReSharper disable once InconsistentNaming
     public class ID
     {
         private readonly Guid _guid;
 
-        public ID(Guid guid)
-        {
-            _guid = guid;
-        }
+        public ID(Guid guid) => _guid = guid;
 
-        public ID([NotNull] string id)
-        {
-            Guid.TryParse(id, out _guid);
-        }
+        public ID([NotNull] string id) => Guid.TryParse(id, out _guid);
 
         public override bool Equals([CanBeNull] object obj)
         {
@@ -37,34 +32,16 @@ namespace Sitecore.Pathfinder.Projects
             return Equals((ID)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return _guid.GetHashCode();
-        }
+        public override int GetHashCode() => _guid.GetHashCode();
 
-        public static bool operator ==([CanBeNull] ID left, [CanBeNull] ID right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==([CanBeNull] ID left, [CanBeNull] ID right) => Equals(left, right);
 
-        public static bool operator !=([CanBeNull] ID left, [CanBeNull] ID right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=([CanBeNull] ID left, [CanBeNull] ID right) => !Equals(left, right);
 
-        public Guid ToGuid()
-        {
-            return _guid;
-        }
+        public Guid ToGuid() => _guid;
 
-        public override string ToString()
-        {
-            return _guid.ToString("B").ToUpperInvariant();
-        }
+        public override string ToString() => _guid.ToString("B").ToUpperInvariant();
 
-        protected bool Equals([NotNull] ID other)
-        {
-            return _guid.Equals(other._guid);
-        }
+        protected bool Equals([NotNull] ID other) => _guid.Equals(other._guid);
     }
 }
