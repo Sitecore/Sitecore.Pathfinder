@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
 {
-    public class XmlInnerTextNode : ITextNode, IMutableTextNode
+    public class XmlInnerTextNode : ITextNode
     {
         [NotNull]
         private static readonly Regex RemoveNamespaces = new Regex("\\sxmlns[^\"]+\"[^\"]+\"", RegexOptions.Compiled);
@@ -41,46 +41,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
         public string Value => _value ?? (_value = RemoveNamespaces.Replace(string.Join(string.Empty, _element.Nodes().Select(n => n.ToString(SaveOptions.OmitDuplicateNamespaces)).ToArray()).Trim(), string.Empty));
 
-        ICollection<ITextNode> IMutableTextNode.AttributeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
-
-        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection { get; } = Constants.EmptyReadOnlyTextNodeCollection;
-
-        public ITextNode GetAttribute(string attributeName)
-        {
-            return null;
-        }
-
-        public string GetAttributeValue(string attributeName, string defaultValue = "")
-        {
-            return string.Empty;
-        }
-
-        public ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            return null;
-        }
-
-        public bool HasAttribute(string attributeName)
-        {
-            return false;
-        }
-
-        public ITextNode GetInnerTextNode()
-        {
-            return null;
-        }
-
-        bool IMutableTextNode.SetKey(string newKey)
-        {
-            return false;
-        }
-
-        bool IMutableTextNode.SetValue(string newValue)
-        {
-            _value = newValue;
-            _element.Value = newValue;
-
-            return true;
-        }
+        public ITextNode Inner => null;
     }
 }

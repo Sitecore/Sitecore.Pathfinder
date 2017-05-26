@@ -1,7 +1,5 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -9,10 +7,10 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
 {
-    public class JsonTextNode : TextNode, IMutableTextNode
+    public class JsonTextNode : TextNode
     {
         [NotNull, ItemCanBeNull]
-        private JToken _jtoken;
+        private readonly JToken _jtoken;
 
         public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
         {
@@ -29,24 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             _jtoken = jproperty;
         }
 
-        ICollection<ITextNode> IMutableTextNode.AttributeCollection => (IList<ITextNode>)Attributes;
-
-        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)ChildNodes;
-
-        public override ITextNode GetInnerTextNode()
-        {
-            return new JsonInnerTextNode(this, _jtoken);
-        }
-
-        public override ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            return this; // ChildNodes.FirstOrDefault(n => n.Key == name);
-        }
-
-        public override ITextNode GetAttribute(string attributeName)
-        {
-            return Attributes.FirstOrDefault(a => a.Key == attributeName);
-        }
+        public override ITextNode Inner => new JsonInnerTextNode(this, _jtoken);
 
         private static TextSpan GetTextSpan([NotNull] IJsonLineInfo lineInfo)
         {
@@ -62,45 +43,6 @@ namespace Sitecore.Pathfinder.Languages.Json
             }
 
             return new TextSpan(lineInfo.LineNumber, lineInfo.LinePosition + 1, lineLength);
-        }
-
-        bool IMutableTextNode.SetKey(string newKey)
-        {
-            var property = _jtoken as JProperty;
-            if (property != null)
-            {
-                var newProperty = new JProperty(newKey, property.Value);
-                property.Replace(newProperty);
-                _jtoken = newProperty;
-                return true;
-            }
-
-            var jobject = _jtoken as JObject;
-            if (jobject != null)
-            {
-                var prop = jobject.Parent as JProperty;
-                if (prop != null)
-                {
-                    var newProperty = new JProperty(newKey, jobject);
-                    prop.Replace(newProperty);
-                    _jtoken = newProperty;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        bool IMutableTextNode.SetValue(string newValue)
-        {
-            var property = _jtoken as JProperty;
-            if (property != null)
-            {
-                property.Value = newValue;
-                return true;
-            }
-
-            return false;
         }
     }
 }

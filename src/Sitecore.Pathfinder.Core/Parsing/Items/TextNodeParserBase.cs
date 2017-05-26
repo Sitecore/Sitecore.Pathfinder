@@ -2,6 +2,7 @@
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items

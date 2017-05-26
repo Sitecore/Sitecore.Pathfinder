@@ -2,6 +2,7 @@
 
 using System.Composition;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;

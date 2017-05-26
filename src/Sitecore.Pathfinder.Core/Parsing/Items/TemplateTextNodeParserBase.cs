@@ -72,13 +72,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.StandardValuesItem = standardValuesItem;
 
             // parse fields and sections
-            var sections = textNode.GetSnapshotLanguageSpecificChildNode("Sections");
-            if (sections != null)
+            foreach (var sectionTreeNode in textNode.ChildNodes)
             {
-                foreach (var sectionTreeNode in sections.ChildNodes)
-                {
-                    ParseSection(context, template, sectionTreeNode);
-                }
+                ParseSection(context, template, sectionTreeNode);
             }
 
             Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
@@ -167,14 +163,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             templateSection.IconProperty.Parse(templateSectionTextNode);
 
-            var fieldsTextNode = templateSectionTextNode.GetSnapshotLanguageSpecificChildNode("Fields");
-            if (fieldsTextNode == null)
-            {
-                return;
-            }
-
             var nextSortOrder = 0;
-            foreach (var fieldTextNode in fieldsTextNode.ChildNodes)
+            foreach (var fieldTextNode in templateSectionTextNode.ChildNodes)
             {
                 ParseField(context, template, templateSection, fieldTextNode, ref nextSortOrder);
             }

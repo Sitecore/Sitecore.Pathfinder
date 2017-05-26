@@ -33,22 +33,6 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string Value { get; protected set; }
 
-        public virtual ITextNode GetAttribute(string attributeName) => Attributes.FirstOrDefault(a => a.Key == attributeName);
-
-        public virtual string GetAttributeValue(string attributeName, string defaultValue = "")
-        {
-            var value = GetAttribute(attributeName)?.Value;
-            return !string.IsNullOrEmpty(value) ? value : defaultValue;
-        }
-
-        public virtual ITextNode GetInnerTextNode() => null;
-
-        public virtual ITextNode GetSnapshotLanguageSpecificChildNode(string name)
-        {
-            // overwritten in JsonTextNode to find the appropriate text node
-            return this;
-        }
-
-        public bool HasAttribute(string attributeName) => GetAttribute(attributeName) != null;
+        public virtual ITextNode Inner => null;
     }
 }
