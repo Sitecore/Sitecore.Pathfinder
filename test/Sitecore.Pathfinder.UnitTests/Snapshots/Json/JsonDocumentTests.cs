@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Json;
 
 namespace Sitecore.Pathfinder.Snapshots.Json
@@ -23,7 +24,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
             var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
 
-            var fields = root.GetSnapshotLanguageSpecificChildNode("Fields");
+            var fields = root;
             Assert.IsNotNull(fields);
 
             var field = fields.ChildNodes.FirstOrDefault();

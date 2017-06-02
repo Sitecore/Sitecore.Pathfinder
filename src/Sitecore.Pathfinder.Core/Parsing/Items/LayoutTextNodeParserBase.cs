@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -40,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             // todo: set template field
 
-            var innerTextNode = textNode.GetInnerTextNode();
+            var innerTextNode = textNode.Inner;
             if (innerTextNode != null)
             {
                 // use the inner value but the outer text node
@@ -62,13 +63,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             layoutProperty.Parse(deviceTextNode);
             references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty));
 
-            var renderingsTextNode = deviceTextNode.GetSnapshotLanguageSpecificChildNode("Renderings");
-            if (renderingsTextNode == null)
-            {
-                return;
-            }
-
-            foreach (var renderingTextNode in renderingsTextNode.ChildNodes)
+            foreach (var renderingTextNode in deviceTextNode.ChildNodes)
             {
                 ParseRenderingReferences(context, references, projectItem, renderingTextNode);
             }
@@ -79,13 +74,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var result = context.ParseContext.ReferenceParser.ParseReferences(projectItem, layoutTextNode).ToList();
 
-            var devicesTextNode = layoutTextNode.GetSnapshotLanguageSpecificChildNode("Devices");
-            if (devicesTextNode == null)
-            {
-                return result;
-            }
-
-            foreach (var deviceTextNode in devicesTextNode.ChildNodes)
+            foreach (var deviceTextNode in layoutTextNode.ChildNodes)
             {
                 ParseDeviceReferences(context, result, projectItem, deviceTextNode);
             }

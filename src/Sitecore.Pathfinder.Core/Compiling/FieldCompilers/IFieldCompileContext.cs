@@ -3,21 +3,13 @@
 using System.Collections.Generic;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
     public interface IFieldCompileContext
     {
-        [NotNull]
-        ICompositionService CompositionService { get; }
-
-        [NotNull]
-        IConfiguration Configuration { get; }
-
         [NotNull]
         CultureInfo Culture { get; }
 

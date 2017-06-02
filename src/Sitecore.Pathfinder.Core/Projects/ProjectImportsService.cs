@@ -206,24 +206,28 @@ namespace Sitecore.Pathfinder.Projects
         protected virtual void ImportReferencesFromNodeModulesDirectory([NotNull] IProject project)
         {
             var nodeModulesDirectory = Path.Combine(project.ProjectDirectory, "node_modules");
-            if (FileSystem.DirectoryExists(nodeModulesDirectory))
+            if (!FileSystem.DirectoryExists(nodeModulesDirectory))
             {
-                foreach (var fileName in Directory.GetFiles(nodeModulesDirectory, "project.exports.xml", SearchOption.AllDirectories))
-                {
-                    ImportReferencesFromFile(project, fileName);
-                }
+                return;
+            }
+
+            foreach (var fileName in Directory.GetFiles(nodeModulesDirectory, "project.exports.xml", SearchOption.AllDirectories))
+            {
+                ImportReferencesFromFile(project, fileName);
             }
         }
 
         protected virtual void ImportReferencesFromPackagesDirectory([NotNull] IProject project)
         {
             var packagesDirectory = Path.Combine(project.ProjectDirectory, "packages");
-            if (FileSystem.DirectoryExists(packagesDirectory))
+            if (!FileSystem.DirectoryExists(packagesDirectory))
             {
-                foreach (var fileName in Directory.GetFiles(packagesDirectory, "project.exports.xml", SearchOption.AllDirectories))
-                {
-                    ImportReferencesFromFile(project, fileName);
-                }
+                return;
+            }
+
+            foreach (var fileName in Directory.GetFiles(packagesDirectory, "project.exports.xml", SearchOption.AllDirectories))
+            {
+                ImportReferencesFromFile(project, fileName);
             }
         }
     }

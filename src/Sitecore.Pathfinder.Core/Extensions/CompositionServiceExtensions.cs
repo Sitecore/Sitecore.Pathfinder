@@ -8,9 +8,6 @@ namespace Sitecore.Pathfinder.Extensions
     public static class CompositionServiceExtensions
     {
         [NotNull]
-        public static T New<T>([NotNull] this ExportFactory<T> factory) where T : class
-        {
-            return factory.CreateExport().Value;
-        }
+        public static T New<T>([NotNull] this ExportFactory<T> factory) where T : class => factory.CreateExport().Value;
     }
 }

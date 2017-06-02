@@ -1,7 +1,6 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -9,6 +8,9 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class TextNodeExtensions
     {
+        [CanBeNull]
+        public static ITextNode GetAttribute([NotNull] this ITextNode textNode, [NotNull] string attributeName) => textNode.Attributes.FirstOrDefault(a => a.Key == attributeName);
+
         public static bool GetAttributeBool([NotNull] this ITextNode textNode, [NotNull] string attributeName, bool defaultValue = false)
         {
             if (!textNode.HasAttribute(attributeName))
@@ -18,6 +20,20 @@ namespace Sitecore.Pathfinder.Extensions
 
             var value = textNode.GetAttributeValue(attributeName);
             return string.Equals(value, "true", StringComparison.OrdinalIgnoreCase);
+        }
+
+
+        [NotNull]
+        public static string GetAttributeValue([NotNull] this ITextNode textNode, [NotNull] string attributeName, [NotNull] string defaultValue = "")
+        {
+            var attribute = textNode.GetAttribute(attributeName);
+            if (attribute == null)
+            {
+                return defaultValue;
+            }
+
+            var value = attribute.Value;
+            return !string.IsNullOrEmpty(value) ? value : defaultValue;
         }
 
         [ItemNotNull, NotNull]
@@ -33,5 +49,7 @@ namespace Sitecore.Pathfinder.Extensions
                 yield return textNode;
             }
         }
+
+        public static bool HasAttribute([NotNull] this ITextNode textNode, [NotNull] string attributeName) => textNode.GetAttribute(attributeName) != null;
     }
 }

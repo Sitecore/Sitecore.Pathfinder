@@ -6,10 +6,10 @@ using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
-    public class AttributeNameTextNode : ITextNode, IMutableTextNode
+    public class AttributeNameTextNode : ITextNode
     {
         [NotNull]
-        private string _key;
+        private readonly string _key;
 
         public AttributeNameTextNode([NotNull] ITextNode textNode)
         {
@@ -32,36 +32,6 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected ITextNode TextNode { get; }
 
-        ICollection<ITextNode> IMutableTextNode.AttributeCollection => (IList<ITextNode>)TextNode.Attributes;
-
-        ICollection<ITextNode> IMutableTextNode.ChildNodeCollection => (IList<ITextNode>)TextNode.ChildNodes;
-
-        public ITextNode GetAttribute(string attributeName) => TextNode.GetAttribute(attributeName);
-
-        public string GetAttributeValue(string attributeName, string defaultValue = "") => TextNode.GetAttributeValue(attributeName, defaultValue);
-
-        public ITextNode GetInnerTextNode() => null;
-
-        public ITextNode GetSnapshotLanguageSpecificChildNode(string name) => null;
-
-        public bool HasAttribute(string attributeName) => GetAttribute(attributeName) != null;
-
-        bool IMutableTextNode.SetKey(string newKey)
-        {
-            var mutableTextNode = TextNode as IMutableTextNode;
-            Assert.IsNotNull(mutableTextNode, "TextNode must be mutable");
-
-            _key = newKey.UnescapeXmlElementName();
-            return mutableTextNode.SetKey(newKey);
-        }
-
-        bool IMutableTextNode.SetValue(string newValue)
-        {
-            var mutableTextNode = TextNode as IMutableTextNode;
-            Assert.IsNotNull(mutableTextNode, "TextNode must be mutable");
-
-            _key = newValue.UnescapeXmlElementName();
-            return mutableTextNode.SetKey(newValue);
-        }
+        public ITextNode Inner => null;
     }
 }

@@ -9,8 +9,6 @@ using Newtonsoft.Json;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel.Json;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.Extensions
 {

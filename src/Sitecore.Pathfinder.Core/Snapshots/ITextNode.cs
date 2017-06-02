@@ -1,6 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -13,6 +11,9 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull, ItemNotNull]
         IEnumerable<ITextNode> ChildNodes { get; }
 
+        [CanBeNull]
+        ITextNode Inner { get; }
+
         [NotNull]
         string Key { get; }
 
@@ -23,19 +24,5 @@ namespace Sitecore.Pathfinder.Snapshots
 
         [NotNull]
         string Value { get; }
-
-        [CanBeNull]
-        ITextNode GetAttribute([NotNull] string attributeName);
-
-        [NotNull]
-        string GetAttributeValue([NotNull] string attributeName, [NotNull] string defaultValue = "");
-
-        [CanBeNull]
-        ITextNode GetInnerTextNode();
-
-        [CanBeNull]
-        ITextNode GetSnapshotLanguageSpecificChildNode([NotNull] string name);
-
-        bool HasAttribute([NotNull] string attributeName);
     }
 }

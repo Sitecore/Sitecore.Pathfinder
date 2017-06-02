@@ -20,25 +20,8 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public string DatabaseName { get; }
 
-        [NotNull, ItemNotNull]
-        public ICollection<string> StandardTemplateFields { get; } = new List<string>();
-
         [NotNull]
         public IDictionary<string, string> Tokens { get; } = new Dictionary<string, string>();
-
-        public virtual void LoadStandardTemplateFields([NotNull] IConfiguration configuration)
-        {
-            foreach (var pair in configuration.GetSubKeys(Constants.Configuration.StandardTemplateFields))
-            {
-                StandardTemplateFields.Add(pair.Key);
-
-                var value = configuration.GetString(Constants.Configuration.StandardTemplateFields + ":" + pair.Key);
-                if (!string.IsNullOrEmpty(value))
-                {
-                    StandardTemplateFields.Add(value);
-                }
-            }
-        }
 
         public virtual void LoadTokens([NotNull] IConfiguration configuration)
         {

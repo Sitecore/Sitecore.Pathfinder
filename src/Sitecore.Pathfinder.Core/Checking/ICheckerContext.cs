@@ -30,6 +30,6 @@ namespace Sitecore.Pathfinder.Checking
         ITraceService Trace { get; }
 
         [NotNull]
-        ICheckerContext With([NotNull] IProjectBase project, [CanBeNull] IDiagnosticCollector collector);
+        ICheckerContext With([NotNull] IProjectBase project, [NotNull] IDiagnosticCollector collector);
     }
 }

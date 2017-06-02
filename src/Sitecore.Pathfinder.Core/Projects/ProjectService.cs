@@ -46,7 +46,6 @@ namespace Sitecore.Pathfinder.Projects
 
             var projectOptions = Factory.ProjectOptions(databaseName);
 
-            projectOptions.LoadStandardTemplateFields(Configuration);
             projectOptions.LoadTokens(Configuration);
 
             var projectTree = GetProjectTree(projectOptions);

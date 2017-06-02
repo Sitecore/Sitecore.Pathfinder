@@ -5,6 +5,7 @@ using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
@@ -17,10 +18,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public abstract class TemplateTextNodeParserBase : TextNodeParserBase
     {
         [ImportingConstructor]
-        protected TemplateTextNodeParserBase([NotNull] ISchemaService schemaService, double priority) : base(priority)
+        protected TemplateTextNodeParserBase([NotNull] IPipelineService pipelines, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            Pipelines = pipelines;
             SchemaService = schemaService;
         }
+
+        [NotNull]
+        protected IPipelineService Pipelines { get; }
 
         [NotNull]
         protected ISchemaService SchemaService { get; }
@@ -67,16 +72,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.StandardValuesItem = standardValuesItem;
 
             // parse fields and sections
-            var sections = textNode.GetSnapshotLanguageSpecificChildNode("Sections");
-            if (sections != null)
+            foreach (var sectionTreeNode in textNode.ChildNodes)
             {
-                foreach (var sectionTreeNode in sections.ChildNodes)
-                {
-                    ParseSection(context, template, sectionTreeNode);
-                }
+                ParseSection(context, template, sectionTreeNode);
             }
 
-            context.ParseContext.Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
+            Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
 
             context.ParseContext.Project.AddOrMerge(template);
             context.ParseContext.Project.AddOrMerge(standardValuesItem);
@@ -162,14 +163,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             templateSection.IconProperty.Parse(templateSectionTextNode);
 
-            var fieldsTextNode = templateSectionTextNode.GetSnapshotLanguageSpecificChildNode("Fields");
-            if (fieldsTextNode == null)
-            {
-                return;
-            }
-
             var nextSortOrder = 0;
-            foreach (var fieldTextNode in fieldsTextNode.ChildNodes)
+            foreach (var fieldTextNode in templateSectionTextNode.ChildNodes)
             {
                 ParseField(context, template, templateSection, fieldTextNode, ref nextSortOrder);
             }

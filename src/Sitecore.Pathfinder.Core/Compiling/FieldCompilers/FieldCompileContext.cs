@@ -1,12 +1,9 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
@@ -16,10 +13,9 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     public class FieldCompileContext : IFieldCompileContext
     {
         [ImportingConstructor]
-        public FieldCompileContext([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull, ImportMany, ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
+        public FieldCompileContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull, ImportMany, ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
             Console = console;
             Factory = factory;
             FieldCompilers = fieldCompilers;
@@ -27,9 +23,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             Culture = configuration.GetCulture();
         }
 
-        public ICompositionService CompositionService { get; }
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
-        public IConfiguration Configuration { get; }
+        [NotNull]
+        protected IConsoleService Console { get; }
 
         public CultureInfo Culture { get; }
 
@@ -37,10 +35,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         public IEnumerable<IFieldCompiler> FieldCompilers { get; }
 
-        public ITraceService Trace { get; private set; } = TraceService.Empty; 
-
-        [NotNull]
-        protected IConsoleService Console { get; }
+        public ITraceService Trace { get; private set; } = TraceService.Empty;
 
         public IFieldCompileContext With(IDiagnosticCollector diagnosticCollector)
         {

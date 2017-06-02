@@ -5,7 +5,6 @@ using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
@@ -17,12 +16,11 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines, [NotNull] ISchemaService schemaService, [NotNull] IReferenceParserService referenceParser)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IReferenceParserService referenceParser)
         {
             Configuration = configuration;
             Console = console;
             Factory = factory;
-            Pipelines = pipelines;
             ReferenceParser = referenceParser;
             Snapshot = Snapshots.Snapshot.Empty;
 
@@ -44,8 +42,6 @@ namespace Sitecore.Pathfinder.Parsing
         public virtual string ItemName { get; private set; }
 
         public virtual string ItemPath { get; private set; }
-
-        public IPipelineService Pipelines { get; }
 
         public IProject Project { get; private set; }
 
