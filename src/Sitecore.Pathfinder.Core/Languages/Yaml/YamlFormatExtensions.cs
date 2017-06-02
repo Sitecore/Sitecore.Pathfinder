@@ -1,18 +1,16 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Projects.Templates;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
 {
     public static class YamlFormatExtensions
     {
-        public static void WriteAsContentYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
+        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, bool writeChildren = false)
         {
             var output = new YamlTextWriter(writer);
 
@@ -21,22 +19,21 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             output.WriteAttributeStringIf("ItemPath", item.ItemIdOrPath);
             output.WriteAttributeStringIf("Database", item.DatabaseName);
 
-            foreach (var field in item.Fields.Where(f => f.TemplateField.Shared).OrderBy(f => f.FieldName))
+            if (item.Fields.Any())
             {
-                output.WriteAttributeStringIf(field.FieldName, field.Value);
-            }
+                output.WriteStartElement("Fields");
 
-            if (item.Fields.Any(f => !f.TemplateField.Shared))
-            {
-                output.WriteStartElement("..versions");
-
-                var languages = item.Fields.Select(f => f.Language).Where(l => l != Language.Undefined && l != Language.Empty).Distinct();
-
-                foreach (var language in languages.OrderBy(l => l.LanguageName))
+                foreach (var field in item.Versions.GetSharedFields().OrderBy(f => f.FieldName))
                 {
-                    var unversionedFields = item.Fields.Where(f => f.Language == language && f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
-                    var versionedFields = item.Fields.Where(f => f.Language == language && !f.TemplateField.Unversioned && !f.TemplateField.Shared).ToArray();
-                    if (!unversionedFields.Any() && !versionedFields.Any())
+                    output.WriteAttributeString(field.FieldName, field.CompiledValue);
+                }
+
+                foreach (var language in item.Versions.GetLanguages())
+                {
+                    var unversionedFields = item.Versions.GetUnversionedFields(language);
+                    var versions = item.Versions.GetVersions(language);
+
+                    if (!unversionedFields.Any() && !versions.Any())
                     {
                         continue;
                     }
@@ -45,95 +42,22 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
                     foreach (var field in unversionedFields.OrderBy(f => f.FieldName))
                     {
-                        output.WriteAttributeStringIf(field.FieldName, field.Value);
+                        output.WriteAttributeString(field.FieldName, field.CompiledValue);
                     }
 
-                    var versions = versionedFields.Select(f => f.Version).Distinct().ToArray();
                     foreach (var version in versions.OrderByDescending(v => v.Number))
                     {
+                        var versionedFields = item.Versions.GetVersionedFields(language, version);
+                        if (!versionedFields.Any())
+                        {
+                            continue;
+                        }
+
                         output.WriteStartElement(version.Number.ToString());
 
-                        foreach (var field in versionedFields.Where(f => f.Version == version).OrderBy(f => f.FieldName))
+                        foreach (var field in versionedFields.OrderBy(f => f.FieldName))
                         {
-                            output.WriteAttributeStringIf(field.FieldName, field.Value);
-                        }
-
-                        output.WriteEndElement();
-                    }
-
-                    output.WriteEndElement();
-                }
-            }
-
-            if (writeInner != null)
-            {
-                writeInner(writer, output.Indent);
-            }
-        }
-
-        public static void WriteAsYaml([NotNull] this Item item, [NotNull] TextWriter writer, [CanBeNull] Action<TextWriter, int> writeInner = null)
-        {
-            var output = new YamlTextWriter(writer);
-
-            var sharedFields = item.Fields.Where(f => f.Language == Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
-            var unversionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version == Projects.Items.Version.Undefined).ToList();
-            var versionedFields = item.Fields.Where(f => f.Language != Language.Undefined && f.Version != Projects.Items.Version.Undefined).ToList();
-
-            output.WriteStartElement("Item");
-
-            output.WriteAttributeString("Id", item.Uri.Guid.Format());
-            output.WriteAttributeStringIf("Database", item.DatabaseName);
-            output.WriteAttributeStringIf("Name", item.ItemName);
-            output.WriteAttributeStringIf("ItemPath", item.ItemIdOrPath);
-            output.WriteAttributeStringIf("Template", item.TemplateIdOrPath);
-
-            output.WriteStartElement("Fields");
-
-            foreach (var field in sharedFields)
-            {
-                output.WriteStartElement("Field", field.FieldName);
-                output.WriteAttributeString("Value", field.Value);
-                output.WriteEndElement();
-            }
-
-            if (unversionedFields.Any())
-            {
-                output.WriteStartElement("Unversioned");
-
-                foreach (var language in unversionedFields.Select(f => f.Language).Distinct())
-                {
-                    output.WriteStartElement(language.LanguageName);
-
-                    foreach (var field in unversionedFields.Where(f => f.Language == language))
-                    {
-                        output.WriteStartElement("Field", field.FieldName);
-                        output.WriteAttributeString("Value", field.Value);
-                        output.WriteEndElement();
-                    }
-
-                    output.WriteEndElement();
-                }
-
-                output.WriteEndElement();
-            }
-
-            if (versionedFields.Any())
-            {
-                output.WriteStartElement("Versioned");
-
-                foreach (var language in versionedFields.Select(f => f.Language).Distinct())
-                {
-                    output.WriteStartElement(language.LanguageName);
-
-                    foreach (var version in versionedFields.Where(f => f.Language == language).Select(f => f.Version).Distinct())
-                    {
-                        output.WriteStartElement(version.ToString());
-
-                        foreach (var field in versionedFields.Where(f => f.Language == language && f.Version == version))
-                        {
-                            output.WriteStartElement("Field", field.FieldName);
-                            output.WriteAttributeString("Value", field.Value);
-                            output.WriteEndElement();
+                            output.WriteAttributeString(field.FieldName, field.CompiledValue);
                         }
 
                         output.WriteEndElement();
@@ -145,46 +69,19 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 output.WriteEndElement();
             }
 
-            if (writeInner != null)
+            if (writeChildren)
             {
-                writeInner(writer, output.Indent);
-            }
-        }
-
-        public static void WriteAsYaml([NotNull] this Template template, [NotNull] TextWriter writer)
-        {
-            var output = new YamlTextWriter(writer);
-
-            output.WriteStartElement("Template");
-            output.WriteAttributeString("Name", template.ItemName);
-            output.WriteAttributeStringIf("Id", template.Uri.Guid.Format());
-            output.WriteAttributeStringIf("Database", template.DatabaseName);
-            output.WriteAttributeStringIf("ItemPath", template.ItemIdOrPath);
-            output.WriteAttributeStringIf("BaseTemplates", template.BaseTemplates);
-
-            foreach (var section in template.Sections)
-            {
-                output.WriteStartElement("Section");
-                output.WriteAttributeString("Name", section.SectionName);
-                output.WriteAttributeStringIf("Id", section.Uri.Guid.Format());
-                output.WriteAttributeStringIf("Icon", section.Icon);
-
-                foreach (var field in section.Fields)
+                var children = item.Children.ToArray();
+                if (children.Any())
                 {
-                    output.WriteStartElement("Field");
-                    output.WriteAttributeString("Name", field.FieldName);
-                    output.WriteAttributeStringIf("Id", field.Uri.Guid.Format());
-                    output.WriteAttributeStringIf("Sortorder", field.Sortorder);
-                    output.WriteAttributeStringIf("Type", field.Type);
-                    output.WriteAttributeStringIf("Source", field.Source);
-                    output.WriteAttributeStringIf("Sharing", field.Shared ? "Shared" : field.Unversioned ? "Unversioned" : string.Empty);
-                    output.WriteAttributeStringIf("ShortHelp", field.ShortHelp);
-                    output.WriteAttributeStringIf("LongHelp", field.LongHelp);
+                    output.WriteStartElement("Children");
+                    foreach (var child in children)
+                    {
+                        child.WriteAsYaml(writer, true);
+                    }
 
                     output.WriteEndElement();
                 }
-
-                output.WriteEndElement();
             }
 
             output.WriteEndElement();

@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
 
             var destinationFileName = PathHelper.Combine(OutputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));
 
-            destinationFileName += ".xml";
+            destinationFileName += ".content.xml";
 
             FileSystem.CreateDirectoryFromFileName(destinationFileName);
 
@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             {
                 using (var writer = new StreamWriter(stream))
                 {
-                    item.WriteAsContentXml(writer);
+                    item.WriteAsXml(writer);
                 }
             }
         }

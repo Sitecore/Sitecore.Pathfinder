@@ -4,7 +4,6 @@ using System;
 using System.Composition;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.BinFiles;
@@ -27,14 +26,10 @@ namespace Sitecore.Pathfinder.Configuration
     public class FactoryService : IFactoryService
     {
         [ImportingConstructor]
-        public FactoryService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService)
+        public FactoryService([NotNull] IConfiguration configuration)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
         }
-
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }

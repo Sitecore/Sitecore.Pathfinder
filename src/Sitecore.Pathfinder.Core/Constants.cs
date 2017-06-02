@@ -332,7 +332,7 @@ namespace Sitecore.Pathfinder
 
             public const string ShortDescription = "__Short description";
 
-            public const string SortOrder = "__Sort order";
+            public const string SortOrder = "__Sortorder";
 
             public const string Source = "Source";
 

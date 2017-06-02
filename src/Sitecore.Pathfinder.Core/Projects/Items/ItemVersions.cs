@@ -42,6 +42,24 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [ItemNotNull, NotNull]
+        public IEnumerable<Field> GetSharedFields()
+        {
+            return _item.Fields.Where(f => f.TemplateField.Shared);
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Field> GetUnversionedFields([NotNull] Language language)
+        {
+            return _item.Fields.Where(f => !f.TemplateField.Shared && f.TemplateField.Unversioned && f.Language == language);
+        }
+
+        [ItemNotNull, NotNull]
+        public IEnumerable<Field> GetVersionedFields([NotNull] Language language, [NotNull] Version version)
+        {
+            return _item.Fields.Where(f => !f.TemplateField.Shared && !f.TemplateField.Unversioned && f.Language == language && f.Version == version);
+        }
+
+        [ItemNotNull, NotNull]
         public IEnumerable<Version> GetVersions([NotNull] Language language)
         {
             var versions = _item.Fields.Where(f => f.Language == language).ToArray();

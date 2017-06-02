@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Languages.Json
             {
                 using (var writer = new StreamWriter(stream))
                 {
-                    item.WriteAsContentJson(writer);
+                    item.WriteAsJson(writer);
                 }
             }
         }

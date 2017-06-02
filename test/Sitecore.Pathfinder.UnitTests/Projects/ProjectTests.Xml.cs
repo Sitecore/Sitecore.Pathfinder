@@ -3,6 +3,7 @@
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Languages.Yaml;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -76,7 +77,7 @@ namespace Sitecore.Pathfinder.Projects
 
             var writer = new StringWriter();
 
-            item.WriteAsYaml(writer);
+            item.WriteAsXml(writer);
 
             var result = writer.ToString();
 

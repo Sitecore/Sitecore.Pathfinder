@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             {
                 using (var writer = new StreamWriter(stream))
                 {
-                    item.WriteAsContentYaml(writer);
+                    item.WriteAsYaml(writer);
                 }
             }
         }
