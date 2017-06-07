@@ -25,10 +25,7 @@ namespace Sitecore.Pathfinder.Languages.Media
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
-        {
-            return projectItem is MediaFile;
-        }
+        public override bool CanCompile(ICompileContext context, IProjectItem projectItem) => projectItem is MediaFile;
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
@@ -61,7 +58,7 @@ namespace Sitecore.Pathfinder.Languages.Media
             {
                 var altField = context.Factory.Field(item, "Alt", mediaFile.ItemName).With(item.SourceTextNode);
                 altField.Language = language;
-                altField.Version = new Version(1);
+                altField.Version = context.Factory.Version(1);
                 item.Fields.Add(altField);
             }
 

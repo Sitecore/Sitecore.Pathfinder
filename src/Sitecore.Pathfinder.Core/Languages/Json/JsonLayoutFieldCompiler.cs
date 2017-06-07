@@ -14,12 +14,16 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public JsonLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
+        public JsonLayoutFieldCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
+            Trace = trace;
             FileSystem = fileSystem;
         }
 
         public override bool IsExclusive { get; } = true;
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -49,17 +53,10 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return field.Value;
             }
 
-            var layoutCompileContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
+            var layoutCompileContext = new LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
 
-            var compiler = new JsonLayoutCompiler(FileSystem);
+            var compiler = new LayoutCompiler(Trace, FileSystem);
             return compiler.Compile(layoutCompileContext, textNode);
-        }
-
-        protected class JsonLayoutCompiler : LayoutCompiler
-        {
-            public JsonLayoutCompiler([NotNull] IFileSystemService fileSystem) : base(fileSystem)
-            {
-            }
         }
     }
 }

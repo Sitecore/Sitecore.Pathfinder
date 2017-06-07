@@ -34,15 +34,9 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         protected ITraceService Trace { get; }
 
-        public bool ValidateSnapshotSchema(IParseContext context, ITextSnapshot textSnapshot)
-        {
-            return textSnapshot.ValidateSchema(context);
-        }
+        public bool ValidateSnapshotSchema(IParseContext context, ITextSnapshot textSnapshot) => textSnapshot.ValidateSchema(context);
 
-        public bool ValidateTextNodeSchema(ITextNode textNode)
-        {
-            return ValidateTextNodeSchema(textNode, textNode.Key);
-        }
+        public bool ValidateTextNodeSchema(ITextNode textNode) => ValidateTextNodeSchema(textNode, textNode.Key);
 
         public bool ValidateTextNodeSchema(ITextNode textNode, string textNodeName)
         {

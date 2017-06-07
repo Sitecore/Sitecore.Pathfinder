@@ -5,6 +5,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.References;
@@ -15,8 +16,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public abstract class LayoutTextNodeParserBase : TextNodeParserBase
     {
-        protected LayoutTextNodeParserBase(double priority) : base(priority)
+        [NotNull]
+        protected IReferenceParserService ReferenceParserService { get; }
+
+        protected LayoutTextNodeParserBase([NotNull] IReferenceParserService referenceParserService, double priority) : base(priority)
         {
+            ReferenceParserService = referenceParserService;
         }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
@@ -57,11 +62,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty));
+            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty, context.ParseContext.Database.DatabaseName));
 
             var layoutProperty = new SourceProperty<string>(projectItem, "Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty));
+            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty, context.ParseContext.Database.DatabaseName));
 
             foreach (var renderingTextNode in deviceTextNode.ChildNodes)
             {
@@ -72,7 +77,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         [NotNull, ItemNotNull]
         protected virtual IEnumerable<IReference> ParseReferences([NotNull] ItemParseContext context, [NotNull] IProjectItem projectItem, [NotNull] ITextNode layoutTextNode)
         {
-            var result = context.ParseContext.ReferenceParser.ParseReferences(projectItem, layoutTextNode).ToList();
+            var result = ReferenceParserService.ParseReferences(projectItem, layoutTextNode).ToList();
 
             foreach (var deviceTextNode in layoutTextNode.ChildNodes)
             {
@@ -89,13 +94,13 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var sourceProperty = new SourceProperty<string>(projectItem, renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty));
+                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty, context.ParseContext.Database.DatabaseName));
             }
 
             // parse references for rendering properties
             foreach (var attributeTextNode in renderingTextNode.Attributes)
             {
-                foreach (var reference in context.ParseContext.ReferenceParser.ParseReferences(projectItem, attributeTextNode))
+                foreach (var reference in ReferenceParserService.ParseReferences(projectItem, attributeTextNode))
                 {
                     references.Add(reference);
                 }

@@ -1,8 +1,7 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
@@ -14,16 +13,18 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     [Export(typeof(IFieldCompiler)), Shared]
     public class ImageFieldCompiler : FieldCompilerBase
     {
-        public ImageFieldCompiler() : base(Constants.FieldCompilers.Normal)
+        [ImportingConstructor]
+        public ImageFieldCompiler([NotNull] ITraceService trace) : base(Constants.FieldCompilers.Normal)
         {
+            Trace = trace;
         }
 
         public override bool IsExclusive { get; } = true;
 
-        public override bool CanCompile(IFieldCompileContext context, Field field)
-        {
-            return string.Equals(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase);
-        }
+        [NotNull]
+        protected ITraceService Trace { get; }
+
+        public override bool CanCompile(IFieldCompileContext context, Field field) => string.Equals(field.TemplateField.Type, "image", StringComparison.OrdinalIgnoreCase);
 
         public override string Compile(IFieldCompileContext context, Field field)
         {
@@ -51,7 +52,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1044, Texts.Image_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), qualifiedName);
+                Trace.TraceError(Msg.C1044, Texts.Image_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty), qualifiedName);
                 return string.Empty;
             }
 

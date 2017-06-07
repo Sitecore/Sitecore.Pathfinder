@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,12 +18,13 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseService : IParseService
     {
         [ImportingConstructor]
-        public ParseService([NotNull] IConfiguration configuration, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [NotNull] ExportFactory<IParseContext> parseContextFactory, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
+        public ParseService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper, [ImportMany, NotNull, ItemNotNull] IEnumerable<IParser> parsers)
         {
             Configuration = configuration;
+            Trace = trace;
+            Factory = factory;
             SnapshotService = snapshotService;
             PathMapper = pathMapper;
-            ParseContextFactory = parseContextFactory;
             Parsers = parsers;
         }
 
@@ -30,7 +32,10 @@ namespace Sitecore.Pathfinder.Parsing
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected ExportFactory<IParseContext> ParseContextFactory { get; }
+        protected ITraceService Trace { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<IParser> Parsers { get; }
@@ -43,12 +48,12 @@ namespace Sitecore.Pathfinder.Parsing
 
         public virtual void Parse(IProject project, ISourceFile sourceFile)
         {
-            var pathMappingContext = new PathMappingContext(PathMapper);
+            var pathMappingContext = Factory.PathMappingContext(PathMapper);
             pathMappingContext.Parse(project, sourceFile);
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext);
 
-            var parseContext = ParseContextFactory.New().With(project, snapshot, pathMappingContext);
+            var parseContext = Factory.ParseContext(project, snapshot, pathMappingContext);
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
                 try
@@ -69,13 +74,13 @@ namespace Sitecore.Pathfinder.Parsing
                         text += Environment.NewLine + ex.StackTrace;
                     }
 
-                    parseContext.Trace.TraceError(Msg.P1013, text, sourceFile);
+                    Trace.TraceError(Msg.P1013, text, sourceFile);
                 }
             }
 
             if (!parseContext.IsParsed)
             {
-                parseContext.Trace.TraceWarning(Msg.P1024, Texts.No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting, sourceFile);
+                Trace.TraceWarning(Msg.P1024, Texts.No_parser_found_for_file__If_the_file_is_a_content_file__add_the_file_extension_to_the__project_website_mappings_content_files__setting, sourceFile);
             }
         }
     }

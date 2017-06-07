@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Items;
 
@@ -9,6 +10,7 @@ namespace Sitecore.Pathfinder.Projects.References
 {
     public class LayoutRenderingReference : Reference
     {
+        [FactoryConstructor]
         public LayoutRenderingReference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName) : base(owner, sourceProperty, referenceText, databaseName)
         {
         }

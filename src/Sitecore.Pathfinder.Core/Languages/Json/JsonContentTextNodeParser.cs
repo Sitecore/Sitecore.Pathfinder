@@ -5,6 +5,7 @@ using System.Composition;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -14,7 +15,7 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonContentTextNodeParser : ContentTextNodeParserBase
     {
         [ImportingConstructor]
-        public JsonContentTextNodeParser([NotNull] ISchemaService schemaService) : base(schemaService, Constants.TextNodeParsers.Items)
+        public JsonContentTextNodeParser([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(trace, referenceParser, schemaService, Constants.TextNodeParsers.Items)
         {
         }
 
@@ -56,7 +57,7 @@ namespace Sitecore.Pathfinder.Languages.Json
 
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode layoutTextNode)
         {
-            var parser = new JsonLayoutTextNodeParser();
+            var parser = new JsonLayoutTextNodeParser(ReferenceParser);
             parser.Parse(context, layoutTextNode, item);
         }
     }

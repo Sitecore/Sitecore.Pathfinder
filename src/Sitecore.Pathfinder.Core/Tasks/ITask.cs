@@ -17,6 +17,8 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         string TaskName { get; }
 
+        bool IsHidden { get; }
+
         void Run([NotNull] ITaskContext context);
     }
 }

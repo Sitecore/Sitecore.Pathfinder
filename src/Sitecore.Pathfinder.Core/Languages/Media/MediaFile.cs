@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Files;
@@ -9,6 +10,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 {
     public class MediaFile : File
     {
+        [FactoryConstructor]
         public MediaFile([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath) : base(database.Project, snapshot, filePath)
         {
             Database = database;

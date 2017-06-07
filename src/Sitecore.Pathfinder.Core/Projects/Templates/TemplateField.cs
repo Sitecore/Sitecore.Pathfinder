@@ -2,6 +2,7 @@
 
 using System;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -16,6 +17,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull]
         private ID _id;
 
+        [FactoryConstructor]
         public TemplateField([NotNull] Template template, Guid guid)
         {
             Template = template;

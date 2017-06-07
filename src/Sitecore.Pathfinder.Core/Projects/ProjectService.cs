@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectService : IProjectService
     {
         [ImportingConstructor]
-        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] ExportFactory<IProject> projectFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
+        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ExportFactory<IProject> projectFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
         {
             Configuration = configuration;
             Factory = factory;
@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected ExportFactory<IProject> ProjectFactory { get; }

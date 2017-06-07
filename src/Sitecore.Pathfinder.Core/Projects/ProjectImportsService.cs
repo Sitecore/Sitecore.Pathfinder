@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Projects
     public class ProjectImportsService
     {
         [ImportingConstructor]
-        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem)
+        public ProjectImportsService([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem)
         {
             Configuration = configuration;
             Trace = trace;
@@ -28,7 +28,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }

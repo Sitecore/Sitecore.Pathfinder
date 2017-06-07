@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
     public class UnicornProjectEmitter : DirectoryProjectEmitterBase
     {
         [ImportingConstructor]
-        public UnicornProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters, fileSystem)
+        public UnicornProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters, fileSystem)
         {
         }
 
@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var destinationFileName = GetItemFileName(item.DatabaseName, item.ItemIdOrPath);
 
@@ -88,7 +88,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
                         var i = item.Database.GetItem(itemPath);
                         if (i == null)
                         {
-                            context.Trace.TraceError(Msg.E1045, "Required item not found for Unicorn serialization", itemPath);
+                            Trace.TraceError(Msg.E1045, "Required item not found for Unicorn serialization", itemPath);
                             break;
                         }
 
@@ -110,11 +110,11 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
             var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
-                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var destinationFileName = GetItemFileName(item.DatabaseName, item.ItemIdOrPath);
 
@@ -150,7 +150,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
 
             var destinationDirectory = Configuration.GetString(Constants.Configuration.Output.Unicorn.UnicornRootPath);
 
-            context.Trace.TraceInformation(Msg.E1046, "Mirroring item files", sourceDirectory + " => " + destinationDirectory);
+            Trace.TraceInformation(Msg.E1046, "Mirroring item files", sourceDirectory + " => " + destinationDirectory);
 
             FileSystem.CreateDirectory(destinationDirectory);
             FileSystem.Mirror(sourceDirectory, destinationDirectory);

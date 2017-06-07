@@ -1,6 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
@@ -13,12 +13,13 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         public static PathMappingContext Empty = new PathMappingContext();
 
-        [ImportingConstructor]
+        [FactoryConstructor]
         public PathMappingContext([NotNull] IPathMapperService pathMapper)
         {
             PathMapper = pathMapper;
         }
 
+        // ReSharper disable once NotNullMemberIsNotInitialized
         private PathMappingContext()
         {
         }

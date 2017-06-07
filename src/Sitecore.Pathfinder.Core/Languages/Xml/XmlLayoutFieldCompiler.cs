@@ -14,12 +14,16 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public XmlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
+        public XmlLayoutFieldCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
+            Trace = trace;
             FileSystem = fileSystem;
         }
 
         public override bool IsExclusive { get; } = true;
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -50,9 +54,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
+            var layoutResolveContext = new LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
 
-            var resolver = new LayoutCompiler(FileSystem);
+            var resolver = new LayoutCompiler(Trace, FileSystem);
 
             return resolver.Compile(layoutResolveContext, textNode);
         }

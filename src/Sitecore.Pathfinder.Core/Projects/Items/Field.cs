@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
@@ -18,6 +19,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         [CanBeNull]
         private TemplateField _templateField;
 
+        [FactoryConstructor]
         public Field([NotNull] Item item)
         {
             Item = item;

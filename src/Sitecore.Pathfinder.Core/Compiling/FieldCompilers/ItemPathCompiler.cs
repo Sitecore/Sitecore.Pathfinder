@@ -18,10 +18,14 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     public class ItemPathCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public ItemPathCompiler([NotNull] IReferenceParserService referenceParser) : base(Constants.FieldCompilers.Normal + 10)
+        public ItemPathCompiler([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser) : base(Constants.FieldCompilers.Normal + 10)
         {
+            Trace = trace;
             ReferenceParser = referenceParser;
         }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IReferenceParserService ReferenceParser { get; }
@@ -47,24 +51,24 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
             if (value.IndexOf('|') >= 0)
             {
-                return CompilePipeList(context, field, value);
+                return CompilePipeList(field, value);
             }
 
             if (value.IndexOf('&') >= 0)
             {
-                return CompileUrlString(context, field, value);
+                return CompileUrlString(field, value);
             }
 
             if (value.StartsWith("/sitecore", StringComparison.OrdinalIgnoreCase))
             {
-                return CompileDirectLink(context, field, value);
+                return CompileDirectLink(field, value);
             }
 
-            return CompileInlineValue(context, field, value);
+            return CompileInlineValue(field, value);
         }
 
         [NotNull]
-        private string CompileDirectLink([NotNull] IFieldCompileContext context, [NotNull] Field field, [NotNull] string value)
+        private string CompileDirectLink([NotNull] Field field, [NotNull] string value)
         {
             if (!PathHelper.IsProbablyItemPath(value))
             {
@@ -79,7 +83,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(value);
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
+                Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
                 return value;
             }
 
@@ -87,7 +91,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         }
 
         [NotNull]
-        private string CompileInlineValue([NotNull] IFieldCompileContext context, [NotNull] Field field, [NotNull] string value)
+        private string CompileInlineValue([NotNull] Field field, [NotNull] string value)
         {
             var start = value.IndexOf("/sitecore", StringComparison.OrdinalIgnoreCase);
             var end = value.IndexOf(',', start);
@@ -126,7 +130,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(qualifiedName);
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
+                Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
                 return value;
             }
 
@@ -134,7 +138,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         }
 
         [NotNull]
-        private string CompilePipeList([NotNull] IFieldCompileContext context, [NotNull] Field field, [NotNull] string value)
+        private string CompilePipeList([NotNull] Field field, [NotNull] string value)
         {
             var sb = new StringBuilder();
             foreach (var itemPath in value.Split(Constants.Pipe, StringSplitOptions.RemoveEmptyEntries))
@@ -150,7 +154,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     }
                     else
                     {
-                        context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), path);
+                        Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), path);
                     }
                 }
 
@@ -166,7 +170,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         }
 
         [NotNull]
-        private string CompileUrlString([NotNull] IFieldCompileContext context, [NotNull] Field field, [NotNull] string value)
+        private string CompileUrlString([NotNull] Field field, [NotNull] string value)
         {
             var url = new UrlString(value);
             var result = new UrlString();
@@ -197,11 +201,11 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
                     {
                         if (database != null && !string.Equals(database.DatabaseName, field.Item.DatabaseName, StringComparison.OrdinalIgnoreCase))
                         {
-                            context.Trace.TraceWarning(Msg.C1064, Texts.Item_path_reference_not_found__but_may_be_in_another_database, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), database.DatabaseName + ":/" + v);
+                            Trace.TraceWarning(Msg.C1064, Texts.Item_path_reference_not_found__but_may_be_in_another_database, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), database.DatabaseName + ":/" + v);
                         }
                         else
                         {
-                            context.Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), v);
+                            Trace.TraceError(Msg.C1046, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), v);
                         }
                     }
                 }

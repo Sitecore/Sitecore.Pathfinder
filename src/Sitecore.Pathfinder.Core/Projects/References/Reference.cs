@@ -1,6 +1,7 @@
 ﻿// © 2015-2016 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -9,6 +10,7 @@ namespace Sitecore.Pathfinder.Projects.References
     [DebuggerDisplay("{GetType().Name,nq}: {ReferenceText}")]
     public class Reference : IReference
     {
+        [FactoryConstructor]
         public Reference([NotNull] IProjectItem owner, [NotNull] SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // the reference text might be different from the source property value. 
@@ -20,6 +22,7 @@ namespace Sitecore.Pathfinder.Projects.References
             DatabaseName = databaseName;
         }
 
+        [FactoryConstructor]
         public Reference([NotNull] IProjectItem owner, [NotNull] ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName)
         {
             // the reference text might be different from the source property value. 

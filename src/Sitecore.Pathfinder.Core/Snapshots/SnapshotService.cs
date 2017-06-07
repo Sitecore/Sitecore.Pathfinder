@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders)
+        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders)
         {
             Configuration = configuration;
             Factory = factory;
@@ -33,7 +33,7 @@ namespace Sitecore.Pathfinder.Snapshots
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<ISnapshotLoader> Loaders { get; }

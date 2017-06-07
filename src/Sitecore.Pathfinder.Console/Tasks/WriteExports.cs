@@ -6,6 +6,7 @@ using System.Composition;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -20,14 +21,18 @@ namespace Sitecore.Pathfinder.Tasks
     public class WriteExports : BuildTaskBase
     {
         [ImportingConstructor]
-        public WriteExports([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem) : base("write-exports")
+        public WriteExports([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem) : base("write-exports")
         {
             Configuration = configuration;
+            Factory = factory;
             FileSystem = fileSystem;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -45,15 +50,9 @@ namespace Sitecore.Pathfinder.Tasks
 
             using (var writer = FileSystem.OpenStreamWriter(fileName))
             {
-                var settings = new XmlWriterSettings
-                {
-                    Encoding = new UTF8Encoding(false),
-                    Indent = true
-                };
-
                 var defaultDatabase = context.Configuration.GetString(Constants.Configuration.Database, "master");
 
-                using (var output = XmlWriter.Create(writer, settings))
+                using (var output = Factory.XmlWriter(writer))
                 {
                     output.WriteStartElement("Exports");
                     output.WriteAttributeString("Database", defaultDatabase);

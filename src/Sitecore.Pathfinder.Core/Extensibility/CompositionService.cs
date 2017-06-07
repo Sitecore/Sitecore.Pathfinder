@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Extensibility
     public class CompositionService : ICompositionService
     {
         [NotNull]
-        public CompositionHost CompositionHost { get; private set; }
+        protected CompositionHost CompositionHost { get; private set; }
 
         public T Resolve<T>()
         {

@@ -2,10 +2,9 @@
 
 using System.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
-using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
@@ -14,17 +13,17 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     public class CompileProjectItems : PipelineProcessorBase<CompilePipeline>
     {
         [ImportingConstructor]
-        public CompileProjectItems([NotNull] ExportFactory<ICompileContext> compileContextFactory) : base(1000)
+        public CompileProjectItems([NotNull] IFactory factory) : base(1000)
         {
-            CompileContextFactory = compileContextFactory;
+            Factory = factory;
         }
 
         [NotNull]
-        protected ExportFactory<ICompileContext> CompileContextFactory { get; }
+        protected IFactory Factory { get; }
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var context = CompileContextFactory.New().With(pipeline.Context.Project);
+            var context = Factory.CompileContext(pipeline.Context.Project);
 
             IProjectItem[] projectItems;
             do

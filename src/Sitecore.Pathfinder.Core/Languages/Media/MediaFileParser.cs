@@ -1,7 +1,7 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System.Composition;
+﻿using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing;
 
@@ -10,9 +10,14 @@ namespace Sitecore.Pathfinder.Languages.Media
     [Export(typeof(IParser)), Shared]
     public class MediaFileParser : ParserBase
     {
-        public MediaFileParser() : base(Constants.Parsers.Media)
+        [ImportingConstructor]
+        public MediaFileParser([NotNull] IConfiguration configuration) : base(Constants.Parsers.Media)
         {
+            Configuration = configuration;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -22,7 +27,7 @@ namespace Sitecore.Pathfinder.Languages.Media
             }
 
             var extension = Path.GetExtension(context.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
-            var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension);
+            var templateIdOrPath = Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension);
 
             return !string.IsNullOrEmpty(templateIdOrPath);
         }

@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
         IEnumerable<ICompiler> Compilers { get; }
 
         [NotNull]
-        IFactoryService Factory { get; }
+        IFactory Factory { get; }
 
         [NotNull]
         IProject Project { get; }

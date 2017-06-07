@@ -14,12 +14,16 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public YamlLayoutFieldCompiler([NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
+        public YamlLayoutFieldCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
         {
+            Trace = trace;
             FileSystem = fileSystem;
         }
 
         public override bool IsExclusive { get; } = true;
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -49,9 +53,9 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(context.Trace, field.Item.Project, field.Database, textSnapshot);
+            var layoutResolveContext = new LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
 
-            var resolver = new LayoutCompiler(FileSystem);
+            var resolver = new LayoutCompiler(Trace, FileSystem);
 
             return resolver.Compile(layoutResolveContext, textNode);
         }

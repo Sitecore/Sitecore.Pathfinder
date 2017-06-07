@@ -5,9 +5,7 @@ using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 {
@@ -15,9 +13,8 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     public class FieldCompileContext : IFieldCompileContext
     {
         [ImportingConstructor]
-        public FieldCompileContext([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull, ImportMany, ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
+        public FieldCompileContext([NotNull] IConfiguration configuration, [NotNull, ImportMany, ItemNotNull] IEnumerable<IFieldCompiler> fieldCompilers)
         {
-            CompositionService = compositionService;
             FieldCompilers = fieldCompilers;
 
             Culture = configuration.GetCulture();
@@ -26,10 +23,5 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         public CultureInfo Culture { get; }
 
         public IEnumerable<IFieldCompiler> FieldCompilers { get; }
-
-        public ITraceService Trace { get; private set; } = TraceService.Empty;
-
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
     }
 }

@@ -16,8 +16,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public class ItemParser : ParserBase
     {
         [ImportingConstructor]
-        public ItemParser([NotNull] IConfiguration configuration, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
+        public ItemParser([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
+            Configuration = configuration;
+            Trace = trace;
             SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
 
@@ -29,6 +31,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         [NotNull]
         protected PathMatcher PathMatcher { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected ISchemaService SchemaService { get; }
@@ -49,7 +57,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 var textSpan = textSnapshot.ParseErrorTextSpan != TextSpan.Empty ? textSnapshot.ParseErrorTextSpan : textSnapshot.Root.TextSpan;
                 var text = !string.IsNullOrEmpty(textSnapshot.ParseError) ? textSnapshot.ParseError : Texts.Source_file_is_empty;
-                context.Trace.TraceWarning(Msg.P1009, text, textSnapshot.SourceFile.AbsoluteFileName, textSpan);
+                Trace.TraceWarning(Msg.P1009, text, textSnapshot.SourceFile.AbsoluteFileName, textSpan);
                 return;
             }
 
@@ -97,18 +105,18 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
                 if (!parsed)
                 {
-                    context.ParseContext.Trace.TraceError(Msg.P1025, Texts.Unknown_text_node, textNode, textNode.Key);
+                    Trace.TraceError(Msg.P1025, Texts.Unknown_text_node, textNode, textNode.Key);
                 }
             }
             catch (Exception ex)
             {
                 var details = ex.Message;
-                if (context.ParseContext.Configuration.GetBool(Constants.Configuration.System.ShowStackTrace))
+                if (Configuration.GetBool(Constants.Configuration.System.ShowStackTrace))
                 {
                     details += Environment.NewLine + ex.StackTrace;
                 }
 
-                context.ParseContext.Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, details);
+                Trace.TraceError(Msg.P1004, string.Empty, context.ParseContext.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty, details);
             }
         }
     }

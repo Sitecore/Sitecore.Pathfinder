@@ -1,6 +1,5 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System.Composition;
+﻿using System.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.Pipelines.ItemParserPipelines;
@@ -14,9 +13,14 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
     {
         public const string LayoutFile = "Layout.File";
 
-        public LayoutFileItemParser() : base(1000)
+        [ImportingConstructor]
+        public LayoutFileItemParser([NotNull] ITraceService trace) : base(1000)
         {
+            Trace = trace;
         }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         protected override void Process(ItemParserPipeline pipeline)
         {
@@ -26,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
                 return;
             }
 
-            var sourcePropertyBag = (ISourcePropertyBag)pipeline.Item;
+            var sourcePropertyBag = (ISourcePropertyBag) pipeline.Item;
 
             var layoutFileProperty = sourcePropertyBag.GetSourceProperty<string>(LayoutFile) ?? sourcePropertyBag.NewSourceProperty(LayoutFile, string.Empty);
             layoutFileProperty.SetValue(layoutFileTextNode);
@@ -34,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
             var fieldValue = layoutFileProperty.GetValue();
             if (!fieldValue.StartsWith("~/"))
             {
-                pipeline.Context.ParseContext.Trace.TraceWarning(Msg.P1016, Texts.File_path_must_start_with____, TraceHelper.GetTextNode(layoutFileProperty), fieldValue);
+                Trace.TraceWarning(Msg.P1016, Texts.File_path_must_start_with____, TraceHelper.GetTextNode(layoutFileProperty), fieldValue);
             }
         }
     }

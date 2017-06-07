@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
@@ -12,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         [NotNull]
         private static readonly Regex PlaceholderRegex = new Regex("<[^>]*Placeholder[^>]*Key=\"([^\"]*)\"[^>]*>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        protected WebFormsRenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(fileExtension, templateIdOrPath)
+        protected WebFormsRenderingParser([NotNull] IConfiguration configuration, [NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(configuration, fileExtension, templateIdOrPath)
         {
         }
 

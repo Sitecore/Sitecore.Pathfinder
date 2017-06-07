@@ -1,6 +1,7 @@
 // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Languages.Content;
 using Sitecore.Pathfinder.Projects;
@@ -10,6 +11,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public class Rendering : ContentFile
     {
+        [FactoryConstructor]
         public Rendering([NotNull] Database database, [NotNull] ISnapshot snapshot, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath) : base(database.Project, snapshot, filePath)
         {
             Database = database;

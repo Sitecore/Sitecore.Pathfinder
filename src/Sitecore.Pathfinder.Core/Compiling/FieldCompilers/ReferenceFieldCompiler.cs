@@ -2,6 +2,7 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
@@ -12,8 +13,13 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     [Export(typeof(IFieldCompiler)), Shared]
     public class ReferenceFieldCompiler : FieldCompilerBase
     {
-        public ReferenceFieldCompiler() : base(Constants.FieldCompilers.Normal)
+        [NotNull]
+        protected ITraceService Trace { get; }
+
+        [ImportingConstructor]
+        public ReferenceFieldCompiler([NotNull] ITraceService trace) : base(Constants.FieldCompilers.Normal)
         {
+            Trace = trace;
         }
 
         public override bool CanCompile(IFieldCompileContext context, Field field) => string.Equals(field.TemplateField.Type, "reference", StringComparison.OrdinalIgnoreCase);
@@ -29,7 +35,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             var item = field.Item.Project.Indexes.FindQualifiedItem<IProjectItem>(value);
             if (item == null)
             {
-                context.Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
+                Trace.TraceError(Msg.C1045, Texts.Item_path_reference_not_found, TraceHelper.GetTextNode(field.ValueProperty, field.FieldNameProperty, field), value);
                 return value;
             }
 

@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ArchitectureCheckers : Checker
     {
         [ImportingConstructor]
-        public ArchitectureCheckers([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactoryService factory, [NotNull] IPathMapperService pathMapper)
+        public ArchitectureCheckers([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactory factory, [NotNull] IPathMapperService pathMapper)
         {
             Configuration = configuration;
             FileSystem = fileSystem;
@@ -34,7 +34,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }

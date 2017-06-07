@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -10,7 +10,6 @@ using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Tasks.Building
 {
-    [Export(typeof(IBuildContext))]
     public class BuildContext : TaskContext, IBuildContext
     {
         [NotNull]
@@ -19,7 +18,7 @@ namespace Sitecore.Pathfinder.Tasks.Building
         [CanBeNull]
         private IProject _project;
 
-        [ImportingConstructor]
+        [FactoryConstructor(typeof(IBuildContext))]
         public BuildContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] ITraceService traceService) : base(configuration, console, traceService)
         {
         }

@@ -11,8 +11,9 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
     [Export(typeof(ICompileContext))]
     public class CompileContext : ICompileContext
     {
+        [FactoryConstructor]
         [ImportingConstructor]
-        public CompileContext([NotNull] IFactoryService factory, [ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
+        public CompileContext([NotNull] IFactory factory, [ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
         {
             Factory = factory;
             Compilers = compilers;
@@ -20,9 +21,9 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         public IEnumerable<ICompiler> Compilers { get; }
 
-        public IFactoryService Factory { get; }
+        public IFactory Factory { get; }
 
-        public IProject Project { get; private set; } 
+        public IProject Project { get; private set; } = (IProject) Projects.Project.Empty;
 
         public ICompileContext With(IProject project)
         {

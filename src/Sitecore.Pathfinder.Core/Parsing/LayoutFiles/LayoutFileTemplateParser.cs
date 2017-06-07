@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Composition;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
@@ -12,8 +13,13 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
     [Export(typeof(IPipelineProcessor)), Shared]
     public class LayoutFileTemplateParser : PipelineProcessorBase<TemplateParserPipeline>
     {
-        public LayoutFileTemplateParser() : base(1000)
+        [NotNull]
+        protected ITraceService Trace { get; }
+
+        [ImportingConstructor]
+        public LayoutFileTemplateParser([NotNull] ITraceService trace) : base(1000)
         {
+            Trace = trace;
         }
 
         protected override void Process(TemplateParserPipeline pipeline)
@@ -38,7 +44,7 @@ namespace Sitecore.Pathfinder.Parsing.LayoutFiles
             var fieldValue = layoutFileProperty.GetValue();
             if (!fieldValue.StartsWith("~/"))
             {
-                pipeline.Context.ParseContext.Trace.TraceWarning(Msg.P1016, Texts.File_path_must_start_with____, TraceHelper.GetTextNode(layoutFileProperty), fieldValue);
+                Trace.TraceWarning(Msg.P1016, Texts.File_path_must_start_with____, TraceHelper.GetTextNode(layoutFileProperty), fieldValue);
             }
         }
     }

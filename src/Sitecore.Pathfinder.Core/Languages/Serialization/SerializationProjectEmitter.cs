@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     public class SerializationProjectEmitter : DirectoryProjectEmitterBase
     {
         [ImportingConstructor]
-        public SerializationProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters, fileSystem)
+        public SerializationProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters, fileSystem)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 return;
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var destinationFileName = PathHelper.Combine(OutputDirectory, PathHelper.NormalizeFilePath(item.ItemIdOrPath).TrimStart('\\'));
 

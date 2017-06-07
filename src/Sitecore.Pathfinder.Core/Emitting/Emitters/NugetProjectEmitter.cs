@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Template> _templates = new List<Template>();
 
         [ImportingConstructor]
-        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
+        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content");
@@ -103,12 +103,12 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 fileName = fileName.Mid(2);
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+            Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
-                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
                 return;
             }
 
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 fileName = fileName.Mid(2);
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+            Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             var forceUpdate = Configuration.GetBool(Constants.Configuration.BuildProject.ForceUpdate, true);
             var destinationFileName = PathHelper.Combine(OutputDirectory, fileName);
@@ -134,14 +134,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
         public virtual void EmitItem([NotNull] IEmitContext context, [NotNull] Item item)
         {
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             _items.Add(item);
         }
 
         public virtual void EmitTemplate([NotNull] IEmitContext context, [NotNull] Template item)
         {
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             _templates.Add(item);
         }
@@ -273,7 +273,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                         var mediaFile = context.Project.Indexes.FindQualifiedItem<MediaFile>(field.Value);
                         if (mediaFile == null)
                         {
-                            context.Trace.TraceInformation(Msg.E1047, "No media item", item.SourceTextNode);
+                            Trace.TraceInformation(Msg.E1047, "No media item", item.SourceTextNode);
                         }
                         else
                         {

@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class ItemBuilder
     {
-        public ItemBuilder([NotNull] IFactoryService factory)
+        public ItemBuilder([NotNull] IFactory factory)
         {
             Factory = factory;
         }
@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         public ITextNode TemplateShortHelpTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         public Item Build([NotNull] IProjectBase project, [NotNull] ITextNode rootTextNode)

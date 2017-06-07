@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Projects.Items
@@ -13,6 +14,8 @@ namespace Sitecore.Pathfinder.Projects.Items
 
         [NotNull]
         public static Language Undefined = new Language("[Undefined]");
+
+        [FactoryConstructor]
 
         public Language([NotNull] string languageName)
         {

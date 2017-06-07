@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -31,10 +32,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
+        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
+            Factory = factory;
             FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
@@ -84,7 +89,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             _files.Add('/' + fileName);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+            Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             Zip.AddEntry("files/" + NormalizeZipPath(fileName), sourceFileAbsoluteFileName);
 
@@ -103,7 +108,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         {
             _items.Add(item);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var hasVersions = item.Fields.Any(f => !f.TemplateField.Shared && !f.TemplateField.Unversioned);
 
@@ -113,7 +118,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 var language = item.Database.Languages.FirstOrDefault();
                 if (language == null)
                 {
-                    context.Trace.TraceError(Msg.E1000, "No languages defined");
+                    Trace.TraceError(Msg.E1000, "No languages defined");
                     return;
                 }
 
@@ -130,7 +135,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 {
                     versions = new List<Projects.Items.Version>
                     {
-                        new Projects.Items.Version(1)
+                        Factory.Version(1)
                     };
                 }
 
@@ -141,13 +146,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                     {
                         using (var writer = new StreamWriter(stream, Encoding.UTF8))
                         {
-                            var settings = new XmlWriterSettings
-                            {
-                                Encoding = Encoding.UTF8,
-                                Indent = true
-                            };
-
-                            using (var output = XmlWriter.Create(writer, settings))
+                            using (var output = Factory.XmlWriter(writer))
                             {
                                 var parent = item.GetParent();
                                 var parentId = parent != null ? parent.Uri.Guid.Format() : string.Empty;
@@ -427,7 +426,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
-                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
                 return;
             }
 

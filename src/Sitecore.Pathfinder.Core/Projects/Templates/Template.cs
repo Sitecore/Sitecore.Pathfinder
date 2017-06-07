@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects.Items;
@@ -24,6 +25,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         [CanBeNull, ItemNotNull]
         private ID[] _baseTemplateIDs;
 
+        [FactoryConstructor]
         public Template([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
             BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);

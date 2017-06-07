@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 {
     public class FieldBuilder
     {
-        public FieldBuilder([NotNull] IFactoryService factory)
+        public FieldBuilder([NotNull] IFactory factory)
         {
             Factory = factory;
         }
@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         public ITextNode VersionTextNode { get; set; } = TextNode.Empty;
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         public Field Build([NotNull] Item item)

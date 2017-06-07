@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         private List<Tuple<string, string>> _ignoreReferences;
 
         [ImportingConstructor]
-        public ReferenceParserService([NotNull] IConfiguration configuration, [NotNull] IFactoryService factory, [NotNull] IPipelineService pipelines)
+        public ReferenceParserService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IPipelineService pipelines)
         {
             Configuration = configuration;
             Factory = factory;
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing.References
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IPipelineService Pipelines { get; }

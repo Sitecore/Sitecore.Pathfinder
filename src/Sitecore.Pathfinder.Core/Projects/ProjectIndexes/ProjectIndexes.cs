@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -16,6 +17,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
 {
     public class ProjectIndexes
     {
+        [FactoryConstructor]
         public ProjectIndexes([NotNull] IProjectBase project)
         {
             Project = project;

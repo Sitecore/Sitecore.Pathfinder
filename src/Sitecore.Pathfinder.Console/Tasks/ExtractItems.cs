@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class ExtractItems : BuildTaskBase
     {
         [ImportingConstructor]
-        public ExtractItems([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IFactoryService factory, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
+        public ExtractItems([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IFactory factory, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFactoryService Factory { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -68,7 +68,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var options = new ProjectOptions(Configuration.GetString(Constants.Configuration.Database));
+            var options = Factory.ProjectOptions(Configuration.GetString(Constants.Configuration.Database));
             var project = ProjectService.LoadProject(options, Enumerable.Empty<string>());
 
             LoadPackage(context, project, fileName);
@@ -110,8 +110,8 @@ namespace Sitecore.Pathfinder.Tasks
 
             item.Sortorder = int.Parse(element.GetAttributeValue("sortorder"));
 
-            var language = new Language(element.GetAttributeValue("language"));
-            var version = new Projects.Items.Version(int.Parse(element.GetAttributeValue("version")));
+            var language = Factory.Language(element.GetAttributeValue("language"));
+            var version = Factory.Version(int.Parse(element.GetAttributeValue("version")));
 
             var fieldsElement = element.Element("fields");
             if (fieldsElement != null)

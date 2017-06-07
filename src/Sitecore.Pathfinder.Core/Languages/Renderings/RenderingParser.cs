@@ -1,32 +1,35 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public abstract class RenderingParser : ParserBase
     {
-        protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
+        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
         {
+            Configuration = configuration;
             FileExtension = fileExtension;
             TemplateIdOrPath = templateIdOrPath;
         }
 
-        protected RenderingParser([NotNull] string fileExtension, [NotNull] string templateIdOrPath, double priority) : base(priority)
+        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] string fileExtension, [NotNull] string templateIdOrPath, double priority) : base(priority)
         {
+            Configuration = configuration;
             FileExtension = fileExtension;
             TemplateIdOrPath = templateIdOrPath;
         }
 
         [NotNull]
         public string TemplateIdOrPath { get; }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected string FileExtension { get; }
@@ -45,7 +48,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         public override void Parse(IParseContext context)
         {
             // check if creating items for partial views (file name starts with '_')
-            if (Path.GetFileName(context.FilePath).StartsWith("_") && !context.Configuration.GetBool(Constants.Configuration.BuildProject.Renderings.CreateItemsForPartialViews))
+            if (Path.GetFileName(context.FilePath).StartsWith("_") && !Configuration.GetBool(Constants.Configuration.BuildProject.Renderings.CreateItemsForPartialViews))
             {
                 return;
             }

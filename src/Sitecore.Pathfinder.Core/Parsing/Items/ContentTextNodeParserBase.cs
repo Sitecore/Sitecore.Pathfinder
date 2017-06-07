@@ -6,6 +6,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -15,10 +16,18 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public abstract class ContentTextNodeParserBase : TextNodeParserBase
     {
         [NotNull]
+        protected ITraceService Trace { get; }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
         protected ISchemaService SchemaService { get; }
 
-        protected ContentTextNodeParserBase([NotNull] ISchemaService schemaService, double priority) : base(priority)
+        protected ContentTextNodeParserBase([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            Trace = trace;
+            ReferenceParser = referenceParser;
             SchemaService = schemaService;
         }
 
@@ -35,7 +44,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1027, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+                Trace.TraceError(Msg.P1027, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
@@ -52,7 +61,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             if (!item.IsImport)
             {
-                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
+                item.References.AddRange(ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
             }
 
             // parse shared fields
@@ -97,7 +106,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                         break;
 
                     default:
-                        context.ParseContext.Trace.TraceError(Msg.P1026, "Unexpected text node", childNode, childNode.Key);
+                        Trace.TraceError(Msg.P1026, "Unexpected text node", childNode, childNode.Key);
                         break;
                 }
             }
@@ -129,12 +138,12 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else
             {
-                context.ParseContext.Trace.TraceError(Msg.P1008, Texts.Field_is_already_defined, fieldTextNode, duplicate.FieldName);
+                Trace.TraceError(Msg.P1008, Texts.Field_is_already_defined, fieldTextNode, duplicate.FieldName);
             }
 
             if (!item.IsImport)
             {
-                item.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(field));
+                item.References.AddRange(ReferenceParser.ParseReferences(field));
             }
         }
 

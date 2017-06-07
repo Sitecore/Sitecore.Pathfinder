@@ -24,7 +24,7 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    [Export, Export(typeof(IProject)), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
+    [Export(typeof(IProject)), Export, DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
     public class Project : SourcePropertyBag, IProject
     {
         [NotNull]
@@ -53,7 +53,8 @@ namespace Sitecore.Pathfinder.Projects
         private string _projectUniqueId;
 
         [ImportingConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactoryService factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
+        [FactoryConstructor]
+        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
         {
             CompositionService = compositionService;
             Configuration = configuration;
@@ -64,8 +65,8 @@ namespace Sitecore.Pathfinder.Projects
             Pipelines = pipelines;
             Checker = checker;
 
-            Context = new ProjectContext();
-            Indexes = new ProjectIndexes.ProjectIndexes(this);
+            Context = Factory.ProjectContext();
+            Indexes = Factory.ProjectIndexes(this);
 
             _projectItems = new LockableList<IProjectItem>(this);
             _diagnostics = new SynchronizedList<Diagnostic>();
@@ -76,7 +77,7 @@ namespace Sitecore.Pathfinder.Projects
             foreach (var pair in Configuration.GetSubKeys(Constants.Configuration.Databases))
             {
                 var languageNames = Configuration.GetArray(Constants.Configuration.Databases + ":" + pair.Key + ":languages");
-                _databases[pair.Key.ToUpperInvariant()] = new Database(this, pair.Key, languageNames);
+                _databases[pair.Key.ToUpperInvariant()] = Factory.Database(this, pair.Key, languageNames);
             }
 
             // set Context language
@@ -107,7 +108,7 @@ namespace Sitecore.Pathfinder.Projects
         public long Ducats { get; set; }
 
         [NotNull]
-        public IFactoryService Factory { get; }
+        public IFactory Factory { get; }
 
         public IEnumerable<File> Files => ProjectItems.OfType<File>().Where(f => f.IsEmittable);
 

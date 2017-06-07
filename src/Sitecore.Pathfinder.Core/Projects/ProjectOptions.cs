@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Collections.Generic;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -12,6 +13,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         public static readonly ProjectOptions Empty = new ProjectOptions(string.Empty);
 
+        [FactoryConstructor]
         public ProjectOptions([NotNull] string databaseName)
         {
             DatabaseName = databaseName;

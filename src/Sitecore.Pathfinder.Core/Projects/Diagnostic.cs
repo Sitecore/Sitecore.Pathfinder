@@ -1,6 +1,7 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -9,6 +10,7 @@ namespace Sitecore.Pathfinder.Projects
     [DebuggerDisplay("{GetType().Name,nq}: {Text}, {FileName}")]
     public class Diagnostic
     {
+        [FactoryConstructor]
         public Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text)
         {
             Msg = msg;

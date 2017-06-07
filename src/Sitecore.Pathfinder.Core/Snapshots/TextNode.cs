@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -12,6 +13,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         public static readonly ITextNode Empty = new SnapshotTextNode(Snapshots.Snapshot.Empty);
 
+        [FactoryConstructor]
         public TextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull] string value, TextSpan textSpan)
         {
             Snapshot = snapshot;

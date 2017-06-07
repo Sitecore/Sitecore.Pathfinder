@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -10,6 +11,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
 {
     public class TemplateSection : TextNodeSourcePropertyBag
     {
+        [FactoryConstructor]
         public TemplateSection([NotNull] Template template, Guid guid)
         {
             Template = template;

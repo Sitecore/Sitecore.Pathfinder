@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -14,6 +15,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
     public class ProjectTree : IProjectTree
     {
         [ImportingConstructor]
+        [FactoryConstructor]
         public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines, [NotNull] ExportFactory<ProjectTreeVisitor> projectTreeVisitorFactory)
         {
             Configuration = configuration;

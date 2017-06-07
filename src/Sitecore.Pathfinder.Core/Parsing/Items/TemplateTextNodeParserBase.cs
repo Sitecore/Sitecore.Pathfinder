@@ -9,6 +9,7 @@ using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -18,14 +19,22 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public abstract class TemplateTextNodeParserBase : TextNodeParserBase
     {
         [ImportingConstructor]
-        protected TemplateTextNodeParserBase([NotNull] IPipelineService pipelines, [NotNull] ISchemaService schemaService, double priority) : base(priority)
+        protected TemplateTextNodeParserBase([NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            Trace = trace;
             Pipelines = pipelines;
+            ReferenceParser = referenceParser;
             SchemaService = schemaService;
         }
 
         [NotNull]
+        protected ITraceService Trace { get; }
+
+        [NotNull]
         protected IPipelineService Pipelines { get; }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
         protected ISchemaService SchemaService { get; }
@@ -43,14 +52,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
             else if (itemNameTextNode.Value != Path.GetFileName(itemIdOrPath))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1034, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
+                Trace.TraceError(Msg.P1034, "Item name in 'ItemPath' and 'Name' does not match. Using 'Name'");
             }
 
             var guid = StringHelper.GetGuid(context.ParseContext.Project, textNode.GetAttributeValue("Id", itemIdOrPath));
             var databaseName = textNode.GetAttributeValue("Database", context.Database.DatabaseName);
             var database = context.ParseContext.Project.GetDatabase(databaseName);
 
-            var template = context.ParseContext.Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath).With(textNode);
+            var template = context.ParseContext.Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplateId);
             template.IconProperty.Parse(textNode);
@@ -60,7 +69,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             template.IsEmittable = textNode.GetAttributeBool(Constants.Fields.IsEmittable, true);
             template.IsImport = textNode.GetAttributeBool(Constants.Fields.IsImport, context.IsImport);
 
-            template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
+            template.References.AddRange(ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
@@ -90,7 +99,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             GetName(context.ParseContext, templateFieldTextNode, out string fieldName, out ITextNode fieldNameTextNode, "Field", "Name");
             if (string.IsNullOrEmpty(fieldName))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
+                Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
                 return;
             }
 
@@ -121,7 +130,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             {
                 if (template.StandardValuesItem == null)
                 {
-                    context.ParseContext.Trace.TraceError(Msg.P1006, Texts.Template_does_not_a_standard_values_item, standardValueTextNode);
+                    Trace.TraceError(Msg.P1006, Texts.Template_does_not_a_standard_values_item, standardValueTextNode);
                 }
                 else
                 {
@@ -134,7 +143,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
             }
 
-            template.References.AddRange(context.ParseContext.ReferenceParser.ParseReferences(template, templateField.SourceProperty));
+            template.References.AddRange(ReferenceParser.ParseReferences(template, templateField.SourceProperty));
         }
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)
@@ -144,7 +153,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             GetName(context.ParseContext, templateSectionTextNode, out string sectionName, out ITextNode sectionNameTextNode, "Section", "Name");
             if (string.IsNullOrEmpty(sectionName))
             {
-                context.ParseContext.Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);
+                Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);
                 return;
             }
 

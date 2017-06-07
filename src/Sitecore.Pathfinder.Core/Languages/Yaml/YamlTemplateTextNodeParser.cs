@@ -5,6 +5,7 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
@@ -13,7 +14,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlTemplateTextNodeParser : TemplateTextNodeParserBase
     {
         [ImportingConstructor]
-        public YamlTemplateTextNodeParser([NotNull] IPipelineService pipelines, [NotNull] ISchemaService schemaService) : base(pipelines, schemaService, Constants.TextNodeParsers.Templates)
+        public YamlTemplateTextNodeParser([NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(trace, pipelines, referenceParser, schemaService, Constants.TextNodeParsers.Templates)
         {
         }
 

@@ -1,6 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
@@ -25,9 +23,6 @@ namespace Sitecore.Pathfinder.Checking
 
         [NotNull]
         IProjectBase Project { get; }
-
-        [NotNull]
-        ITraceService Trace { get; }
 
         [NotNull]
         ICheckerContext With([NotNull] IProjectBase project);

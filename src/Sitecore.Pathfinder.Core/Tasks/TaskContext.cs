@@ -17,14 +17,17 @@ namespace Sitecore.Pathfinder.Tasks
             Trace = traceService;
         }
 
+        // keep this - for easy use in Tasks
         public IConfiguration Configuration { get; }
 
+        // keep this - for easy use in Tasks
         public IConsoleService Console { get; }
 
         public int ErrorCode { get; set; }
 
         public bool IsAborted { get; set; }
 
+        // keep this - for easy use in Tasks
         public ITraceService Trace { get; }
     }
 }

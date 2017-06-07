@@ -14,8 +14,5 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
 
         [NotNull, ItemNotNull]
         IEnumerable<IFieldCompiler> FieldCompilers { get; }
-
-        [NotNull]
-        ITraceService Trace { get; }
     }
 }

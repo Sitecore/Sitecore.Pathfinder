@@ -33,10 +33,11 @@ namespace Sitecore.Pathfinder.Checking
         private const string BasedOn = "based-on";
 
         [ImportingConstructor]
-        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
+        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService trace, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
         {
             Configuration = configuration;
             CompositionService = compositionService;
+            Trace = trace;
 
             var list = new List<CheckerInfo>();
 
@@ -64,6 +65,9 @@ namespace Sitecore.Pathfinder.Checking
 
         [NotNull]
         protected ICompositionService CompositionService { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -211,7 +215,7 @@ namespace Sitecore.Pathfinder.Checking
         {
             if (checker.Severity == CheckerSeverity.Default)
             {
-                context.Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
+                Trace.TraceDiagnostics(diagnostics, treatWarningsAsErrors);
                 return;
             }
 
@@ -229,7 +233,7 @@ namespace Sitecore.Pathfinder.Checking
                     break;
             }
 
-            context.Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
+            Trace.TraceDiagnostics(diagnostics, severity, treatWarningsAsErrors);
         }
     }
 }

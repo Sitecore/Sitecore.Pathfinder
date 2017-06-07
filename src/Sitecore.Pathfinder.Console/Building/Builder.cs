@@ -3,13 +3,13 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Tasks;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Building
 {
@@ -17,16 +17,13 @@ namespace Sitecore.Pathfinder.Building
     public class Builder : TaskRunnerBase
     {
         [ImportingConstructor]
-        public Builder([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull] ExportFactory<IBuildContext> buildContextFactory, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
+        public Builder([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
         {
             Console = console;
             FileSystem = fileSystem;
             ProjectService = projectService;
-            BuildContextFactory = buildContextFactory;
+            Factory = factory;
         }
-
-        [NotNull]
-        protected ExportFactory<IBuildContext> BuildContextFactory { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }
@@ -36,6 +33,9 @@ namespace Sitecore.Pathfinder.Building
 
         [NotNull]
         protected IProjectService ProjectService { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         public override int Start()
         {
@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Building
 
         protected virtual int BuildProject()
         {
-            var context = BuildContextFactory.New().With(LoadProject);
+            var context = Factory.BuildContext().With(LoadProject);
 
             RunTasks(context);
 

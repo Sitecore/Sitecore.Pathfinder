@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
+        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
             FileSystem = fileSystem;
         }
@@ -83,7 +83,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 
             _files.Add('/' + fileName);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+            Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             Zip.AddEntry("addedfiles/" + NormalizeZipPath(fileName), sourceFileAbsoluteFileName);
 
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         {
             _items.Add(item);
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
+            Trace.TraceInformation(Msg.I1011, "Publishing", item.ItemIdOrPath);
 
             var fileName = item.DatabaseName + PathHelper.NormalizeFilePath(item.ItemIdOrPath) + "_" + item.Uri.Guid.ToString("B");
 
@@ -149,7 +149,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
             var item = context.Project.Indexes.FindQualifiedItem<Item>(mediaFile.MediaItemUri);
             if (item == null)
             {
-                context.Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
+                Trace.TraceInformation(Msg.E1047, "No media item - skipping", mediaFile.Snapshot.SourceFile);
                 return;
             }
 

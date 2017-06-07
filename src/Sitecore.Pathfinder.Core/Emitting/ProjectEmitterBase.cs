@@ -18,10 +18,10 @@ namespace Sitecore.Pathfinder.Emitting
         private readonly object _syncObject = new object();
 
         [ImportingConstructor]
-        protected ProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
+        protected ProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ImportMany, NotNull, ItemNotNull] IEnumerable<IEmitter> emitters)
         {
             Configuration = configuration;
-            Trace = traceService;
+            Trace = trace;
             Emitters = emitters;
         }
 
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Emitting
             if (Configuration.GetBool(Constants.Configuration.InstallPackage.ShowDiagnostics))
             {
                 var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
-                context.Trace.TraceDiagnostics(project.Diagnostics, treatWarningsAsErrors);
+                Trace.TraceDiagnostics(project.Diagnostics, treatWarningsAsErrors);
             }
 
             project.Lock(Locking.ReadOnly);

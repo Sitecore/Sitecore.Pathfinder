@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public abstract class DirectoryProjectEmitterBase : ProjectEmitterBase
     {
-        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, traceService, emitters)
+        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 fileName = fileName.Mid(2);
             }
 
-            context.Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
+            Trace.TraceInformation(Msg.I1011, "Publishing", "~\\" + fileName);
 
             var forceUpdate = Configuration.GetBool(Constants.Configuration.BuildProject.ForceUpdate, true);
             var destinationFileName = PathHelper.Combine(OutputDirectory, fileName);

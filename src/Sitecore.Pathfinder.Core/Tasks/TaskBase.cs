@@ -1,6 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,6 +21,8 @@ namespace Sitecore.Pathfinder.Tasks
             TaskName = taskName;
             Alias = alias;
         }
+
+        public bool IsHidden { get; protected set; } = false;
 
         public string Alias { get; set; } = string.Empty;
 
@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Tasks
             // use default value, if any
             if (attribute.DefaultValue != null)
             {
-                return (bool)attribute.DefaultValue;
+                return (bool) attribute.DefaultValue;
             }
 
             // get from user using console
@@ -81,8 +81,7 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     return b == true;
                 }
-            }
-            while (true);
+            } while (true);
         }
 
         [NotNull]
@@ -115,7 +114,7 @@ namespace Sitecore.Pathfinder.Tasks
             // use default value, if any
             if (attribute.DefaultValue != null)
             {
-                return (string)attribute.DefaultValue;
+                return (string) attribute.DefaultValue;
             }
 
             // get from user using pick list
@@ -131,7 +130,7 @@ namespace Sitecore.Pathfinder.Tasks
                         continue;
                     }
 
-                    var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[]
+                    var tuples = (IEnumerable<(string Name, string Value)>) method.Invoke(this, new object[]
                     {
                         context
                     });
@@ -152,8 +151,7 @@ namespace Sitecore.Pathfinder.Tasks
                         {
                             return value;
                         }
-                    }
-                    while (true);
+                    } while (true);
                 }
             }
 
@@ -165,8 +163,7 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     return MatchPartialStringValue(context, attribute, property, value);
                 }
-            }
-            while (true);
+            } while (true);
         }
 
         protected virtual bool IsProjectConfigured([NotNull] ITaskContext context)
@@ -199,7 +196,7 @@ namespace Sitecore.Pathfinder.Tasks
                     continue;
                 }
 
-                var tuples = (IEnumerable<(string Name, string Value)>)method.Invoke(this, new object[]
+                var tuples = (IEnumerable<(string Name, string Value)>) method.Invoke(this, new object[]
                 {
                     context
                 });

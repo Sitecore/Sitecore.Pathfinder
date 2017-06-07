@@ -2,8 +2,6 @@
 
 using System.Collections.Generic;
 using System.Composition;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel;
-using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -12,22 +10,11 @@ namespace Sitecore.Pathfinder.Emitting
     [Export(typeof(IEmitContext))]
     public class EmitContext : IEmitContext
     {
-        [ImportingConstructor]
-        public EmitContext([NotNull] IConfiguration configuration, [NotNull] ITraceService traceService)
-        {
-            Configuration = configuration;
-            Trace = traceService;
-        }
-
-        public IConfiguration Configuration { get; }
-
         public ICollection<OutputFile> OutputFiles { get; } = new List<OutputFile>();
 
-        public IProjectBase Project { get; private set; }
+        public IProjectBase Project { get; private set; } = Projects.Project.Empty;
 
         public IProjectEmitter ProjectEmitter { get; protected set; }
-
-        public ITraceService Trace { get; }
 
         public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project)
         {

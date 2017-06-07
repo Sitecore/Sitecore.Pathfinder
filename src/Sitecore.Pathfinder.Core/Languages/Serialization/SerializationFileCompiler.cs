@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
         protected virtual int ParseField([NotNull] ICompileContext context, [NotNull] ITextSnapshot textSnapshot, [NotNull] ItemBuilder itemBuilder, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
         {
-            var textNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, 0), string.Empty, string.Empty);
+            var textNode = context.Factory.TextNode(textSnapshot, string.Empty, string.Empty, GetTextSpan(lineNumber, 0, 0));
 
             var fieldBuilder = new FieldBuilder(context.Factory).With(itemBuilder, textNode);
             itemBuilder.Fields.Add(fieldBuilder);
@@ -108,11 +108,11 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 {
                     case "field":
                         fieldBuilder.FieldId = value;
-                        fieldBuilder.FieldIdTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, lineLength), "field", value);
+                        fieldBuilder.FieldIdTextNode = context.Factory.TextNode(textSnapshot, "field", value, GetTextSpan(lineNumber, 0, lineLength));
                         break;
                     case "name":
                         fieldBuilder.FieldName = value;
-                        fieldBuilder.FieldNameTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, lineLength), "name", value);
+                        fieldBuilder.FieldNameTextNode = context.Factory.TextNode(textSnapshot, "name", value, GetTextSpan(lineNumber, 0, lineLength));
                         break;
                     case "key": break;
                 }
@@ -152,13 +152,13 @@ namespace Sitecore.Pathfinder.Languages.Serialization
 
                 value = sb.ToString().Trim().TrimEnd('\n', '\r');
                 fieldBuilder.Value = value;
-                fieldBuilder.ValueTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(startIndex, 0, contentLength), string.Empty, value);
+                fieldBuilder.ValueTextNode = context.Factory.TextNode(textSnapshot, string.Empty, value, GetTextSpan(startIndex, 0, contentLength));
                 return n - 1;
             }
 
             value = sb.ToString().Trim().TrimEnd('\n', '\r');
             fieldBuilder.Value = value;
-            fieldBuilder.ValueTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(startIndex, 0, contentLength), string.Empty, value);
+            fieldBuilder.ValueTextNode = context.Factory.TextNode(textSnapshot, string.Empty, value, GetTextSpan(startIndex, 0, contentLength));
             return lines.Length;
         }
 
@@ -214,12 +214,12 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                     case "parent": break;
                     case "name":
                         itemBuilder.ItemName = value;
-                        itemBuilder.ItemNameTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "name", value);
+                        itemBuilder.ItemNameTextNode = context.Factory.TextNode(textSnapshot, "name", value, GetTextSpan(n, 0, line.Length));
                         break;
                     case "master": break;
                     case "template":
                         itemBuilder.TemplateIdOrPath = value;
-                        itemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "template", value);
+                        itemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(textSnapshot, "template", value, GetTextSpan(n, 0, line.Length));
                         break;
                     case "templatekey": break;
                     case "version": break;
@@ -252,13 +252,13 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                 {
                     case "language":
                         languageVersionBuilder.Language = database.GetLanguage(value);
-                        languageVersionBuilder.LanguageTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "language", value);
+                        languageVersionBuilder.LanguageTextNode = context.Factory.TextNode(textSnapshot, "language", value, GetTextSpan(n, 0, line.Length));
                         break;
                     case "version":
                         if (Version.TryParse(value, out Version version))
                         {
                             languageVersionBuilder.Version = version;
-                            languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "version", value);
+                            languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, "version", value, GetTextSpan(n, 0, line.Length));
                         }
                         break;
                     case "revision": break;

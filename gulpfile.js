@@ -138,3 +138,7 @@ gulp.task("publish", function() {
 gulp.task("appveyor", function() {
     runSequence("build-dist-directory", ["build-npm-package", "build-zip-file"]);
 });
+
+gulp.task("generate-factory", function () {
+    return spawn("scc.cmd", ["generate-factory"], { stdio: "inherit", "cwd": "./src/Sitecore.Pathfinder.Core/Configuration/" });
+});

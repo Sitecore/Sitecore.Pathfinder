@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             var build = CompositionService.Resolve<Builder>();
 
-            foreach (var task in build.Tasks.OrderBy(t => t.TaskName))
+            foreach (var task in build.Tasks.Where(t => !t.IsHidden).OrderBy(t => t.TaskName))
             {
                 var summary = GetSummary(context, task);
                 context.Trace.WriteLine($"{task.TaskName} - {summary}");
@@ -161,7 +161,7 @@ namespace Sitecore.Pathfinder.Tasks
         private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
             var build = CompositionService.Resolve<Builder>();
-            var task = build.Tasks.FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
+            var task = build.Tasks.Where(t => !t.IsHidden).FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {
                 context.Trace.WriteLine($"Task not found: {taskName}");
