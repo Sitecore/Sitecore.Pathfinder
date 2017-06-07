@@ -3,6 +3,7 @@
 using System;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -14,9 +15,14 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     [Export(typeof(IPipelineProcessor)), Shared]
     public class CreateMissingParentItems : PipelineProcessorBase<CompilePipeline>
     {
-        public CreateMissingParentItems() : base(1600)
+        [ImportingConstructor]
+        public CreateMissingParentItems([NotNull] ITraceService trace) : base(1600)
         {
+            Trace = trace;
         }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         protected override void Process(CompilePipeline pipeline)
         {
@@ -34,7 +40,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 var path = item.ItemIdOrPath;
                 if (path.IndexOf('/') < 0)
                 {
-                    pipeline.Context.Trace.TraceWarning(Msg.C1134, "Item has no parent and no path", path);
+                    Trace.TraceWarning(Msg.C1134, "Item has no parent and no path", path);
                     continue;
                 }
 

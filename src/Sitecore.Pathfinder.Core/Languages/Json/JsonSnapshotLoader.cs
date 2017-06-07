@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(snapshotParseContext, sourceFile, contents);
+            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, contents);
 
             return jsonTextSnapshot;
         }

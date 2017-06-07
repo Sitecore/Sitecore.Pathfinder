@@ -126,7 +126,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
             {
                 output.WriteStartElement("field");
                 output.WriteFullElementString("fieldid", field.FieldId.Format());
-                output.WriteFullElementString("fieldname", field.FieldName);
+                output.WriteFullElementString("fieldname", field.FieldName);                             
                 output.WriteFullElementString("fieldkey", field.FieldName.ToLowerInvariant());
                 output.WriteFullElementString("fieldvalue", field.CompiledValue);
                 output.WriteEndElement();

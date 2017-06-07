@@ -16,13 +16,17 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     {
         // must come after RenderingCompiler, or renderings will not be found
         [ImportingConstructor]
-        public ItemLayoutFileCompiler([NotNull, ItemNotNull, ImportMany] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
+        public ItemLayoutFileCompiler([NotNull] ITraceService trace, [NotNull, ItemNotNull, ImportMany] IEnumerable<ILayoutFileCompiler> layoutFileCompilers) : base(9000)
         {
+            Trace = trace;
             LayoutFileCompilers = layoutFileCompilers;
         }
 
         [NotNull, ItemNotNull]
         protected IEnumerable<ILayoutFileCompiler> LayoutFileCompilers { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
@@ -61,7 +65,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
             if (!compiled)
             {
-                context.Trace.TraceError(Msg.C1063, Texts.Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled, TraceHelper.GetTextNode(property), property.GetValue());
+                Trace.TraceError(Msg.C1063, Texts.Element_has_a__Layout_File__attribute__but_it_could_not_be_compiled, TraceHelper.GetTextNode(property), property.GetValue());
             }
         }
     }

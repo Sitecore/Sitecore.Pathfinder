@@ -6,6 +6,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
@@ -17,9 +18,18 @@ namespace Sitecore.Pathfinder.Languages.Templates
     [Export(typeof(ICompiler)), Shared]
     public class TemplateCompiler : CompilerBase
     {
-        public TemplateCompiler() : base(1000)
+        [ImportingConstructor]
+        public TemplateCompiler([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser) : base(1000)
         {
+            Trace = trace;
+            ReferenceParser = referenceParser;
         }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
@@ -40,7 +50,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
             var standardTemplate = item.Database.FindQualifiedItem<Template>(Constants.Templates.StandardTemplateId);
             if (standardTemplate == null)
             {
-                context.Trace.TraceWarning(Msg.C1135, "Standard Template not found - are you missing a reference?");
+                Trace.TraceWarning(Msg.C1135, "Standard Template not found - are you missing a reference?");
                 return;
             }
 
@@ -49,7 +59,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
             var templateIdOrPathTextNode = item.GetTextNodes().Select(n => n.GetAttribute("Template")).FirstOrDefault(t => t != null);
             if (templateIdOrPathTextNode == null)
             {
-                context.Trace.TraceError(Msg.C1051, Texts.The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_, TraceHelper.GetTextNode(item));
+                Trace.TraceError(Msg.C1051, Texts.The__Template__attribute_must_be_specified_when__Template_CreateFromFields__equals_true_, TraceHelper.GetTextNode(item));
             }
 
             var itemTextNode = item.SourceTextNode;
@@ -71,7 +81,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
 
             if (!template.IsImport)
             {
-                template.References.AddRange(context.ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
+                template.References.AddRange(ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
             }
 
             if (item.Fields.Any())
@@ -124,7 +134,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                     nextSortOrder = templateField.Sortorder + 100;
 
                     // todo: added multiple times if merged
-                    template.References.AddRange(context.ReferenceParser.ParseReferences(template, templateField.SourceProperty));
+                    template.References.AddRange(ReferenceParser.ParseReferences(template, templateField.SourceProperty));
                 }
             }
 

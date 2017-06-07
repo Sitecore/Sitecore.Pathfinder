@@ -41,14 +41,14 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
-        public virtual void Parse(IProject project, IDiagnosticCollector diagnosticColletor, ISourceFile sourceFile)
+        public virtual void Parse(IProject project, ISourceFile sourceFile)
         {
             var pathMappingContext = new PathMappingContext(PathMapper);
             pathMappingContext.Parse(project, sourceFile);
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext);
 
-            var parseContext = ParseContextFactory.New().With(project, diagnosticColletor, snapshot, pathMappingContext);
+            var parseContext = ParseContextFactory.New().With(project, snapshot, pathMappingContext);
             foreach (var parser in Parsers.OrderBy(p => p.Priority))
             {
                 try

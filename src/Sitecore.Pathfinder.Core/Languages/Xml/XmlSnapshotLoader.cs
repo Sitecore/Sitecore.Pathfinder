@@ -5,7 +5,6 @@ using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
@@ -14,10 +13,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public XmlSnapshotLoader([NotNull] ICompositionService compositionService, [NotNull] IFileSystemService fileSystem)
+        public XmlSnapshotLoader([NotNull] ICompositionService compositionService)
         {
             CompositionService = compositionService;
-            FileSystem = fileSystem;
             Priority = 1000;
         }
 
@@ -30,9 +28,6 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         protected ICompositionService CompositionService { get; }
 
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
-
         public override bool CanLoad(ISourceFile sourceFile)
         {
             return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".xml", StringComparison.OrdinalIgnoreCase);
@@ -42,7 +37,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            return CompositionService.Resolve<XmlTextSnapshot>().With(snapshotParseContext, sourceFile, contents, SchemaNamespace, SchemaFileName);
+            return CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, contents, SchemaNamespace, SchemaFileName);
         }
     }
 }

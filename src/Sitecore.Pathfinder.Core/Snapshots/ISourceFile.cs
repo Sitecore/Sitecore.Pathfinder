@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
@@ -11,9 +10,6 @@ namespace Sitecore.Pathfinder.Snapshots
     {
         [NotNull]
         string AbsoluteFileName { get; }
-
-        [NotNull]
-        IFileSystemService FileSystem { get; }
 
         DateTime LastWriteTimeUtc { get; }
 

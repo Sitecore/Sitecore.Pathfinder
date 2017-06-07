@@ -103,7 +103,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         // ReSharper disable once InconsistentNaming
         public ID ID => new ID(FieldId);
 
-        public bool IsCompiled { get; set; }
+        protected bool IsCompiled { get; set; }
 
         [NotNull]
         public Item Item { get; set; }
@@ -123,7 +123,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string Name => FieldName;
 
         [NotNull]
-        public TemplateField TemplateField
+        public virtual TemplateField TemplateField
         {
             get
             {
@@ -157,14 +157,20 @@ namespace Sitecore.Pathfinder.Projects.Items
         [NotNull]
         public SourceProperty<Version> VersionProperty { get; }
 
-        public void Compile([NotNull] IFieldCompileContext context)
+        [NotNull]
+        public virtual string Compile([NotNull] IFieldCompileContext context)
         {
-            if (IsCompiled || !context.FieldCompilers.Any())
+            if (IsCompiled)
             {
-                return;
+                return CompiledValue;
             }
 
             CompiledValue = Value;
+
+            if (!context.FieldCompilers.Any())
+            {
+                return CompiledValue;
+            }
 
             foreach (var compiler in context.FieldCompilers.OrderBy(r => r.Priority))
             {
@@ -181,15 +187,17 @@ namespace Sitecore.Pathfinder.Projects.Items
                     break;
                 }
             }
+
+            return CompiledValue;
         }
 
-        public void Invalidate()
+        public virtual void Invalidate()
         {
             IsCompiled = false;
         }
 
         [NotNull]
-        public Field With([NotNull] ITextNode textNode)
+        public virtual Field With([NotNull] ITextNode textNode)
         {
             WithSourceTextNode(textNode);
             return this;

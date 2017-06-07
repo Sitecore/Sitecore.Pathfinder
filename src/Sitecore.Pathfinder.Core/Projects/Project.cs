@@ -25,7 +25,7 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects
 {
     [Export, Export(typeof(IProject)), DebuggerDisplay("{GetType().Name,nq}: {ProjectDirectory}")]
-    public class Project : SourcePropertyBag, IProject, IDiagnosticCollector
+    public class Project : SourcePropertyBag, IProject
     {
         [NotNull]
         public static readonly IProjectBase Empty = new Project();
@@ -171,14 +171,7 @@ namespace Sitecore.Pathfinder.Projects
                 SourceFiles.Add(absoluteFileName.ToUpperInvariant(), sourceFile);
             }
 
-            try
-            {
-                ParseService.Parse(this, this, sourceFile);
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(Msg.P1000, ex.Message, absoluteFileName);
-            }
+            Parse(sourceFile);
 
             return this;
         }
@@ -252,14 +245,22 @@ namespace Sitecore.Pathfinder.Projects
 
             _isChecked = true;
 
-            Lock(Locking.ReadOnly);
+            Trace.SetOut(CaptureTrace);
             try
             {
-                Checker.CheckProject(this, this);
+                Lock(Locking.ReadOnly);
+                try
+                {
+                    Checker.CheckProject(this);
+                }
+                finally
+                {
+                    Lock(Locking.ReadWrite);
+                }
             }
             finally
             {
-                Lock(Locking.ReadWrite);
+                Trace.SetOut(null);
             }
 
             return this;
@@ -269,7 +270,15 @@ namespace Sitecore.Pathfinder.Projects
         {
             var context = CompositionService.Resolve<ICompileContext>().With(this);
 
-            Pipelines.Resolve<CompilePipeline>().Execute(context, this);
+            Trace.SetOut(CaptureTrace);
+            try
+            {
+                Pipelines.Resolve<CompilePipeline>().Execute(context);
+            }
+            finally
+            {
+                Trace.SetOut(null);
+            }
 
             return this;
         }
@@ -284,7 +293,6 @@ namespace Sitecore.Pathfinder.Projects
 
             return database;
         }
-
 
         public void Lock(Locking locking)
         {
@@ -313,6 +321,18 @@ namespace Sitecore.Pathfinder.Projects
             Compile();
 
             return this;
+        }
+
+        protected virtual void CaptureTrace(int msg, [NotNull] string text, Severity severity, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details)
+        {
+            if (!string.IsNullOrEmpty(details))
+            {
+                text += ": " + details;
+            }
+
+            var diagnostic = Factory.Diagnostic(msg, fileName, textSpan, severity, text);
+
+            _diagnostics.Add(diagnostic);
         }
 
         [NotNull]
@@ -386,10 +406,24 @@ namespace Sitecore.Pathfinder.Projects
             return template;
         }
 
-        void IDiagnosticCollector.Add(Diagnostic diagnostic) => _diagnostics.Add(diagnostic);
-
-        void IDiagnosticCollector.Clear() => _diagnostics.Clear();
-
-        void IDiagnosticCollector.Remove(Diagnostic diagnostic) => _diagnostics.Remove(diagnostic);
+        protected virtual void Parse([NotNull] ISourceFile sourceFile)
+        {
+            Trace.SetOut(CaptureTrace);
+            try
+            {
+                try
+                {
+                    ParseService.Parse(this, sourceFile);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(Msg.P1000, ex.Message, sourceFile.AbsoluteFileName);
+                }
+            }
+            finally
+            {
+                Trace.SetOut(null);
+            }
+        }
     }
 }

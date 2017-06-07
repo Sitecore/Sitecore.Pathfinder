@@ -4,6 +4,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 {
     public class EmptyTraceService : ITraceService
     {
+        public TraceOutDelegate Out => null;
+
+        public void SetOut(TraceOutDelegate traceOut)
+        {
+        }
+
         public void TraceError(string text, string details = "")
         {
         }

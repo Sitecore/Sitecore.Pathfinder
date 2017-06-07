@@ -2,15 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public class EmptySourceFile : ISourceFile
     {
         public string AbsoluteFileName { get; } = string.Empty;
-
-        public IFileSystemService FileSystem { get; }
 
         public bool IsModified { get; set; } = false;
 

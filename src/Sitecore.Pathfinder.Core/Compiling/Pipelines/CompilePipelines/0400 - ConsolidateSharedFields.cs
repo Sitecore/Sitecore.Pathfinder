@@ -2,6 +2,7 @@
 
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
@@ -11,9 +12,14 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     {
         public const int ConsolidateSharedFieldsPriority = 400;
 
-        public ConsolidateSharedFields() : base(ConsolidateSharedFieldsPriority)
+        [ImportingConstructor]
+        public ConsolidateSharedFields([NotNull] ITraceService trace) : base(ConsolidateSharedFieldsPriority)
         {
+            Trace = trace;
         }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         protected override void Process(CompilePipeline pipeline)
         {
@@ -37,7 +43,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         {
                             if (field1.Value != field2.Value)
                             {
-                                pipeline.Context.Trace.TraceError(Msg.C1127, "Shared field appears multiple times with different values", field1.SourceTextNode, field1.FieldName);
+                                Trace.TraceError(Msg.C1127, "Shared field appears multiple times with different values", field1.SourceTextNode, field1.FieldName);
                                 break;
                             }
 
@@ -49,7 +55,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         {
                             if (field1.Value != field2.Value)
                             {
-                                pipeline.Context.Trace.TraceError(Msg.C1128, "Unversioned field appears multiple times with different values", field1.SourceTextNode, field1.FieldName);
+                                Trace.TraceError(Msg.C1128, "Unversioned field appears multiple times with different values", field1.SourceTextNode, field1.FieldName);
                                 break;
                             }
 

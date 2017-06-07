@@ -3,6 +3,7 @@
 using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -15,9 +16,14 @@ namespace Sitecore.Pathfinder.Languages.Media
     [Export(typeof(ICompiler)), Shared]
     public class MediaFileCompiler : CompilerBase
     {
-        public MediaFileCompiler() : base(1000)
+        [ImportingConstructor]
+        public MediaFileCompiler([NotNull] IConfiguration configuration) : base(1000)
         {
+            Configuration = configuration;
         }
+
+        [NotNull]
+        protected IConfiguration Configuration { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
@@ -31,7 +37,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 
             var extension = Path.GetExtension(mediaFile.Snapshot.SourceFile.AbsoluteFileName).TrimStart('.').ToLowerInvariant();
 
-            var templateIdOrPath = context.Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
+            var templateIdOrPath = Configuration.GetString(Constants.Configuration.BuildProject.MediaTemplate + ":" + extension, "/sitecore/templates/System/Media/Unversioned/File");
 
             var project = context.Project;
             var snapshot = mediaFile.Snapshot;

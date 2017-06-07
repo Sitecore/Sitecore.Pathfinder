@@ -4,8 +4,15 @@ using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Diagnostics
 {
+    public delegate void TraceOutDelegate(int msg, [NotNull] string text, Severity severity, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details);
+
     public interface ITraceService
     {
+        [CanBeNull]
+        TraceOutDelegate Out { get; }
+
+        void SetOut([CanBeNull] TraceOutDelegate traceOut);
+
         void TraceError([Localizable(true), NotNull] string text, [NotNull] string details = "");
 
         void TraceError([Localizable(true), NotNull] string text, [NotNull] string fileName, TextSpan span, [NotNull] string details = "");

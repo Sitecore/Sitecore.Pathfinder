@@ -138,6 +138,11 @@ namespace Sitecore.Pathfinder.Tasks
             foreach (var task in tasks)
             {
                 RunTask(context, task);
+
+                if (context.IsAborted)
+                {
+                    break;
+                }
             }
 
             if (context.IsAborted)

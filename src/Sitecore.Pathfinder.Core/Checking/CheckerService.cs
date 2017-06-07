@@ -68,9 +68,9 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         protected IConfiguration Configuration { get; }
 
-        public virtual void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector)
+        public virtual void CheckProject(IProjectBase project)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
+            var context = CompositionService.Resolve<ICheckerContext>().With(project);
 
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
@@ -80,9 +80,9 @@ namespace Sitecore.Pathfinder.Checking
             CheckProject(context, checkers, isMultiThreaded, treatWarningsAsErrors);
         }
 
-        public void CheckProject(IProjectBase project, IDiagnosticCollector diagnosticCollector, IEnumerable<string> checkerNames)
+        public void CheckProject(IProjectBase project, IEnumerable<string> checkerNames)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project, diagnosticCollector);
+            var context = CompositionService.Resolve<ICheckerContext>().With(project);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 

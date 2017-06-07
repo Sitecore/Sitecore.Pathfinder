@@ -7,7 +7,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
@@ -19,28 +18,19 @@ namespace Sitecore.Pathfinder.Languages.Json
         private ITextNode _root;
 
         [ImportingConstructor]
-        public JsonTextSnapshot([NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService) : base(snapshotService)
+        public JsonTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
-            FileSystem = fileSystem;
         }
 
         public override ITextNode Root => _root ?? (_root = RootToken != null ? Parse() : TextNode.Empty);
-
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
-
-        [NotNull]
-        protected SnapshotParseContext ParseContext { get; private set; }
 
         [CanBeNull, ItemNotNull]
         protected JToken RootToken { get; private set; }
 
         [NotNull]
-        public virtual JsonTextSnapshot With([NotNull] SnapshotParseContext snapshotParseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
+        public virtual JsonTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {
             base.With(sourceFile);
-
-            ParseContext = snapshotParseContext;
 
             try
             {

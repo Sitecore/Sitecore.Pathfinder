@@ -1,7 +1,10 @@
-﻿using System;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System;
 using System.Composition;
 using System.Runtime.Loader;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -15,19 +18,27 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
     public class BinFileCompiler : CompilerBase
     {
         [ImportingConstructor]
-        public BinFileCompiler([NotNull] IPipelineService pipelines) : base(1000)
+        public BinFileCompiler([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IPipelineService pipelines) : base(1000)
         {
+            Configuration = configuration;
+            Trace = trace;
             Pipelines = pipelines;
         }
 
         [NotNull]
+        protected IConfiguration Configuration { get; }
+
+        [NotNull]
         protected IPipelineService Pipelines { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem) => projectItem is BinFile;
 
         public override void Compile(ICompileContext context, IProjectItem projectItem)
         {
-            var include = context.Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesInclude);
+            var include = Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesInclude);
             if (string.IsNullOrEmpty(include))
             {
                 return;
@@ -36,7 +47,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
             var binFile = projectItem as BinFile;
             Assert.Cast(binFile, nameof(binFile));
 
-            var exclude = context.Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesExclude);
+            var exclude = Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesExclude);
 
             var pathMatcher = new PathMatcher(include, exclude);
             if (!pathMatcher.IsMatch(binFile.FilePath))
@@ -55,7 +66,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
             }
             catch (Exception ex)
             {
-                context.Trace.TraceError(Msg.C1059, ex.Message, binFile.FilePath);
+                Trace.TraceError(Msg.C1059, ex.Message, binFile.FilePath);
             }
         }
     }

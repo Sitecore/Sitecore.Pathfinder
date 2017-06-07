@@ -10,29 +10,31 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     [Export]
     public partial class YamlTextSnapshot : TextSnapshot
     {
+        [CanBeNull]
+        private ITextNode _root;
+
+        [NotNull]
+        private string _contents = string.Empty;
+
         [ImportingConstructor]
         public YamlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
         }
 
         [NotNull]
-        protected SnapshotParseContext ParseContext { get; private set; }
-
-        [NotNull]
-        public virtual YamlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents)
+        public virtual YamlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents)
         {
             base.With(sourceFile);
 
-            ParseContext = parseContext;
-
-            var tokenizer = new Tokenizer(contents);
-            Root = Parse(tokenizer, null) ?? TextNode.Empty;
+            _contents = contents;
 
             return this;
         }
 
+        public override ITextNode Root => _root ?? (_root = Parse(new Tokenizer(_contents)) ?? TextNode.Empty);
+
         [CanBeNull]
-        protected ITextNode Parse([NotNull] Tokenizer tokenizer, [CanBeNull] YamlTextNode parentTreeNode)
+        protected ITextNode Parse([NotNull] Tokenizer tokenizer)
         {
             if (tokenizer.Token == null)
             {
@@ -52,7 +54,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             {
                 if (tokenizer.Token.IsNested)
                 {
-                    var childNode = Parse(tokenizer, textNode);
+                    var childNode = Parse(tokenizer);
                     if (childNode != null)
                     {
                         childNodes.Add(childNode);

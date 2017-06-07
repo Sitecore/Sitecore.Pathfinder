@@ -9,6 +9,9 @@ namespace Sitecore.Pathfinder.Snapshots
     [Export]
     public class TextSnapshot : Snapshot, ITextSnapshot
     {
+        [CanBeNull]
+        private ITextNode _root;
+
         [ImportingConstructor]
         public TextSnapshot([NotNull] ISnapshotService snapshotService)
         {
@@ -19,20 +22,11 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public TextSpan ParseErrorTextSpan { get; protected set; } = TextSpan.Empty;
 
-        public virtual ITextNode Root { get; protected set; }
+        public virtual ITextNode Root => _root ?? (_root = new SnapshotTextNode(this));
 
         [NotNull]
         protected ISnapshotService SnapshotService { get; }
 
         public virtual bool ValidateSchema(IParseContext context) => true;
-
-        public override ISnapshot With(ISourceFile sourceFile)
-        {
-            base.With(sourceFile);
-
-            Root = new SnapshotTextNode(this);
-
-            return this;
-        }
     }
 }

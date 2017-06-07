@@ -8,26 +8,23 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public class AttributeNameTextNode : ITextNode
     {
-        [NotNull]
-        private readonly string _key;
-
         public AttributeNameTextNode([NotNull] ITextNode textNode)
         {
             TextNode = textNode;
-            _key = textNode.Key.UnescapeXmlElementName();
+            Key = textNode.Key.UnescapeXmlElementName();
         }
 
         public IEnumerable<ITextNode> Attributes => TextNode.Attributes;
 
         public IEnumerable<ITextNode> ChildNodes => TextNode.ChildNodes;
 
-        public string Key => _key;
+        public string Key { get; }
 
         public ISnapshot Snapshot => TextNode.Snapshot;
 
         public TextSpan TextSpan => TextNode.TextSpan;
 
-        public string Value => _key;
+        public string Value => Key;
 
         [NotNull]
         protected ITextNode TextNode { get; }

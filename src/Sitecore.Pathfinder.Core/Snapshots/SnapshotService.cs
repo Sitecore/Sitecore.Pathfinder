@@ -79,7 +79,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
             tokens.AddRange(project.Options.Tokens);
 
-            var snapshotParseContext = new SnapshotParseContext(this, project, tokens, new Dictionary<string, List<ITextNode>>());
+            var snapshotParseContext = new SnapshotParseContext(project, tokens);
             var snapshot = LoadSnapshot(snapshotParseContext, sourceFile);
 
             return snapshot;

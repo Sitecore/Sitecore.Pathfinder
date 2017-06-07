@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var context = CompositionService.Resolve<IFieldCompileContext>().With(pipeline.DiagnosticCollector);
+            var context = CompositionService.Resolve<IFieldCompileContext>();
 
             // tried to use multi-threading here, but compilers update the templates, which then throws an exception
             foreach (var field in pipeline.Context.Project.Items.SelectMany(item => item.Fields))

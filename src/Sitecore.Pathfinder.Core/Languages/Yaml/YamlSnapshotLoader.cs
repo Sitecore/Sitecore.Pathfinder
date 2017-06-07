@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(snapshotParseContext, sourceFile, contents);
+            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents);
 
             return yamlTextSnapshot;
         }

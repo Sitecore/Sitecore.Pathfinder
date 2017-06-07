@@ -5,6 +5,7 @@ using System.Text;
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
+using Sitecore.Pathfinder.Parsing.References;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Snapshots;
@@ -14,9 +15,18 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     [Export(typeof(ICompiler)), Shared]
     public class SerializationFileCompiler : CompilerBase
     {
-        public SerializationFileCompiler() : base(1000)
+        [ImportingConstructor]
+        public SerializationFileCompiler([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser) : base(1000)
         {
+            Trace = trace;
+            ReferenceParser = referenceParser;
         }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem)
         {
@@ -32,7 +42,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             var rootTextNode = textDocument.Root;
             if (rootTextNode == TextNode.Empty)
             {
-                context.Trace.TraceError(Msg.C1050, Texts.Document_is_not_valid, textDocument.SourceFile.AbsoluteFileName, TextSpan.Empty);
+                Trace.TraceError(Msg.C1050, Texts.Document_is_not_valid, textDocument.SourceFile.AbsoluteFileName, TextSpan.Empty);
                 return;
             }
 
@@ -44,10 +54,10 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             var item = itemBuilder.Build(serializationFile.Project, rootTextNode);
             item.IsEmittable = false;
 
-            item.References.AddRange(context.ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
+            item.References.AddRange(ReferenceParser.ParseReferences(item, item.TemplateIdOrPathProperty));
             foreach (var field in item.Fields)
             {
-                item.References.AddRange(context.ReferenceParser.ParseReferences(field));
+                item.References.AddRange(ReferenceParser.ParseReferences(field));
             }
 
             var addedItem = context.Project.AddOrMerge(item);
@@ -104,8 +114,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                         fieldBuilder.FieldName = value;
                         fieldBuilder.FieldNameTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(lineNumber, 0, lineLength), "name", value);
                         break;
-                    case "key":
-                        break;
+                    case "key": break;
                 }
 
                 if (name == "content-length")
@@ -202,22 +211,18 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                     case "path":
                         itemBuilder.ItemIdOrPath = value;
                         break;
-                    case "parent":
-                        break;
+                    case "parent": break;
                     case "name":
                         itemBuilder.ItemName = value;
                         itemBuilder.ItemNameTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "name", value);
                         break;
-                    case "master":
-                        break;
+                    case "master": break;
                     case "template":
                         itemBuilder.TemplateIdOrPath = value;
                         itemBuilder.TemplateIdOrPathTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "template", value);
                         break;
-                    case "templatekey":
-                        break;
-                    case "version":
-                        break;
+                    case "templatekey": break;
+                    case "version": break;
                 }
             }
 
@@ -256,8 +261,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
                             languageVersionBuilder.VersionTextNode = context.Factory.TextNode(textSnapshot, GetTextSpan(n, 0, line.Length), "version", value);
                         }
                         break;
-                    case "revision":
-                        break;
+                    case "revision": break;
                 }
             }
 

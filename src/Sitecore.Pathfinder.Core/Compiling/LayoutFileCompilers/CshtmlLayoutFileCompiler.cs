@@ -17,6 +17,15 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     [Export(typeof(ILayoutFileCompiler)), Shared]
     public class CshtmlLayoutFileCompiler : LayoutFileCompilerBase
     {
+        [ImportingConstructor]
+        public CshtmlLayoutFileCompiler([NotNull] ITraceService trace)
+        {
+            Trace = trace;
+        }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
+
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property)
         {
             var item = projectItem as Item;
@@ -49,13 +58,13 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             var renderings = item.Project.Indexes.GetByFileName<Rendering>(value).Where(r => r.Database == item.Database).ToList();
             if (!renderings.Any())
             {
-                context.Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
+                Trace.TraceError(Msg.C1060, Texts.Rendering_reference_not_found, TraceHelper.GetTextNode(property), value);
                 return;
             }
 
             if (renderings.Count > 1)
             {
-                context.Trace.TraceError(Msg.C1062, Texts.Ambiguous_file_name, TraceHelper.GetTextNode(property), value);
+                Trace.TraceError(Msg.C1062, Texts.Ambiguous_file_name, TraceHelper.GetTextNode(property), value);
                 return;
             }
 

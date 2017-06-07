@@ -16,9 +16,10 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [ImportingConstructor]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IReferenceParserService referenceParser)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IConsoleService console, [NotNull] IFactoryService factory, [NotNull] IReferenceParserService referenceParser)
         {
             Configuration = configuration;
+            Trace = trace;
             Console = console;
             Factory = factory;
             ReferenceParser = referenceParser;
@@ -49,14 +50,14 @@ namespace Sitecore.Pathfinder.Parsing
 
         public ISnapshot Snapshot { get; private set; }
 
-        public ITraceService Trace { get; private set; }
+        public ITraceService Trace { get; }
 
         public bool UploadMedia { get; private set; }
 
         [NotNull]
         protected IConsoleService Console { get; }
 
-        public IParseContext With(IProject project, IDiagnosticCollector diagnosticColletor, ISnapshot snapshot, PathMappingContext pathMappingContext)
+        public IParseContext With(IProject project, ISnapshot snapshot, PathMappingContext pathMappingContext)
         {
             Project = project;
             Snapshot = snapshot;
@@ -66,8 +67,6 @@ namespace Sitecore.Pathfinder.Parsing
             ItemPath = pathMappingContext.ItemPath;
             Database = pathMappingContext.Database;
             UploadMedia = pathMappingContext.UploadMedia;
-
-            Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(diagnosticColletor);
 
             return this;
         }

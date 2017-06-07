@@ -6,7 +6,6 @@ using System.Composition;
 using System.Xml;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -15,16 +14,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
     [Export]
     public class XmlTextSnapshot : TextSnapshot
     {
-        [NotNull]
-        protected static readonly object SchemasSync = new object();
-
         [CanBeNull]
         private ITextNode _root;
 
         [ImportingConstructor]
-        public XmlTextSnapshot([NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService) : base(snapshotService)
+        public XmlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
-            FileSystem = fileSystem;
         }
 
         public override ITextNode Root => _root ?? (_root = RootElement != null ? Parse(null, RootElement) : TextNode.Empty);
@@ -35,26 +30,16 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [NotNull]
         public string SchemaNamespace { get; private set; }
 
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
-
-        [NotNull]
-        protected SnapshotParseContext ParseContext { get; private set; }
-
-        [NotNull]
-        protected IProjectBase Project { get; private set; }
-
         [CanBeNull]
         protected XElement RootElement { get; private set; }
 
         [NotNull]
-        public virtual XmlTextSnapshot With([NotNull] SnapshotParseContext parseContext, [NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
+        public virtual XmlTextSnapshot With([NotNull] ISourceFile sourceFile, [NotNull] string contents, [NotNull] string schemaNamespace, [NotNull] string schemaFileName)
         {
             base.With(sourceFile);
 
             SchemaNamespace = schemaNamespace;
             SchemaFileName = schemaFileName;
-            ParseContext = parseContext;
 
             try
             {

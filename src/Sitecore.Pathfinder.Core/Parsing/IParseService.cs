@@ -8,6 +8,6 @@ namespace Sitecore.Pathfinder.Parsing
 {
     public interface IParseService
     {
-        void Parse([NotNull] IProject project, [NotNull] IDiagnosticCollector diagnosticColletor, [NotNull] ISourceFile sourceFile);
+        void Parse([NotNull] IProject project, [NotNull] ISourceFile sourceFile);
     }
 }

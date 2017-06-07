@@ -6,8 +6,6 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public interface ISnapshot
     {
-        SnapshotCapabilities Capabilities { get; }
-
         [NotNull]
         ISourceFile SourceFile { get; }
     }

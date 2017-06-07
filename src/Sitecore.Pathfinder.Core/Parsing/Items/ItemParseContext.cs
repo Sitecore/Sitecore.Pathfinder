@@ -2,7 +2,6 @@
 
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Parsing.Items
 {
@@ -30,9 +29,6 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         [NotNull]
         public ItemParser Parser { get; }
-
-        [NotNull]
-        public ITextSnapshot Snapshot => (ITextSnapshot)ParseContext.Snapshot;
 
         public int Sortorder { get; private set; }
 

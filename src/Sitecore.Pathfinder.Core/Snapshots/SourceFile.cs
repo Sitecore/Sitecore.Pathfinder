@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -14,12 +16,15 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         private string _fileNameWithoutExtensions;
 
-        public SourceFile([NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName, [NotNull] string relativeFileName, [NotNull] string projectFileName)
+        public SourceFile([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName)
         {
             FileSystem = fileSystem;
             AbsoluteFileName = absoluteFileName;
-            RelativeFileName = relativeFileName;
-            ProjectFileName = projectFileName;
+
+            var projectDirectory = configuration.GetProjectDirectory();
+
+            RelativeFileName = PathHelper.NormalizeFilePath(PathHelper.UnmapPath(projectDirectory, absoluteFileName)).TrimStart('\\');
+            ProjectFileName = "~/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(projectDirectory, PathHelper.GetDirectoryAndFileNameWithoutExtensions(absoluteFileName))).TrimStart('/');
 
             LastWriteTimeUtc = FileSystem.GetLastWriteTimeUtc(AbsoluteFileName);
         }
@@ -29,13 +34,14 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         public static ISourceFile Empty { get; } = new EmptySourceFile();
 
-        public IFileSystemService FileSystem { get; }
-
         public DateTime LastWriteTimeUtc { get; }
 
         public string ProjectFileName { get; }
 
         public string RelativeFileName { get; }
+
+        [NotNull]
+        protected IFileSystemService FileSystem { get; }
 
         public virtual string GetFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
 

@@ -8,9 +8,9 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public class FileNameTextNode : ITextNode
     {
-        public FileNameTextNode([NotNull] string itemName, [NotNull] ISnapshot snapshot)
+        public FileNameTextNode([NotNull] string fileName, [NotNull] ISnapshot snapshot)
         {
-            Value = itemName;
+            Value = fileName;
             Snapshot = snapshot;
         }
 

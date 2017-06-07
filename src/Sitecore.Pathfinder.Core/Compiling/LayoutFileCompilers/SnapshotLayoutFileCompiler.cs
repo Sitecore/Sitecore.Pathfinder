@@ -21,8 +21,9 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     public class SnapshotLayoutFileCompiler : LayoutFileCompilerBase
     {
         [ImportingConstructor]
-        public SnapshotLayoutFileCompiler([NotNull] IFileSystemService fileSystem, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper)
+        public SnapshotLayoutFileCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IFactoryService factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper)
         {
+            Trace = trace;
             FileSystem = fileSystem;
             Factory = factory;
             SnapshotService = snapshotService;
@@ -31,6 +32,9 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         [NotNull]
         protected IFactoryService Factory { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -104,7 +108,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             fileName = Path.Combine(project.ProjectDirectory, fileName);
             if (!FileSystem.FileExists(fileName))
             {
-                context.Trace.TraceError(Msg.C1061, Texts.File_not_found, fileName);
+                Trace.TraceError(Msg.C1061, Texts.File_not_found, fileName);
                 return;
             }
 
@@ -117,7 +121,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(context.Trace, project, item.Database, snapshot);
+            var layoutResolveContext = new LayoutCompileContext(Trace, project, item.Database, snapshot);
             var layoutCompiler = new LayoutCompiler(FileSystem);
 
             var xml = layoutCompiler.Compile(layoutResolveContext, snapshot.Root);

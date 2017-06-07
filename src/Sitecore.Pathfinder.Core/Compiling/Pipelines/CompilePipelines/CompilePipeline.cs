@@ -3,7 +3,6 @@
 using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
-using Sitecore.Pathfinder.Projects;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 {
@@ -12,13 +11,9 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
         [NotNull]
         public ICompileContext Context { get; private set; }
 
-        [NotNull]
-        public IDiagnosticCollector DiagnosticCollector { get; private set; }
-
-        public void Execute([NotNull] ICompileContext context, [NotNull] IDiagnosticCollector diagnosticCollector)
+        public void Execute([NotNull] ICompileContext context)
         {
             Context = context;
-            DiagnosticCollector = diagnosticCollector;
 
             Execute();
         }

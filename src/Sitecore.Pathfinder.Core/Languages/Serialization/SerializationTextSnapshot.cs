@@ -12,7 +12,6 @@ namespace Sitecore.Pathfinder.Languages.Serialization
         [ImportingConstructor]
         public SerializationTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
-            Capabilities = SnapshotCapabilities.None;
         }
     }
 }

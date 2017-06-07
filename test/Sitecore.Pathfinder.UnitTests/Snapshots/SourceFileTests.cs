@@ -19,13 +19,12 @@ namespace Sitecore.Pathfinder.Snapshots
             Start();
             Project = Services.ProjectService.LoadProjectFromConfiguration();
 
-            var projectFileName = "~/items/yaml/ribbon.content.yaml";
             var fileName = Path.Combine(ProjectDirectory, "items\\yaml\\ribbon.content.yaml");
-            var sourceFile = new SourceFile(Services.FileSystem, fileName, fileName, projectFileName);
+            var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, fileName);
 
             Assert.AreEqual(fileName, sourceFile.AbsoluteFileName);
             Assert.AreNotEqual(DateTime.MinValue, sourceFile.LastWriteTimeUtc);
-            Assert.AreEqual("~/items/yaml/ribbon.content.yaml", sourceFile.ProjectFileName);
+            Assert.AreEqual("~/items/yaml/ribbon", sourceFile.ProjectFileName);
         }
     }
 }

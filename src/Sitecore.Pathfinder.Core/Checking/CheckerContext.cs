@@ -3,7 +3,6 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Globalization;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -16,12 +15,10 @@ namespace Sitecore.Pathfinder.Checking
     public class CheckerContext : ICheckerContext
     {
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem, [NotNull] IFactoryService factory)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem)
         {
-            Configuration = configuration;
-            Console = console;
+            Trace = trace;
             FileSystem = fileSystem;
-            Factory = factory;
 
             Culture = configuration.GetCulture();
             IsDeployable = true;
@@ -41,22 +38,11 @@ namespace Sitecore.Pathfinder.Checking
 
         public IProjectBase Project { get; private set; }
 
-        public ITraceService Trace { get; private set; }
+        public ITraceService Trace { get; }
 
-        [NotNull]
-        protected IConfiguration Configuration { get; }
-
-        [NotNull]
-        protected IConsoleService Console { get; }
-
-        [NotNull]
-        protected IFactoryService Factory { get; }
-
-        public ICheckerContext With(IProjectBase project, IDiagnosticCollector collector)
+        public ICheckerContext With(IProjectBase project)
         {
             Project = project;
-
-            Trace = new DiagnosticTraceService(Configuration, Console, Factory).With(collector);
 
             return this;
         }

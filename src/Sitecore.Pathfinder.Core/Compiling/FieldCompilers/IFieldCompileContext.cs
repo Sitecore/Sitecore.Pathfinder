@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 
@@ -13,16 +12,10 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         [NotNull]
         CultureInfo Culture { get; }
 
-        [NotNull]
-        IFactoryService Factory { get; }
-
         [NotNull, ItemNotNull]
         IEnumerable<IFieldCompiler> FieldCompilers { get; }
 
         [NotNull]
         ITraceService Trace { get; }
-
-        [NotNull]
-        IFieldCompileContext With([NotNull] IDiagnosticCollector diagnosticCollector);
     }
 }

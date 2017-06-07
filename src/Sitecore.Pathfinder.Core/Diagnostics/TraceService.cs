@@ -44,6 +44,8 @@ namespace Sitecore.Pathfinder.Diagnostics
             IgnoredMessages = ignoredMessages;
         }
 
+        public TraceOutDelegate Out { get; private set; }
+
         [NotNull]
         protected IConfiguration Configuration { get; }
 
@@ -52,6 +54,11 @@ namespace Sitecore.Pathfinder.Diagnostics
 
         [NotNull, ItemNotNull]
         protected IEnumerable<string> IgnoredMessages { get; }
+
+        public void SetOut(TraceOutDelegate traceOut)
+        {
+            Out = traceOut;
+        }
 
         public void TraceError(string text, string details = "")
         {
@@ -180,6 +187,12 @@ namespace Sitecore.Pathfinder.Diagnostics
                 return;
             }
 
+            if (Out != null)
+            {
+                Out(msg, text, severity, fileName, textSpan, details);
+                return;
+            }
+
             if (!string.IsNullOrEmpty(details))
             {
                 text += ": " + details;
@@ -198,8 +211,12 @@ namespace Sitecore.Pathfinder.Diagnostics
 
             var lineInfo = textSpan.Length == 0 ? $"({textSpan.LineNumber},{textSpan.LinePosition})" : $"({textSpan.LineNumber},{textSpan.LinePosition},{textSpan.LineNumber},{textSpan.LinePosition + textSpan.Length})";
 
+            var lineInfoText = $"{fileInfo}{lineInfo}: ";
+            var msgText = $" SCC{msg:0000}: ";
+            var severityText = severity.ToString().ToLowerInvariant();
+
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write($"{fileInfo}{lineInfo}: ");
+            Console.Write(lineInfoText);
 
             switch (severity)
             {
@@ -214,10 +231,10 @@ namespace Sitecore.Pathfinder.Diagnostics
                     break;
             }
 
-            Console.Write(severity.ToString().ToLowerInvariant());
+            Console.Write(severityText);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write(@" SCC{0}: ", msg.ToString("0000"));
+            Console.Write(msgText);
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(text);

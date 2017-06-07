@@ -19,9 +19,9 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         [TestMethod]
         public void GetNestedTextNodeTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
 
             var fields = root;
@@ -35,21 +35,21 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         [TestMethod]
         public void InvalidJsonTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "\"Item\": { }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "\"Item\": { }");
             Assert.AreEqual(TextNode.Empty, doc.Root);
 
-            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, string.Empty);
+            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, string.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
         }
 
         [TestMethod]
         public void ItemTests()
         {
-            var sourceFile = new SourceFile(Services.FileSystem, "test.txt", "test.txt", "test.txt");
+            var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(SnapshotParseContext.Empty, sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
             Assert.IsNotNull(root);
             Assert.AreEqual("Item", root.Key);

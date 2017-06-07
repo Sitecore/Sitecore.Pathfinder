@@ -50,6 +50,6 @@ namespace Sitecore.Pathfinder.Parsing
         bool UploadMedia { get; }
 
         [NotNull]
-        IParseContext With([NotNull] IProject project, [NotNull] IDiagnosticCollector diagnosticColletor, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
+        IParseContext With([NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext);
     }
 }
