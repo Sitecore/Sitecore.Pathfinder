@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Parsing.References;
@@ -17,7 +18,7 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         [ImportingConstructor]
-        public JsonLayoutTextNodeParser([NotNull] IReferenceParserService referenceParserService) : base(referenceParserService, Constants.TextNodeParsers.Layouts)
+        public JsonLayoutTextNodeParser([NotNull] IFactory factory, [NotNull] IReferenceParserService referenceParserService) : base(factory, referenceParserService, Constants.TextNodeParsers.Layouts)
         {
         }
 

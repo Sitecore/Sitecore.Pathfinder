@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Parsing.References;
@@ -19,14 +20,18 @@ namespace Sitecore.Pathfinder.Languages.Templates
     public class TemplateCompiler : CompilerBase
     {
         [ImportingConstructor]
-        public TemplateCompiler([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser) : base(1000)
+        public TemplateCompiler([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser) : base(1000)
         {
+            Factory = factory;
             Trace = trace;
             ReferenceParser = referenceParser;
         }
 
         [NotNull]
         protected IReferenceParserService ReferenceParser { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -67,7 +72,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
 
             var itemName = itemIdOrPath.Mid(itemIdOrPath.LastIndexOf('/') + 1);
             var guid = StringHelper.GetGuid(item.Project, itemTextNode.GetAttributeValue("Template.Id", itemIdOrPath));
-            var template = context.Factory.Template(item.Database, guid, itemName, itemIdOrPath).With(itemTextNode);
+            var template = Factory.Template(item.Database, guid, itemName, itemIdOrPath).With(itemTextNode);
 
             template.ItemNameProperty.AddSourceTextNode(templateIdOrPathTextNode);
             template.ItemNameProperty.Flags = SourcePropertyFlags.IsQualified;
@@ -89,7 +94,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                 var templateSectionGuid = StringHelper.GetGuid(projectItem.Project, template.ItemIdOrPath + "/Fields");
 
                 // section
-                var templateSection = context.Factory.TemplateSection(template, templateSectionGuid);
+                var templateSection = Factory.TemplateSection(template, templateSectionGuid);
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue("Fields");
                 templateSection.IconProperty.SetValue("Applications/16x16/form_blue.png");
@@ -110,7 +115,7 @@ namespace Sitecore.Pathfinder.Languages.Templates
                     if (templateField == null)
                     {
                         var templateFieldGuid = StringHelper.GetGuid(projectItem.Project, template.ItemIdOrPath + "/Fields/" + field.FieldName);
-                        templateField = context.Factory.TemplateField(template, templateFieldGuid).With(childNode);
+                        templateField = Factory.TemplateField(template, templateFieldGuid).With(childNode);
                         templateSection.Fields.Add(templateField);
 
                         templateField.FieldNameProperty.SetValue(field.FieldNameProperty);

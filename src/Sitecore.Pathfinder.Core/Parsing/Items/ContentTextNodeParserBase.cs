@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -16,6 +17,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public abstract class ContentTextNodeParserBase : TextNodeParserBase
     {
         [NotNull]
+        protected IFactory Factory { get; }
+
+        [NotNull]
         protected ITraceService Trace { get; }
 
         [NotNull]
@@ -24,8 +28,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
         [NotNull]
         protected ISchemaService SchemaService { get; }
 
-        protected ContentTextNodeParserBase([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
+        protected ContentTextNodeParserBase([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            Factory = factory;
             Trace = trace;
             ReferenceParser = referenceParser;
             SchemaService = schemaService;
@@ -52,7 +57,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var database = context.ParseContext.Project.GetDatabase(databaseName);
             var templateIdOrPath = textNode.GetAttributeValue("TemplateName", textNode.Key.UnescapeXmlElementName());
 
-            var item = context.ParseContext.Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
+            var item = Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, templateIdOrPath).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             item.TemplateIdOrPathProperty.AddSourceTextNode(new AttributeNameTextNode(textNode));
             item.SortorderProperty.Parse(textNode, context.Sortorder);
@@ -124,7 +129,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 return;
             }
 
-            var field = context.ParseContext.Factory.Field(item).With(fieldTextNode);
+            var field = Factory.Field(item).With(fieldTextNode);
             field.FieldNameProperty.SetValue(new AttributeNameTextNode(fieldTextNode));
             field.LanguageProperty.SetValue(languageVersionContext.LanguageProperty);
             field.VersionProperty.SetValue(languageVersionContext.VersionProperty);
@@ -151,7 +156,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             foreach (var childNode in itemsTextNode.ChildNodes)
             {
-                var newContext = context.ParseContext.Factory.ItemParseContext(context.ParseContext, context.Parser, item.Database, item.ItemIdOrPath, item.IsImport).With(sortorder);
+                var newContext = Factory.ItemParseContext(context.ParseContext, context.Parser, item.Database, item.ItemIdOrPath, item.IsImport).With(sortorder);
                 context.Parser.ParseTextNode(newContext, childNode);
             }
         }

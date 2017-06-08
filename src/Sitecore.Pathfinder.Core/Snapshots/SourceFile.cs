@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -16,6 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots
         [CanBeNull]
         private string _fileNameWithoutExtensions;
 
+        [FactoryConstructor]
         public SourceFile([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName)
         {
             FileSystem = fileSystem;

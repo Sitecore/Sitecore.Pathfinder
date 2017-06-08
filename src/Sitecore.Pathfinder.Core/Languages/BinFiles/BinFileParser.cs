@@ -2,6 +2,8 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.BinFiles
@@ -11,9 +13,14 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
     {
         private const string FileExtension = ".dll";
 
-        public BinFileParser() : base(Constants.Parsers.BinFiles)
+        [ImportingConstructor]
+        public BinFileParser([NotNull] IFactory factory) : base(Constants.Parsers.BinFiles)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -27,7 +34,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
         public override void Parse(IParseContext context)
         {
-            var binFile = context.Factory.BinFile(context.Project, context.Snapshot, context.FilePath);
+            var binFile = Factory.BinFile(context.Project, context.Snapshot, context.FilePath);
             context.Project.AddOrMerge(binFile);
         }
     }

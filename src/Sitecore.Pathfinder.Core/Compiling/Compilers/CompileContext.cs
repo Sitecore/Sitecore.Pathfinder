@@ -13,15 +13,12 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
     {
         [FactoryConstructor]
         [ImportingConstructor]
-        public CompileContext([NotNull] IFactory factory, [ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
+        public CompileContext([ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
         {
-            Factory = factory;
             Compilers = compilers;
         }
 
         public IEnumerable<ICompiler> Compilers { get; }
-
-        public IFactory Factory { get; }
 
         public IProject Project { get; private set; } = (IProject) Projects.Project.Empty;
 

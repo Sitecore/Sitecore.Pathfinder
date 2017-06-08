@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,7 +18,7 @@ using Sitecore.Pathfinder.Languages.Xml;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
-using Sitecore.Pathfinder.Tasks.Building;
+using File = Sitecore.Pathfinder.Projects.Files.File;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters
 {
@@ -31,8 +32,9 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
+            Factory = factory;
             FileSystem = fileSystem;
         }
 
@@ -42,10 +44,10 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         [NotNull]
         public ZipWriter Zip { get; protected set; }
 
-        public override bool CanEmit(string format)
-        {
-            return string.Equals(format, "update", StringComparison.OrdinalIgnoreCase);
-        }
+        [NotNull]
+        protected IFactory Factory { get; }
+
+        public override bool CanEmit(string format) => string.Equals(format, "update", StringComparison.OrdinalIgnoreCase);
 
         public override void Emit(IEmitContext context, IProject project)
         {
@@ -68,10 +70,10 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 EmitMetaData();
             }
 
-            context.OutputFiles.Add(new OutputFile(fileName));
+            context.OutputFiles.Add(Factory.OutputFile(fileName));
         }
 
-        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] Projects.Files.File file)
+        public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] File file)
         {
             var sourceFileAbsoluteFileName = file.Snapshot.SourceFile.AbsoluteFileName;
 
@@ -257,14 +259,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                     EmitMediaFile(context, mediaFile);
                     unemittedItems.Remove(projectItem);
                 }
-                else if (projectItem is Projects.Files.File file)
+                else if (projectItem is File file)
                 {
                     EmitFile(context, file);
                     unemittedItems.Remove(projectItem);
                 }
                 else if (projectItem is Item item)
                 {
-                    var sourcePropertyBag = (ISourcePropertyBag)item;
+                    var sourcePropertyBag = (ISourcePropertyBag) item;
                     if (item.IsEmittable || sourcePropertyBag.GetValue<string>("__origin_reason") == nameof(CreateItemsFromTemplates))
                     {
                         EmitItem(context, item);

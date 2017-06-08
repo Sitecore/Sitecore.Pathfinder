@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using NuGet.Packaging;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -30,11 +31,15 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Template> _templates = new List<Template>();
 
         [ImportingConstructor]
-        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
+            Factory = factory;
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory) + "\\content");
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         public IFileSystemService FileSystem { get; }
@@ -209,7 +214,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 }
             }
 
-            context.OutputFiles.Add(new OutputFile(fileName));
+            context.OutputFiles.Add(Factory.OutputFile(fileName));
         }
 
         protected virtual void EmitReset([NotNull] XmlWriter writer)

@@ -243,8 +243,7 @@ namespace Sitecore.Pathfinder.Projects
             }
             else if (typeof(T) == typeof(Items.Version))
             {
-                Items.Version version;
-                if (!Items.Version.TryParse(textNode.Value, out version))
+                if (!Items.Version.TryParse(textNode.Value, out var version))
                 {
                     throw new InvalidOperationException("Cannot convert string to version");
                 }
@@ -282,10 +281,7 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public override string ToString()
-        {
-            return GetValue().ToString();
-        }
+        public override string ToString() => GetValue().ToString();
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CanBeNull] string propertyName = null)

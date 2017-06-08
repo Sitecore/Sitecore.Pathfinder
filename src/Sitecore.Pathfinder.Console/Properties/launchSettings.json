@@ -2,7 +2,7 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "b /pause",
+      "commandLineArgs": "generate-factory /pause",
       "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Hello"
     }
   }

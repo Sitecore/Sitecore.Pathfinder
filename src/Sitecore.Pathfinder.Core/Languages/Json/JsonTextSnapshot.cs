@@ -6,6 +6,7 @@ using System.Composition;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -18,6 +19,7 @@ namespace Sitecore.Pathfinder.Languages.Json
         private ITextNode _root;
 
         [ImportingConstructor]
+        [FactoryConstructor]
         public JsonTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
         }

@@ -3,6 +3,7 @@
 using System;
 using System.Composition;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
@@ -14,19 +15,15 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public JsonLayoutFieldCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
+        public JsonLayoutFieldCompiler([NotNull] IFactory factory) : base(Constants.FieldCompilers.Normal)
         {
-            Trace = trace;
-            FileSystem = fileSystem;
+            Factory = factory;
         }
 
         public override bool IsExclusive { get; } = true;
 
         [NotNull]
-        protected ITraceService Trace { get; }
-
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFactory Factory { get; }
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
@@ -53,10 +50,10 @@ namespace Sitecore.Pathfinder.Languages.Json
                 return field.Value;
             }
 
-            var layoutCompileContext = new LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
+            var layoutCompileContext = Factory.LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
+            var layoutCompiler = Factory.LayoutCompiler();
 
-            var compiler = new LayoutCompiler(Trace, FileSystem);
-            return compiler.Compile(layoutCompileContext, textNode);
+            return layoutCompiler.Compile(layoutCompileContext, textNode);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -18,7 +19,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
         private static readonly Regex PlaceholderRegex = new Regex("\\@Html\\.Sitecore\\(\\)\\.Placeholder\\(([^\"\\)]*)\"([^\"]*)\"\\)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         [ImportingConstructor]
-        public ViewRenderingParser([NotNull] IConfiguration configuration) : base(configuration, ".cshtml", Constants.Templates.ViewRenderingId)
+        public ViewRenderingParser([NotNull] IConfiguration configuration, [NotNull] IFactory factory) : base(configuration, factory, ".cshtml", Constants.Templates.ViewRenderingId)
         {
         }
 

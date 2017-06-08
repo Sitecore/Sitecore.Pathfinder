@@ -1,5 +1,8 @@
-﻿using System.Composition;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -11,13 +14,17 @@ namespace Sitecore.Pathfinder.Languages.Media
     public class MediaFileParser : ParserBase
     {
         [ImportingConstructor]
-        public MediaFileParser([NotNull] IConfiguration configuration) : base(Constants.Parsers.Media)
+        public MediaFileParser([NotNull] IConfiguration configuration, [NotNull] IFactory factory) : base(Constants.Parsers.Media)
         {
             Configuration = configuration;
+            Factory = factory;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -34,7 +41,7 @@ namespace Sitecore.Pathfinder.Languages.Media
 
         public override void Parse(IParseContext context)
         {
-            var mediaFile = context.Factory.MediaFile(context.Database, context.Snapshot, context.ItemName, context.ItemPath, context.FilePath);
+            var mediaFile = Factory.MediaFile(context.Database, context.Snapshot, context.ItemName, context.ItemPath, context.FilePath);
             mediaFile.UploadMedia = context.UploadMedia;
             context.Project.AddOrMerge(mediaFile);
 

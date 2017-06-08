@@ -12,7 +12,6 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Languages.BinFiles;
 
 namespace Sitecore.Pathfinder.Extensibility
 {

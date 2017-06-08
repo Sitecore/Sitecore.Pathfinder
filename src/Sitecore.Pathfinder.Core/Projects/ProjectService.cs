@@ -7,20 +7,18 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.ProjectTrees;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Projects
 {
     [Export(typeof(IProjectService)), Shared]
     public class ProjectService : IProjectService
     {
+        [FactoryConstructor]
         [ImportingConstructor]
-        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ExportFactory<IProject> projectFactory, [NotNull] ExportFactory<IProjectTree> projectTreeFactory)
+        public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactory factory)
         {
             Configuration = configuration;
             Factory = factory;
-            ProjectFactory = projectFactory;
-            ProjectTreeFactory = projectTreeFactory;
         }
 
         [NotNull]
@@ -29,16 +27,7 @@ namespace Sitecore.Pathfinder.Projects
         [NotNull]
         protected IFactory Factory { get; }
 
-        [NotNull]
-        protected ExportFactory<IProject> ProjectFactory { get; }
-
-        [NotNull]
-        protected ExportFactory<IProjectTree> ProjectTreeFactory { get; }
-
-        public virtual IProject LoadProject(ProjectOptions projectOptions, IEnumerable<string> sourceFiles)
-        {
-            return ProjectFactory.New().With(projectOptions, sourceFiles);
-        }
+        public virtual IProject LoadProject(ProjectOptions projectOptions, IEnumerable<string> sourceFiles) => Factory.Project(projectOptions, sourceFiles);
 
         public virtual IProject LoadProjectFromConfiguration()
         {
@@ -62,9 +51,9 @@ namespace Sitecore.Pathfinder.Projects
                 return null;
             }
 
-            var context = host.CompositionService.Resolve<IBuildContext>().With(() =>
+            var context = host.Factory.BuildContext().With(() =>
             {
-                var projectService = host.CompositionService.Resolve<IProjectService>();
+                var projectService = host.Factory.ProjectService();
                 return projectService.LoadProjectFromConfiguration();
             });
 
@@ -72,9 +61,6 @@ namespace Sitecore.Pathfinder.Projects
         }
 
         [NotNull]
-        protected virtual IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions)
-        {
-            return ProjectTreeFactory.New().With(Configuration.GetToolsDirectory(), Configuration.GetProjectDirectory());
-        }
+        protected virtual IProjectTree GetProjectTree([NotNull] ProjectOptions projectOptions) => Factory.ProjectTree(Configuration.GetToolsDirectory(), Configuration.GetProjectDirectory());
     }
 }

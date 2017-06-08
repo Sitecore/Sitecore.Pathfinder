@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.IO;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -18,14 +19,17 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public abstract class TemplateTextNodeParserBase : TextNodeParserBase
     {
-        [ImportingConstructor]
-        protected TemplateTextNodeParserBase([NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
+        protected TemplateTextNodeParserBase([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {
+            Factory = factory;
             Trace = trace;
             Pipelines = pipelines;
             ReferenceParser = referenceParser;
             SchemaService = schemaService;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -59,7 +63,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var databaseName = textNode.GetAttributeValue("Database", context.Database.DatabaseName);
             var database = context.ParseContext.Project.GetDatabase(databaseName);
 
-            var template = context.ParseContext.Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath);
+            var template = Factory.Template(database, guid, itemNameTextNode.Value, itemIdOrPath);
             template.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
             template.BaseTemplatesProperty.Parse(textNode, Constants.Templates.StandardTemplateId);
             template.IconProperty.Parse(textNode);
@@ -74,7 +78,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             // create standard values item
             var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
             var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
-            var standardValuesItem = context.ParseContext.Factory.Item(database, standardValuesGuid, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
+            var standardValuesItem = Factory.Item(database, standardValuesGuid, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
             standardValuesItem.IsImport = template.IsImport;
 
             // todo: should be Uri
@@ -109,7 +113,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var itemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName + "/" + fieldName;
                 var guid = StringHelper.GetGuid(template.Project, templateFieldTextNode.GetAttributeValue("Id", itemIdOrPath));
 
-                templateField = context.ParseContext.Factory.TemplateField(template, guid).With(templateFieldTextNode);
+                templateField = Factory.TemplateField(template, guid).With(templateFieldTextNode);
                 templateSection.Fields.Add(templateField);
                 templateField.FieldNameProperty.SetValue(fieldNameTextNode);
                 templateField.FieldName = fieldName;
@@ -135,7 +139,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 else
                 {
                     // todo: support language and version
-                    var field = context.ParseContext.Factory.Field(template.StandardValuesItem).With(standardValueTextNode);
+                    var field = Factory.Field(template.StandardValuesItem).With(standardValueTextNode);
                     field.FieldNameProperty.SetValue(fieldNameTextNode);
                     field.ValueProperty.SetValue(standardValueTextNode);
 
@@ -163,7 +167,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var itemIdOrPath = template.ItemIdOrPath + "/" + sectionName;
                 var guid = StringHelper.GetGuid(template.Project, templateSectionTextNode.GetAttributeValue("Id", itemIdOrPath));
 
-                templateSection = context.ParseContext.Factory.TemplateSection(template, guid).With(templateSectionTextNode);
+                templateSection = Factory.TemplateSection(template, guid).With(templateSectionTextNode);
                 templateSection.SectionNameProperty.SetValue(sectionNameTextNode);
                 templateSection.SectionName = sectionName;
 

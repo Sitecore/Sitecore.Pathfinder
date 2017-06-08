@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Languages.Renderings;
@@ -18,7 +19,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     public class CshtmlLayoutFileCompiler : LayoutFileCompilerBase
     {
         [ImportingConstructor]
-        public CshtmlLayoutFileCompiler([NotNull] ITraceService trace)
+        public CshtmlLayoutFileCompiler([NotNull] IFactory factory, [NotNull] ITraceService trace) : base(factory)
         {
             Trace = trace;
         }
@@ -34,7 +35,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return false;
             }
 
-            var sourcePropertyBag = (ISourcePropertyBag)item;
+            var sourcePropertyBag = (ISourcePropertyBag) item;
             if (!sourcePropertyBag.ContainsSourceProperty(LayoutFileItemParser.LayoutFile))
             {
                 return false;

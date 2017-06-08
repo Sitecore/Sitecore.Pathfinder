@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Composition;
 using System.Xml;
 using System.Xml.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
@@ -17,6 +17,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         [CanBeNull]
         private ITextNode _root;
 
+        [FactoryConstructor]
         [ImportingConstructor]
         public XmlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
@@ -25,10 +26,10 @@ namespace Sitecore.Pathfinder.Languages.Xml
         public override ITextNode Root => _root ?? (_root = RootElement != null ? Parse(null, RootElement) : TextNode.Empty);
 
         [NotNull]
-        public string SchemaFileName { get; private set; }
+        public string SchemaFileName { get; private set; } = string.Empty;
 
         [NotNull]
-        public string SchemaNamespace { get; private set; }
+        public string SchemaNamespace { get; private set; } = string.Empty;
 
         [CanBeNull]
         protected XElement RootElement { get; private set; }

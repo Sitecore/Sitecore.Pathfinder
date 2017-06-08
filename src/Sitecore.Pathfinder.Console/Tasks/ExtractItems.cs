@@ -11,12 +11,10 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.IO.Zip;
 using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -25,12 +23,11 @@ namespace Sitecore.Pathfinder.Tasks
     public class ExtractItems : BuildTaskBase
     {
         [ImportingConstructor]
-        public ExtractItems([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IFactory factory, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
+        public ExtractItems([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
         {
-            CompositionService = compositionService;
             Configuration = configuration;
-            FileSystem = fileSystem;
             Factory = factory;
+            FileSystem = fileSystem;
             ProjectService = projectService;
             ProjectEmitters = projectEmitters;
         }
@@ -47,8 +44,6 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         public IProjectService ProjectService { get; }
 
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -201,7 +196,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var projectEmitter in projectEmitters)
             {
-                var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project);
+                var emitContext = Factory.EmitContext(projectEmitter, project);
 
                 projectEmitter.Emit(emitContext, project);
 

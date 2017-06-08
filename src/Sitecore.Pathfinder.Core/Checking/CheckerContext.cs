@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Composition;
 using System.Globalization;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -12,6 +13,7 @@ namespace Sitecore.Pathfinder.Checking
     [Export(typeof(ICheckerContext))]
     public class CheckerContext : ICheckerContext
     {
+        [FactoryConstructor]
         [ImportingConstructor]
         public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
         {

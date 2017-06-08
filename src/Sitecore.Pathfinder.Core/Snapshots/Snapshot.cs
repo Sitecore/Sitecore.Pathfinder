@@ -2,6 +2,7 @@
 
 using System.Composition;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
@@ -9,6 +10,12 @@ namespace Sitecore.Pathfinder.Snapshots
     [Export, DebuggerDisplay("\\{{GetType().Name,nq}\\}: ProjectFileName: {SourceFile.ProjectFileName}")]
     public class Snapshot : ISnapshot
     {
+        [FactoryConstructor]
+        [ImportingConstructor]
+        public Snapshot()
+        {
+        }
+
         [NotNull]
         public static readonly ISnapshot Empty = new Snapshot().With(Snapshots.SourceFile.Empty);
 

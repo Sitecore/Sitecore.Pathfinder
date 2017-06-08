@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
@@ -14,20 +15,22 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 {
     public abstract class LayoutFileCompilerBase : ILayoutFileCompiler
     {
+        [NotNull]
+        protected IFactory Factory { get; }
+
+        protected LayoutFileCompilerBase([NotNull] IFactory factory)
+        {
+            Factory = factory;
+        }
+
         public abstract bool CanCompile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property);
 
         public abstract void Compile(ICompileContext context, IProjectItem projectItem, SourceProperty<string> property);
 
         protected virtual void CreateLayout([NotNull] ICompileContext context, [NotNull] Item item, Guid layoutId)
         {
-            var settings = new XmlWriterSettings
-            {
-                Encoding = new UTF8Encoding(false),
-                Indent = true
-            };
-
             var writer = new StringBuilder();
-            using (var output = XmlWriter.Create(writer, settings))
+            using (var output = Factory.XmlWriter(writer))
             {
                 output.WriteStartElement("r");
 
@@ -54,14 +57,8 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
 
         protected virtual void CreateLayoutWithRendering([NotNull] ICompileContext context, [NotNull] Item item, Guid layoutId, Guid renderingId, [NotNull] string placeholderKey)
         {
-            var settings = new XmlWriterSettings
-            {
-                Encoding = new UTF8Encoding(false),
-                Indent = true
-            };
-
             var writer = new StringBuilder();
-            using (var output = XmlWriter.Create(writer, settings))
+            using (var output = Factory.XmlWriter(writer))
             {
                 output.WriteStartElement("r");
 
@@ -101,7 +98,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
             var field = item.Fields["__Renderings"];
             if (field == null)
             {
-                field = context.Factory.Field(item, "__Renderings", value);
+                field = Factory.Field(item, "__Renderings", value);
                 item.Fields.Add(field);
             }
             else

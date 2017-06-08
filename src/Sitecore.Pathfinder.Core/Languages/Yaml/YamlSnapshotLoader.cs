@@ -3,8 +3,8 @@
 using System;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
@@ -12,15 +12,15 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     [Export(typeof(ISnapshotLoader)), Shared]
     public class YamlSnapshotLoader : SnapshotLoaderBase
     {
+        [NotNull]
+        protected IFactory Factory { get; }
+
         [ImportingConstructor]
-        public YamlSnapshotLoader([NotNull] ICompositionService compositionService)
+        public YamlSnapshotLoader([NotNull] IFactory factory)
         {
-            CompositionService = compositionService;
+            Factory = factory;
             Priority = 1000;
         }
-
-        [NotNull]
-        protected ICompositionService CompositionService { get; }
 
         public override bool CanLoad(ISourceFile sourceFile)
         {
@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var yamlTextSnapshot = CompositionService.Resolve<YamlTextSnapshot>().With(sourceFile, contents);
+            var yamlTextSnapshot = Factory.YamlTextSnapshot(sourceFile, contents);
 
             return yamlTextSnapshot;
         }

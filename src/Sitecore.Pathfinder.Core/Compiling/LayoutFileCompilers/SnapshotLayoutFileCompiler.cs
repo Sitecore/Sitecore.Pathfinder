@@ -4,7 +4,6 @@ using System;
 using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Compilers;
-using Sitecore.Pathfinder.Compiling.FieldCompilers;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -21,17 +20,13 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     public class SnapshotLayoutFileCompiler : LayoutFileCompilerBase
     {
         [ImportingConstructor]
-        public SnapshotLayoutFileCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] IFactory factory, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper)
+        public SnapshotLayoutFileCompiler([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper) : base(factory)
         {
             Trace = trace;
             FileSystem = fileSystem;
-            Factory = factory;
             SnapshotService = snapshotService;
             PathMapper = pathMapper;
         }
-
-        [NotNull]
-        protected IFactory Factory { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -112,7 +107,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, fileName);
+            var sourceFile = Factory.SourceFile(fileName);
             var pathMappingContext = new PathMappingContext(PathMapper).Parse(project, sourceFile);
 
             var snapshot = SnapshotService.LoadSnapshot(project, sourceFile, pathMappingContext) as ITextSnapshot;
@@ -121,8 +116,8 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
                 return;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(project, item.Database, snapshot);
-            var layoutCompiler = new LayoutCompiler(Trace, FileSystem);
+            var layoutResolveContext = Factory.LayoutCompileContext(project, item.Database, snapshot);
+            var layoutCompiler = Factory.LayoutCompiler();
 
             var xml = layoutCompiler.Compile(layoutResolveContext, snapshot.Root);
 

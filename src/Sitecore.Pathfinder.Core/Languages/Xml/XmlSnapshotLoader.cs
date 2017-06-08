@@ -1,10 +1,8 @@
-﻿// © 2015 Sitecore Corporation A/S. All rights reserved.
-
-using System;
+﻿using System;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Xml
@@ -13,9 +11,9 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public XmlSnapshotLoader([NotNull] ICompositionService compositionService)
+        public XmlSnapshotLoader([NotNull] IFactory factory)
         {
-            CompositionService = compositionService;
+            Factory = factory;
             Priority = 1000;
         }
 
@@ -26,18 +24,15 @@ namespace Sitecore.Pathfinder.Languages.Xml
         public string SchemaNamespace { get; protected set; } = string.Empty;
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected IFactory Factory { get; }
 
-        public override bool CanLoad(ISourceFile sourceFile)
-        {
-            return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".xml", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanLoad(ISourceFile sourceFile) => string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".xml", StringComparison.OrdinalIgnoreCase);
 
         public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            return CompositionService.Resolve<XmlTextSnapshot>().With(sourceFile, contents, SchemaNamespace, SchemaFileName);
+            return Factory.XmlTextSnapshot(sourceFile, contents, SchemaNamespace, SchemaFileName);
         }
     }
 }

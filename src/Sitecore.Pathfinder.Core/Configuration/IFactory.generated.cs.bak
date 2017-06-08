@@ -58,9 +58,6 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Compiling.FieldCompilers.IFieldCompileContext FieldCompileContext();
 
         [NotNull]
-        Sitecore.Pathfinder.Projects.Files.File File([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string filePath);
-
-        [NotNull]
         Sitecore.Pathfinder.ProjectTrees.FileProjectTreeItem FileProjectTreeItem([NotNull] Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, [NotNull] string fileName);
 
         [NotNull]

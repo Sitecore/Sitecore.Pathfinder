@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -16,9 +17,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public class ItemParser : ParserBase
     {
         [ImportingConstructor]
-        public ItemParser([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
+        public ItemParser([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] ISchemaService schemaService, [ImportMany, NotNull, ItemNotNull] IEnumerable<ITextNodeParser> textNodeParsers) : base(Constants.Parsers.Items)
         {
             Configuration = configuration;
+            Factory = factory;
             Trace = trace;
             SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
@@ -34,6 +36,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -67,7 +72,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             }
 
             var parentItemPath = PathHelper.GetItemParentPath(context.ItemPath);
-            var itemParseContext = context.Factory.ItemParseContext(context, this, context.Database, parentItemPath, false);
+            var itemParseContext = Factory.ItemParseContext(context, this, context.Database, parentItemPath, false);
 
             ParseTextNode(itemParseContext, textNode);
         }

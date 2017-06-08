@@ -2,6 +2,7 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing.Items;
 using Sitecore.Pathfinder.Parsing.References;
@@ -13,7 +14,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         [ImportingConstructor]
-        public YamlLayoutTextNodeParser([NotNull] IReferenceParserService referenceParserService) : base(referenceParserService, Constants.TextNodeParsers.Layouts)
+        public YamlLayoutTextNodeParser([NotNull] IFactory factory, [NotNull] IReferenceParserService referenceParserService) : base(factory, referenceParserService, Constants.TextNodeParsers.Layouts)
         {
         }
 

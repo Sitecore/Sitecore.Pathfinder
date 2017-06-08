@@ -3,6 +3,7 @@
 using System.Composition;
 using System.IO;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -17,13 +18,17 @@ namespace Sitecore.Pathfinder.Languages.Media
     public class MediaFileCompiler : CompilerBase
     {
         [ImportingConstructor]
-        public MediaFileCompiler([NotNull] IConfiguration configuration) : base(1000)
+        public MediaFileCompiler([NotNull] IConfiguration configuration, [NotNull] IFactory factory) : base(1000)
         {
             Configuration = configuration;
+            Factory = factory;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         public override bool CanCompile(ICompileContext context, IProjectItem projectItem) => projectItem is MediaFile;
 
@@ -40,7 +45,7 @@ namespace Sitecore.Pathfinder.Languages.Media
             var snapshot = mediaFile.Snapshot;
             var guid = StringHelper.GetGuid(project, mediaFile.ItemPath);
 
-            var item = context.Factory.Item(mediaFile.Database, guid, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(new SnapshotTextNode(snapshot));
+            var item = Factory.Item(mediaFile.Database, guid, mediaFile.ItemName, mediaFile.ItemPath, string.Empty).With(Factory.SnapshotTextNode(snapshot));
             item.IsEmittable = false;
             item.OverwriteWhenMerging = true;
             item.MergingMatch = MergingMatch.MatchUsingSourceFile;
@@ -50,15 +55,15 @@ namespace Sitecore.Pathfinder.Languages.Media
 
             var fileInfo = new FileInfo(mediaFile.Snapshot.SourceFile.AbsoluteFileName);
 
-            item.Fields.Add(context.Factory.Field(item, "Extension", mediaFile.Extension.Mid(1)).With(item.SourceTextNode));
-            item.Fields.Add(context.Factory.Field(item, "Size", fileInfo.Length.ToString()).With(item.SourceTextNode));
-            item.Fields.Add(context.Factory.Field(item, "Blob", mediaFile.Uri.Guid.Format()).With(item.SourceTextNode));
+            item.Fields.Add(Factory.Field(item, "Extension", mediaFile.Extension.Mid(1)).With(item.SourceTextNode));
+            item.Fields.Add(Factory.Field(item, "Size", fileInfo.Length.ToString()).With(item.SourceTextNode));
+            item.Fields.Add(Factory.Field(item, "Blob", mediaFile.Uri.Guid.Format()).With(item.SourceTextNode));
 
             foreach (var language in item.Database.Languages)
             {
-                var altField = context.Factory.Field(item, "Alt", mediaFile.ItemName).With(item.SourceTextNode);
+                var altField = Factory.Field(item, "Alt", mediaFile.ItemName).With(item.SourceTextNode);
                 altField.Language = language;
-                altField.Version = context.Factory.Version(1);
+                altField.Version = Factory.Version(1);
                 item.Fields.Add(altField);
             }
 

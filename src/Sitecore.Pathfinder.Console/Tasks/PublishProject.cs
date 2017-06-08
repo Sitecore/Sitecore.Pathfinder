@@ -3,9 +3,9 @@
 using System.Collections.Generic;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Emitting;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Tasks.Building;
 
@@ -15,20 +15,20 @@ namespace Sitecore.Pathfinder.Tasks
     public class PublishProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public PublishProject([NotNull] ICompositionService compositionService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
+        public PublishProject([NotNull] IFactory factory, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
         {
-            CompositionService = compositionService;
+            Factory = factory;
             ProjectEmitters = projectEmitters;
 
             Alias = "publish";
             Shortcut = "p";
         }
 
-        [NotNull]
-        public ICompositionService CompositionService { get; }
-
         [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
         public string Format { get; set; } = "package";
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [ItemNotNull, NotNull]
         protected IEnumerable<IProjectEmitter> ProjectEmitters { get; }
@@ -54,7 +54,7 @@ namespace Sitecore.Pathfinder.Tasks
 
             foreach (var projectEmitter in projectEmitters)
             {
-                var emitContext = CompositionService.Resolve<IEmitContext>().With(projectEmitter, project);
+                var emitContext = Factory.EmitContext(projectEmitter, project);
 
                 projectEmitter.Emit(emitContext, project);
 

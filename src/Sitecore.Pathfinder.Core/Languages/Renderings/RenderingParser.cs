@@ -1,6 +1,9 @@
-﻿using System;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
@@ -11,19 +14,24 @@ namespace Sitecore.Pathfinder.Languages.Renderings
 {
     public abstract class RenderingParser : ParserBase
     {
-        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
+        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] string fileExtension, [NotNull] string templateIdOrPath) : base(Constants.Parsers.Renderings)
         {
             Configuration = configuration;
+            Factory = factory;
             FileExtension = fileExtension;
             TemplateIdOrPath = templateIdOrPath;
         }
 
-        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] string fileExtension, [NotNull] string templateIdOrPath, double priority) : base(priority)
+        protected RenderingParser([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] string fileExtension, [NotNull] string templateIdOrPath, double priority) : base(priority)
         {
             Configuration = configuration;
+            Factory = factory;
             FileExtension = fileExtension;
             TemplateIdOrPath = templateIdOrPath;
         }
+
+        [NotNull]
+        public IFactory Factory { get; }
 
         [NotNull]
         public string TemplateIdOrPath { get; }
@@ -53,7 +61,7 @@ namespace Sitecore.Pathfinder.Languages.Renderings
                 return;
             }
 
-            var rendering = context.Factory.Rendering(context.Database, context.Snapshot, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
+            var rendering = Factory.Rendering(context.Database, context.Snapshot, context.ItemPath, context.ItemName, context.FilePath, TemplateIdOrPath);
             context.Project.AddOrMerge(rendering);
 
             var contents = context.Snapshot.SourceFile.ReadAsText();

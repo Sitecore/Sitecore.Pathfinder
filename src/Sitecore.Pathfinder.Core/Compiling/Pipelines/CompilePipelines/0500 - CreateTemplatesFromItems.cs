@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
@@ -17,13 +18,18 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     {
         public const int CreateTemplatesFromItemsPriority = 500;
 
-        public CreateTemplatesFromItems() : base(CreateTemplatesFromItemsPriority)
+        [ImportingConstructor]
+        public CreateTemplatesFromItems([NotNull] IFactory factory) : base(CreateTemplatesFromItemsPriority)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         protected virtual void CreateTemplate([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Item templateItem)
         {
-            var template = context.Factory.Template(templateItem.Database, templateItem.Uri.Guid, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
+            var template = Factory.Template(templateItem.Database, templateItem.Uri.Guid, templateItem.ItemName, templateItem.ItemIdOrPath).With(templateItem.SourceTextNode, false, templateItem.IsImport);
             template.IsSynthetic = true;
 
             var baseTemplateField = templateItem.Fields.FirstOrDefault(f => f.FieldName == Constants.FieldNames.BaseTemplate);
@@ -40,7 +46,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             foreach (var sectionItem in templateItem.Children)
             {
-                var templateSection = context.Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
+                var templateSection = Factory.TemplateSection(template, sectionItem.Uri.Guid).With(sectionItem.SourceTextNode);
                 templateSection.IsSynthetic = true;
                 template.Sections.Add(templateSection);
                 templateSection.SectionNameProperty.SetValue(sectionItem.ItemNameProperty);
@@ -62,7 +68,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                 foreach (var fieldItem in sectionItem.Children)
                 {
-                    var templateField = context.Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
+                    var templateField = Factory.TemplateField(template, fieldItem.Uri.Guid).With(fieldItem.SourceTextNode);
                     templateField.IsSynthetic = true;
                     templateSection.Fields.Add(templateField);
                     templateField.FieldNameProperty.SetValue(fieldItem.ItemNameProperty);

@@ -3,6 +3,7 @@
 using System.Composition;
 using System.Linq;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -16,22 +17,27 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     [Export(typeof(IPipelineProcessor)), Shared]
     public class CreateItemsFromTemplates : PipelineProcessorBase<CompilePipeline>
     {
-        public CreateItemsFromTemplates() : base(1500)
+        [NotNull]
+        protected IFactory Factory { get; }
+
+        [ImportingConstructor]
+        public CreateItemsFromTemplates([NotNull] IFactory factory) : base(1500)
         {
+            Factory = factory;
         }
 
         protected virtual void CreateItems([NotNull] ICompileContext context, [NotNull] IProject project, [NotNull] Template template)
         {
-            var item = context.Factory.Item(template.Database, template.Uri.Guid, template.ItemName, template.ItemIdOrPath, Constants.Templates.TemplateId).With(template.SourceTextNode);
+            var item = Factory.Item(template.Database, template.Uri.Guid, template.ItemName, template.ItemIdOrPath, Constants.Templates.TemplateId).With(template.SourceTextNode);
             item.IsEmittable = false;
             item.IsImport = template.IsImport;
             item.IsSynthetic = true;
             item.IconProperty.SetValue(template.IconProperty);
-            item.Fields.Add(context.Factory.Field(item, Constants.FieldNames.BaseTemplate, template.BaseTemplates).With(template.BaseTemplatesProperty.SourceTextNode));
+            item.Fields.Add(Factory.Field(item, Constants.FieldNames.BaseTemplate, template.BaseTemplates).With(template.BaseTemplatesProperty.SourceTextNode));
 
             if (!string.IsNullOrEmpty(template.LongHelp))
             {
-                var field = context.Factory.Field(item, Constants.FieldNames.LongDescription, template.LongHelp).With(template.LongHelpProperty.SourceTextNode);
+                var field = Factory.Field(item, Constants.FieldNames.LongDescription, template.LongHelp).With(template.LongHelpProperty.SourceTextNode);
                 field.Language = context.Project.Context.Language;
                 field.Version = Version.Latest;
                 item.Fields.Add(field);
@@ -39,7 +45,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
             if (!string.IsNullOrEmpty(template.ShortHelp))
             {
-                var field = context.Factory.Field(item, Constants.FieldNames.ShortDescription, template.ShortHelp).With(template.ShortHelpProperty.SourceTextNode);
+                var field = Factory.Field(item, Constants.FieldNames.ShortDescription, template.ShortHelp).With(template.ShortHelpProperty.SourceTextNode);
                 field.Language = context.Project.Context.Language;
                 field.Version = Version.Latest;
                 item.Fields.Add(field);
@@ -51,7 +57,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
             foreach (var templateSection in template.Sections)
             {
                 var templateSectionItemIdOrPath = template.ItemIdOrPath + "/" + templateSection.SectionName;
-                var templateSectionItem = context.Factory.Item(template.Database, templateSection.Uri.Guid, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSection.Format()).With(templateSection.SourceTextNode);
+                var templateSectionItem = Factory.Item(template.Database, templateSection.Uri.Guid, templateSection.SectionName, templateSectionItemIdOrPath, Constants.Templates.TemplateSection.Format()).With(templateSection.SourceTextNode);
                 templateSectionItem.IsEmittable = false;
                 templateSectionItem.IsImport = template.IsImport;
                 templateSectionItem.IsSynthetic = true;
@@ -62,14 +68,14 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                 foreach (var templateField in templateSection.Fields)
                 {
                     var templateFieldItemIdOrPath = templateSectionItemIdOrPath + "/" + templateField.FieldName;
-                    var templateFieldItem = context.Factory.Item(template.Database, templateField.Uri.Guid, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateFieldId).With(templateField.SourceTextNode);
+                    var templateFieldItem = Factory.Item(template.Database, templateField.Uri.Guid, templateField.FieldName, templateFieldItemIdOrPath, Constants.Templates.TemplateFieldId).With(templateField.SourceTextNode);
                     templateFieldItem.IsEmittable = false;
                     templateFieldItem.IsImport = template.IsImport;
                     templateFieldItem.IsSynthetic = true;
 
                     if (!string.IsNullOrEmpty(templateField.LongHelp))
                     {
-                        var field = context.Factory.Field(templateFieldItem, Constants.FieldNames.LongDescription, templateField.LongHelp).With(templateField.LongHelpProperty.SourceTextNode);
+                        var field = Factory.Field(templateFieldItem, Constants.FieldNames.LongDescription, templateField.LongHelp).With(templateField.LongHelpProperty.SourceTextNode);
                         field.Language = context.Project.Context.Language;
                         field.Version = Version.Latest;
                         templateFieldItem.Fields.Add(field);
@@ -77,17 +83,17 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
 
                     if (!string.IsNullOrEmpty(templateField.ShortHelp))
                     {
-                        var field = context.Factory.Field(templateFieldItem, Constants.FieldNames.ShortDescription, templateField.ShortHelp).With(templateField.ShortHelpProperty.SourceTextNode);
+                        var field = Factory.Field(templateFieldItem, Constants.FieldNames.ShortDescription, templateField.ShortHelp).With(templateField.ShortHelpProperty.SourceTextNode);
                         field.Language = context.Project.Context.Language;
                         field.Version = Version.Latest;
                         templateFieldItem.Fields.Add(field);
                     }
 
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, Constants.FieldNames.Shared, templateField.Shared ? "True" : "False"));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, Constants.FieldNames.Unversioned, templateField.Unversioned ? "True" : "False"));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, Constants.FieldNames.Source, templateField.Source).With(templateField.SourceProperty.SourceTextNode));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, Constants.FieldNames.SortOrder, templateField.Sortorder.ToString()).With(templateField.SortorderProperty.SourceTextNode));
-                    templateFieldItem.Fields.Add(context.Factory.Field(templateFieldItem, Constants.FieldNames.Type, templateField.Type).With(templateField.TypeProperty.SourceTextNode));
+                    templateFieldItem.Fields.Add(Factory.Field(templateFieldItem, Constants.FieldNames.Shared, templateField.Shared ? "True" : "False"));
+                    templateFieldItem.Fields.Add(Factory.Field(templateFieldItem, Constants.FieldNames.Unversioned, templateField.Unversioned ? "True" : "False"));
+                    templateFieldItem.Fields.Add(Factory.Field(templateFieldItem, Constants.FieldNames.Source, templateField.Source).With(templateField.SourceProperty.SourceTextNode));
+                    templateFieldItem.Fields.Add(Factory.Field(templateFieldItem, Constants.FieldNames.SortOrder, templateField.Sortorder.ToString()).With(templateField.SortorderProperty.SourceTextNode));
+                    templateFieldItem.Fields.Add(Factory.Field(templateFieldItem, Constants.FieldNames.Type, templateField.Type).With(templateField.TypeProperty.SourceTextNode));
                     ((ISourcePropertyBag)templateFieldItem).NewSourceProperty("__origin", item.Uri);
                     ((ISourcePropertyBag)templateFieldItem).NewSourceProperty("__origin_reason", nameof(CreateItemsFromTemplates));
 

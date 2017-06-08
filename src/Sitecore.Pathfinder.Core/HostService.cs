@@ -2,9 +2,9 @@
 
 using System.Composition;
 using System.Diagnostics;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Tasks;
 
 namespace Sitecore.Pathfinder
@@ -13,19 +13,19 @@ namespace Sitecore.Pathfinder
     public class HostService : IHostService
     {
         [ImportingConstructor]
-        public HostService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService)
+        public HostService([NotNull] IConfiguration configuration, [NotNull] IFactory factory)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
+            Factory = factory;
         }
-
-        public ICompositionService CompositionService { get; }
 
         public IConfiguration Configuration { get; }
 
+        public IFactory Factory { get; }
+
         public Stopwatch Stopwatch { get; private set; }
 
-        public T GetTaskRunner<T>() where T : ITaskRunner => CompositionService.Resolve<T>();
+        public T GetTaskRunner<T>() where T : ITaskRunner => Factory.Resolve<T>();
 
         public IHostService With(Stopwatch stopwatch)
         {

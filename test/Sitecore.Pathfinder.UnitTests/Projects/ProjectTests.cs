@@ -50,7 +50,7 @@ namespace Sitecore.Pathfinder.Projects
         [TestMethod]
         public void MergeByProjectUniqueIdTest()
         {
-            var project = Services.CompositionService.Resolve<IProject>();
+            var project = Services.Factory.Resolve<IProject>();
 
             var sameGuid = new Guid("{11CDDC59-0F73-4A6E-90E2-6614418F173E}");
             var database = project.GetDatabase("master");

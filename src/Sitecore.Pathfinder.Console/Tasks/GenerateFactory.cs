@@ -8,8 +8,10 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
+using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
+using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Tasks
@@ -25,7 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         public override void Run(IBuildContext context)
         {
-            using (var stream = new FileStream("IFactory.generated.cs", FileMode.Create))
+            using (var stream = new FileStream("IFactory.generated.cs.tmp", FileMode.Create))
             {
                 using (var writer = new StreamWriter(stream))
                 {
@@ -69,16 +71,17 @@ namespace Sitecore.Pathfinder.Tasks
                             var parameters = string.Empty;
                             if (constructor.GetCustomAttribute<ImportingConstructorAttribute>() != null)
                             {
-                                var exportAttribute = type.GetTypeInfo().GetCustomAttribute<ExportAttribute>();
+                                var exportAttribute = type.GetTypeInfo().GetCustomAttributes<ExportAttribute>().FirstOrDefault();
                                 if (exportAttribute != null)
                                 {
                                     returnType = GetTypeName(exportAttribute.ContractType ?? type);
                                 }
 
-                                var with = type.GetTypeInfo().GetMethod("With");
+                                var with = type.GetTypeInfo().GetMethods().FirstOrDefault(m => m.Name == "With");
                                 if (with != null)
                                 {
                                     parameters = string.Join(", ", with.GetParameters().Where(p => GetSpecialType(p.ParameterType) == null).Select(p => (p.ParameterType.GetTypeInfo().IsValueType ? string.Empty : "[NotNull] ") + GetTypeName(p.ParameterType) + " " + p.Name));
+                                    returnType = GetTypeName(with.ReturnType);
                                 }
                             }
                             else
@@ -101,7 +104,7 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            using (var stream = new FileStream("Factory.generated.cs", FileMode.Create))
+            using (var stream = new FileStream("Factory.generated.cs.tmp", FileMode.Create))
             {
                 using (var writer = new StreamWriter(stream))
                 {
@@ -116,8 +119,6 @@ namespace Sitecore.Pathfinder.Tasks
                     writer.WriteLine("//------------------------------------------------------------------------------");
                     writer.WriteLine();
                     writer.WriteLine("#pragma warning disable 1591");
-                    writer.WriteLine();
-                    writer.WriteLine("using System.Composition;");
                     writer.WriteLine();
                     writer.WriteLine("namespace Sitecore.Pathfinder.Configuration");
                     writer.WriteLine("{");
@@ -148,19 +149,20 @@ namespace Sitecore.Pathfinder.Tasks
 
                             if (constructor.GetCustomAttribute<ImportingConstructorAttribute>() != null)
                             {
-                                var exportAttribute = type.GetTypeInfo().GetCustomAttribute<ExportAttribute>();
+                                var exportAttribute = type.GetTypeInfo().GetCustomAttributes<ExportAttribute>().FirstOrDefault();
                                 if (exportAttribute != null)
                                 {
                                     returnType = GetTypeName(exportAttribute.ContractType ?? type);
-                                    statement = "CompositionService.Resolve<" + returnType + ">()";
+                                    statement = "Resolve<" + returnType + ">()";
                                 }
 
-                                var with = type.GetTypeInfo().GetMethod("With");
+                                var with = type.GetTypeInfo().GetMethods().FirstOrDefault(m => m.Name == "With");
                                 if (with != null)
                                 {
                                     parameters = string.Join(", ", with.GetParameters().Where(p => GetSpecialType(p.ParameterType) == null).Select(p => GetTypeName(p.ParameterType) + " " + p.Name));
                                     arguments = string.Join(", ", with.GetParameters().Select(p => GetSpecialType(p.ParameterType) ?? p.Name));
                                     statement += $".With({arguments})";
+                                    returnType = GetTypeName(with.ReturnType);
                                 }
                             }
                             else
@@ -180,6 +182,22 @@ namespace Sitecore.Pathfinder.Tasks
                     writer.WriteLine();
                     writer.WriteLine("#pragma warning restore 1591");
                 }
+
+                if (File.Exists("Factory.generated.cs"))
+                {
+                    File.Delete("Factory.generated.cs.bak");
+                    File.Move("Factory.generated.cs", "Factory.generated.cs.bak");
+                }
+
+                if (File.Exists("IFactory.generated.cs"))
+                {
+                    File.Delete("IFactory.generated.cs.bak");
+                    File.Move("IFactory.generated.cs", "IFactory.generated.cs.bak");
+                }
+
+                File.Move("IFactory.generated.cs.tmp", "IFactory.generated.cs");
+
+                File.Move("Factory.generated.cs.tmp", "Factory.generated.cs");
             }
         }
 

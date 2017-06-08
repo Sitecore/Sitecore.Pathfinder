@@ -176,7 +176,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
             foreach (var fileName in FileSystem.GetFiles(directory, "*.xml", SearchOption.AllDirectories))
             {
-                var sourceFile = Factory.SourceFile(FileSystem, fileName);
+                var sourceFile = Factory.SourceFile(fileName);
 
                 var snapshot = SnapshotService.LoadSnapshot(context.Project, sourceFile, pathMappingContext) as ITextSnapshot;
                 if (snapshot != null)

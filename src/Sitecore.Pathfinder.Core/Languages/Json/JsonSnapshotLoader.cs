@@ -3,8 +3,8 @@
 using System;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Json
@@ -13,27 +13,22 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public JsonSnapshotLoader([NotNull] ICompositionService compositionService)
+        public JsonSnapshotLoader([NotNull] IFactory factory)
         {
-            CompositionService = compositionService;
+            Factory = factory;
             Priority = 1000;
         }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected IFactory Factory { get; }
 
-        public override bool CanLoad(ISourceFile sourceFile)
-        {
-            return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".json", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanLoad(ISourceFile sourceFile) => string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".json", StringComparison.OrdinalIgnoreCase);
 
         public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var jsonTextSnapshot = CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, contents);
-
-            return jsonTextSnapshot;
+            return Factory.JsonTextSnapshot(sourceFile, contents);
         }
     }
 }

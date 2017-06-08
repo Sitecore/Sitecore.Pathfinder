@@ -1,7 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.Globalization;
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -15,9 +14,6 @@ namespace Sitecore.Pathfinder.Parsing
 
         [NotNull]
         Database Database { get; }
-
-        [NotNull]
-        IFactory Factory { get; }
 
         [NotNull]
         string FilePath { get; }

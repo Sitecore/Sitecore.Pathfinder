@@ -2,6 +2,8 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.Serialization
@@ -11,18 +13,20 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     {
         private const string FileExtension = ".item";
 
-        public SerializationFileParser() : base(Constants.Parsers.Items)
+        [ImportingConstructor]
+        public SerializationFileParser([NotNull] IFactory factory) : base(Constants.Parsers.Items)
         {
+            Factory = factory;
         }
 
-        public override bool CanParse(IParseContext context)
-        {
-            return context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
-        }
+        [NotNull]
+        protected IFactory Factory { get; }
+
+        public override bool CanParse(IParseContext context) => context.Snapshot.SourceFile.AbsoluteFileName.EndsWith(FileExtension, StringComparison.OrdinalIgnoreCase);
 
         public override void Parse(IParseContext context)
         {
-            var serializationFile = context.Factory.SerializationFile(context.Project, context.Snapshot, context.FilePath);
+            var serializationFile = Factory.SerializationFile(context.Project, context.Snapshot, context.FilePath);
             context.Project.AddOrMerge(serializationFile);
         }
     }

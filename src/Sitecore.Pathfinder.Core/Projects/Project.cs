@@ -7,12 +7,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Sitecore.Pathfinder.Checking;
-using Sitecore.Pathfinder.Compiling.Compilers;
 using Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -52,11 +50,10 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private string _projectUniqueId;
 
-        [ImportingConstructor]
         [FactoryConstructor]
-        public Project([NotNull] ICompositionService compositionService, [NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
+        [ImportingConstructor]
+        public Project([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
         {
-            CompositionService = compositionService;
             Configuration = configuration;
             Trace = trace;
             Factory = factory;
@@ -86,6 +83,7 @@ namespace Sitecore.Pathfinder.Projects
             Context.Language = database.Languages.First();
         }
 
+        // ReSharper disable once NotNullMemberIsNotInitialized
         private Project()
         {
             Options = ProjectOptions.Empty;
@@ -135,9 +133,6 @@ namespace Sitecore.Pathfinder.Projects
         protected ICheckerService Checker { get; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
-
-        [NotNull]
         protected IConfiguration Configuration { get; }
 
         [NotNull]
@@ -165,7 +160,7 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException(Texts.Project_has_not_been_loaded__Call_Load___first);
             }
 
-            var sourceFile = Factory.SourceFile(FileSystem, absoluteFileName);
+            var sourceFile = Factory.SourceFile(absoluteFileName);
 
             lock (_sourceFilesSyncObject)
             {
@@ -269,7 +264,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProjectBase Compile()
         {
-            var context = CompositionService.Resolve<ICompileContext>().With(this);
+            var context = Factory.CompileContext(this);
 
             Trace.SetOut(CaptureTrace);
             try
@@ -314,7 +309,7 @@ namespace Sitecore.Pathfinder.Projects
         {
             Options = projectOptions;
 
-            var projectImportService = CompositionService.Resolve<ProjectImportsService>();
+            var projectImportService = Factory.ProjectImportsService();
             projectImportService.Import(this);
 
             Add(sourceFileNames);

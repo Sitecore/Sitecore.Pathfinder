@@ -2,6 +2,7 @@
 
 using System.Diagnostics;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Snapshots;
@@ -20,6 +21,7 @@ namespace Sitecore.Pathfinder.Projects.Files
         [CanBeNull]
         private string _shortName;
 
+        [FactoryConstructor]
         public File([NotNull] IProjectBase project, [NotNull] ISnapshot snapshot, [NotNull] string filePath) : base(project, GetUri(project, snapshot))
         {
             AddSnapshot(snapshot);

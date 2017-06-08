@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Items;
@@ -12,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlLayoutTextNodeParser : LayoutTextNodeParserBase
     {
         [ImportingConstructor]
-        public XmlLayoutTextNodeParser([NotNull] IReferenceParserService referenceParserService) : base(referenceParserService, Constants.TextNodeParsers.Layouts)
+        public XmlLayoutTextNodeParser([NotNull] IFactory factory, [NotNull] IReferenceParserService referenceParserService) : base(factory, referenceParserService, Constants.TextNodeParsers.Layouts)
         {
         }
 

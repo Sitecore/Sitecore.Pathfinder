@@ -1,4 +1,5 @@
-﻿using System.Composition;
+﻿using System.Collections.Generic;
+using System.Composition;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -27,19 +28,19 @@ namespace Sitecore.Pathfinder.Configuration
         }
 
         [NotNull]
-        protected IConfiguration Configuration { get; }
-
-        [NotNull]
         protected ICompositionService CompositionService { get; }
 
         [NotNull]
-        protected ITraceService Trace { get; }
+        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IConsoleService Console { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
+
+        [NotNull]
+        protected ITraceService Trace { get; }
 
         public virtual Field Field(Item item, string fieldName, string fieldValue)
         {
@@ -49,12 +50,25 @@ namespace Sitecore.Pathfinder.Configuration
             return field;
         }
 
-        public virtual ISnapshot Snapshot(ISourceFile sourceFile) => new Snapshot().With(sourceFile);
+        public T Resolve<T>() => CompositionService.Resolve<T>();
 
-        public virtual ISourceFile SourceFile(IFileSystemService fileSystem, string absoluteFileName) => new SourceFile(Configuration, fileSystem, absoluteFileName);
+        public T Resolve<T>(string contractName) => CompositionService.Resolve<T>(contractName);
+
+        public IEnumerable<T> ResolveMany<T>() => CompositionService.ResolveMany<T>();
 
         // ReSharper disable once InconsistentNaming
         public virtual XmlWriter XmlWriter(TextWriter writer, bool encoderShouldEmitUTF8Identifier = false)
+        {
+            var settings = new XmlWriterSettings
+            {
+                Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier),
+                Indent = true
+            };
+
+            return System.Xml.XmlWriter.Create(writer, settings);
+        }
+
+        public XmlWriter XmlWriter(StringBuilder writer, bool encoderShouldEmitUTF8Identifier = false)
         {
             var settings = new XmlWriterSettings
             {

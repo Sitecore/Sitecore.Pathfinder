@@ -14,15 +14,15 @@ namespace Sitecore.Pathfinder.IO
     [Export(typeof(IPathMapperService)), Shared]
     public class PathMapperService : IPathMapperService
     {
-        public PathMapperService()
-        {
-        }
-
         [ImportingConstructor]
         public PathMapperService([NotNull] IConfiguration configuration, [NotNull] IPipelineService pipelines)
         {
             Pipelines = pipelines;
             LoadFromConfiguration(configuration);
+        }
+
+        public PathMapperService()
+        {
         }
 
         public ICollection<IProjectToWebsiteFileNameMapper> ProjectDirectoryToWebsiteDirectories { get; } = new List<IProjectToWebsiteFileNameMapper>();

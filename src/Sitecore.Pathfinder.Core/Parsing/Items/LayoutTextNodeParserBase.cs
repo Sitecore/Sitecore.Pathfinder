@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -16,13 +17,17 @@ namespace Sitecore.Pathfinder.Parsing.Items
 {
     public abstract class LayoutTextNodeParserBase : TextNodeParserBase
     {
-        [NotNull]
-        protected IReferenceParserService ReferenceParserService { get; }
-
-        protected LayoutTextNodeParserBase([NotNull] IReferenceParserService referenceParserService, double priority) : base(priority)
+        protected LayoutTextNodeParserBase([NotNull] IFactory factory, [NotNull] IReferenceParserService referenceParserService, double priority) : base(priority)
         {
+            Factory = factory;
             ReferenceParserService = referenceParserService;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
+
+        [NotNull]
+        protected IReferenceParserService ReferenceParserService { get; }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
@@ -32,7 +37,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
             var databaseName = textNode.GetAttributeValue("Database", context.Database.DatabaseName);
             var database = context.ParseContext.Project.GetDatabase(databaseName);
 
-            var item = context.ParseContext.Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
+            var item = Factory.Item(database, guid, itemNameTextNode.Value, itemIdOrPath, string.Empty).With(textNode);
             item.ItemNameProperty.AddSourceTextNode(itemNameTextNode);
 
             Parse(context, textNode, item);
@@ -42,7 +47,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         public virtual void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode, [NotNull] Item item)
         {
-            var field = context.ParseContext.Factory.Field(item, "__Renderings", string.Empty).With(textNode);
+            var field = Factory.Field(item, "__Renderings", string.Empty).With(textNode);
 
             // todo: set template field
 
@@ -62,11 +67,11 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             var deviceNameProperty = new SourceProperty<string>(projectItem, "Name", string.Empty, SourcePropertyFlags.IsShort);
             deviceNameProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty, context.ParseContext.Database.DatabaseName));
+            references.Add(Factory.DeviceReference(projectItem, deviceNameProperty, string.Empty, context.ParseContext.Database.DatabaseName));
 
             var layoutProperty = new SourceProperty<string>(projectItem, "Layout", string.Empty, SourcePropertyFlags.IsShort);
             layoutProperty.Parse(deviceTextNode);
-            references.Add(context.ParseContext.Factory.LayoutReference(projectItem, layoutProperty, string.Empty, context.ParseContext.Database.DatabaseName));
+            references.Add(Factory.LayoutReference(projectItem, layoutProperty, string.Empty, context.ParseContext.Database.DatabaseName));
 
             foreach (var renderingTextNode in deviceTextNode.ChildNodes)
             {
@@ -94,7 +99,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 var sourceProperty = new SourceProperty<string>(projectItem, renderingTextNode.Key, string.Empty, SourcePropertyFlags.IsShort);
                 sourceProperty.SetValue(new AttributeNameTextNode(renderingTextNode));
 
-                references.Add(context.ParseContext.Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty, context.ParseContext.Database.DatabaseName));
+                references.Add(Factory.LayoutRenderingReference(projectItem, sourceProperty, string.Empty, context.ParseContext.Database.DatabaseName));
             }
 
             // parse references for rendering properties

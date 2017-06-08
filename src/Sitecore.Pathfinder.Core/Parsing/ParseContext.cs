@@ -13,9 +13,8 @@ namespace Sitecore.Pathfinder.Parsing
     public class ParseContext : IParseContext
     {
         [FactoryConstructor(typeof(IParseContext))]
-        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext)
+        public ParseContext([NotNull] IConfiguration configuration, [NotNull] IProject project, [NotNull] ISnapshot snapshot, [NotNull] PathMappingContext pathMappingContext)
         {
-            Factory = factory;
             Snapshot = Snapshots.Snapshot.Empty;
 
             Culture = configuration.GetCulture();
@@ -32,8 +31,6 @@ namespace Sitecore.Pathfinder.Parsing
         public CultureInfo Culture { get; }
 
         public virtual Database Database { get; } = Database.Empty;
-
-        public IFactory Factory { get; }
 
         public virtual string FilePath { get; }
 

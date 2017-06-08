@@ -18,7 +18,6 @@ using Sitecore.Pathfinder.Languages.Media;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
-using Sitecore.Pathfinder.Tasks.Building;
 
 namespace Sitecore.Pathfinder.Emitting.Emitters
 {
@@ -32,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
         {
             Factory = factory;
             FileSystem = fileSystem;
@@ -74,7 +73,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
                 EmitMetaData();
             }
 
-            context.OutputFiles.Add(new OutputFile(fileName));
+            context.OutputFiles.Add(Factory.OutputFile(fileName));
         }
 
         public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] Projects.Files.File file)

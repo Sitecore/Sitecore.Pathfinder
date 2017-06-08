@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -59,6 +60,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
             "/sitecore/templates/System/Layout/Renderings/Xsl Rendering"
         };
 
+        [FactoryConstructor]
         public LayoutCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem)
         {
             Trace = trace;

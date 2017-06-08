@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Snapshots;
 
@@ -16,6 +17,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         [NotNull]
         private string _contents = string.Empty;
 
+        [FactoryConstructor]
         [ImportingConstructor]
         public YamlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {

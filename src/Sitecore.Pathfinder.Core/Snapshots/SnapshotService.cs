@@ -5,7 +5,6 @@ using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
-using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -18,19 +17,11 @@ namespace Sitecore.Pathfinder.Snapshots
     public class SnapshotService : ISnapshotService
     {
         [ImportingConstructor]
-        public SnapshotService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders)
+        public SnapshotService([NotNull] IFactory factory, [ImportMany, NotNull, ItemNotNull] IEnumerable<ISnapshotLoader> loaders)
         {
-            Configuration = configuration;
             Factory = factory;
-            FileSystem = fileSystem;
             Loaders = loaders;
         }
-
-        [NotNull]
-        public IFileSystemService FileSystem { get; }
-
-        [NotNull]
-        protected IConfiguration Configuration { get; }
 
         [NotNull]
         protected IFactory Factory { get; }
@@ -79,7 +70,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
             tokens.AddRange(project.Options.Tokens);
 
-            var snapshotParseContext = new SnapshotParseContext(project, tokens);
+            var snapshotParseContext = Factory.SnapshotParseContext(project, tokens);
             var snapshot = LoadSnapshot(snapshotParseContext, sourceFile);
 
             return snapshot;

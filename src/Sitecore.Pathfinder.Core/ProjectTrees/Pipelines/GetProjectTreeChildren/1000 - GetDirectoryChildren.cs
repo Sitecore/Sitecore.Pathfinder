@@ -3,6 +3,7 @@
 using System.Composition;
 using System.IO;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 
@@ -11,9 +12,14 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
     [Export(typeof(IPipelineProcessor)), Shared]
     public class GetDirectoryChildren : PipelineProcessorBase<GetProjectTreeChildrenPipeline>
     {
-        public GetDirectoryChildren() : base(1000)
+        [ImportingConstructor]
+        public GetDirectoryChildren([NotNull] IFactory factory) : base(1000)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         protected override void Process(GetProjectTreeChildrenPipeline pipeline)
         {
@@ -39,7 +45,7 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 
                 if (projectTree.IsDirectoryIncluded(directoryName))
                 {
-                    pipeline.Children.Add(new DirectoryProjectTreeItem(projectTree, dir));
+                    pipeline.Children.Add(Factory.DirectoryProjectTreeItem(projectTree, dir));
                 }
             }
 
@@ -50,7 +56,7 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 
                 if (projectTree.IsFileIncluded(name))
                 {
-                    pipeline.Children.Add(new FileProjectTreeItem(projectTree, fileName));
+                    pipeline.Children.Add(Factory.FileProjectTreeItem(projectTree, fileName));
                 }
             }
         }

@@ -2,6 +2,7 @@
 
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmContentTextNodeParser : ContentTextNodeParserBase
     {
         [ImportingConstructor]
-        public XmContentTextNodeParser([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(trace, referenceParser, schemaService, Constants.TextNodeParsers.Items)
+        public XmContentTextNodeParser([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(factory, trace, referenceParser, schemaService, Constants.TextNodeParsers.Items)
         {
         }
 
@@ -64,7 +65,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
                 return;
             }
 
-            var parser = new XmlLayoutTextNodeParser(ReferenceParser);
+            var parser = new XmlLayoutTextNodeParser(Factory, ReferenceParser);
             parser.Parse(context, childNode, item);
         }
     }

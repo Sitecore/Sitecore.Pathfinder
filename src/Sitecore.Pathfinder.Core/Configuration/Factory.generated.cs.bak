@@ -42,8 +42,6 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Compiling.FieldCompilers.IFieldCompileContext FieldCompileContext() => Resolve<Sitecore.Pathfinder.Compiling.FieldCompilers.IFieldCompileContext>();
 
-        public virtual Sitecore.Pathfinder.Projects.Files.File File(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string filePath) => new Sitecore.Pathfinder.Projects.Files.File(project, snapshot, filePath);
-
         public virtual Sitecore.Pathfinder.ProjectTrees.FileProjectTreeItem FileProjectTreeItem(Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, string fileName) => new Sitecore.Pathfinder.ProjectTrees.FileProjectTreeItem(projectTree, fileName);
 
         public virtual Sitecore.Pathfinder.Projects.References.FileReference FileReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, string referenceText) => new Sitecore.Pathfinder.Projects.References.FileReference(owner, sourceProperty, referenceText);

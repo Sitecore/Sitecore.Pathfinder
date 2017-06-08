@@ -1,4 +1,5 @@
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Parsing;
@@ -12,7 +13,7 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonTemplateTextNodeParser : TemplateTextNodeParserBase
     {
         [ImportingConstructor]
-        public JsonTemplateTextNodeParser([NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(trace, pipelines, referenceParser, schemaService, Constants.TextNodeParsers.Templates)
+        public JsonTemplateTextNodeParser([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IPipelineService pipelines, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(factory, trace, pipelines, referenceParser, schemaService, Constants.TextNodeParsers.Templates)
         {
         }
 

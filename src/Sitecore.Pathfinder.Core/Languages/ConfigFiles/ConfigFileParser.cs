@@ -3,6 +3,8 @@
 using System;
 using System.Composition;
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 
 namespace Sitecore.Pathfinder.Languages.ConfigFiles
@@ -18,9 +20,14 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
 
         private const string ExampleConfigFileExtension = ".config.example";
 
-        public ConfigFileParser() : base(Constants.Parsers.Templates)
+        [ImportingConstructor]
+        public ConfigFileParser([NotNull] IFactory factory) : base(Constants.Parsers.Templates)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        public IFactory Factory { get; }
 
         public override bool CanParse(IParseContext context)
         {
@@ -56,7 +63,7 @@ namespace Sitecore.Pathfinder.Languages.ConfigFiles
 
         public override void Parse(IParseContext context)
         {
-            var configFile = context.Factory.ConfigFile(context.Project, context.Snapshot, context.FilePath);
+            var configFile = Factory.ConfigFile(context.Project, context.Snapshot, context.FilePath);
             context.Project.AddOrMerge(configFile);
         }
     }

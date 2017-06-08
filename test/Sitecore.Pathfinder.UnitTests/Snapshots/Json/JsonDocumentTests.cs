@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.Factory.JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
 
             var fields = root;
@@ -37,10 +37,10 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "\"Item\": { }");
+            var doc = Services.Factory.JsonTextSnapshot(sourceFile, "\"Item\": { }");
             Assert.AreEqual(TextNode.Empty, doc.Root);
 
-            doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, string.Empty);
+            doc = Services.Factory.JsonTextSnapshot(sourceFile, string.Empty);
             Assert.AreEqual(TextNode.Empty, doc.Root);
         }
 
@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Snapshots.Json
         {
             var sourceFile = new SourceFile(Services.Configuration, Services.FileSystem, "test.txt");
 
-            var doc = Services.CompositionService.Resolve<JsonTextSnapshot>().With(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
+            var doc = Services.Factory.JsonTextSnapshot(sourceFile, "{ \"Item\": { \"Fields\": [ { \"Name\": \"Text\", \"Value\": \"123\" } ] } }");
             var root = doc.Root;
             Assert.IsNotNull(root);
             Assert.AreEqual("Item", root.Key);

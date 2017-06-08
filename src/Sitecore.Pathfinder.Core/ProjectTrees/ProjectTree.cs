@@ -16,14 +16,14 @@ namespace Sitecore.Pathfinder.ProjectTrees
     {
         [ImportingConstructor]
         [FactoryConstructor]
-        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines, [NotNull] ExportFactory<ProjectTreeVisitor> projectTreeVisitorFactory)
+        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines)
         {
             Configuration = configuration;
+            Factory = factory;
             FileSystem = fileSystem;
             Pipelines = pipelines;
-            ProjectTreeVisitorFactory = projectTreeVisitorFactory;
 
-            PathMatcher = new PathMatcher(Configuration.GetString(Constants.Configuration.Files.Include), Configuration.GetString(Constants.Configuration.Files.Exclude));
+            PathMatcher = Factory.PathMatcher(Configuration.GetString(Constants.Configuration.Files.Include), Configuration.GetString(Constants.Configuration.Files.Exclude));
         }
 
         public IFileSystemService FileSystem { get; }
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
             {
                 if (FileSystem.DirectoryExists(ProjectDirectory))
                 {
-                    var root = new DirectoryProjectTreeItem(this, ProjectDirectory);
+                    var root = Factory.DirectoryProjectTreeItem(this, ProjectDirectory);
                     yield return root;
                 }
             }
@@ -50,16 +50,16 @@ namespace Sitecore.Pathfinder.ProjectTrees
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
-        protected ExportFactory<ProjectTreeVisitor> ProjectTreeVisitorFactory { get; }
+        protected PathMatcher PathMatcher { get; }
 
         public virtual IEnumerable<string> GetSourceFiles()
         {
             var sourceFileNames = new List<string>();
 
-            var visitor = ProjectTreeVisitorFactory.New();
+            var visitor = Factory.ProjectTreeVisitor();
             visitor.Visit(this, sourceFileNames);
 
             sourceFileNames.Reverse();

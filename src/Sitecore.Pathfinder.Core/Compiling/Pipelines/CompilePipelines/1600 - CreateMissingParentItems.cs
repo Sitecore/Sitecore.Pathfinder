@@ -3,6 +3,7 @@
 using System;
 using System.Composition;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -16,10 +17,14 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     public class CreateMissingParentItems : PipelineProcessorBase<CompilePipeline>
     {
         [ImportingConstructor]
-        public CreateMissingParentItems([NotNull] ITraceService trace) : base(1600)
+        public CreateMissingParentItems([NotNull] IFactory factory, [NotNull] ITraceService trace) : base(1600)
         {
+            Factory = factory;
             Trace = trace;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }
@@ -66,7 +71,7 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
                         newPath += "/" + parts[newIndex];
                         var guid = StringHelper.GetGuid(pipeline.Context.Project, newPath);
 
-                        var newItem = pipeline.Context.Factory.Item(item.Database, guid, parts[newIndex], newPath, Constants.Templates.Folder.Format());
+                        var newItem = Factory.Item(item.Database, guid, parts[newIndex], newPath, Constants.Templates.Folder.Format());
                         newItem.IsEmittable = false;
                         newItem.IsImport = item.IsImport;
                         newItem.IsSynthetic = true;

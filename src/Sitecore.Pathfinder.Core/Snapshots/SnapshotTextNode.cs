@@ -2,12 +2,14 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Snapshots
 {
     public class SnapshotTextNode : ITextNode
     {
+        [FactoryConstructor]
         public SnapshotTextNode([NotNull] ISnapshot snapshot)
         {
             Snapshot = snapshot;

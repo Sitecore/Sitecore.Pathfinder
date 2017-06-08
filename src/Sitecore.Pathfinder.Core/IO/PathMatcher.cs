@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
@@ -12,6 +13,7 @@ namespace Sitecore.Pathfinder.IO
     {
         private const RegexOptions Options = RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase;
 
+        [FactoryConstructor]
         public PathMatcher([NotNull] string include, [NotNull] string exclude)
         {
             Includes = include.Split(Constants.Comma, StringSplitOptions.RemoveEmptyEntries).Select(GetRegex).ToList();

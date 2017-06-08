@@ -2,6 +2,7 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Parsing.Items;
@@ -15,7 +16,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlContentTextNodeParser : ContentTextNodeParserBase
     {
         [ImportingConstructor]
-        public YamlContentTextNodeParser([NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(trace, referenceParser, schemaService, Constants.TextNodeParsers.Items)
+        public YamlContentTextNodeParser([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService) : base(factory, trace, referenceParser, schemaService, Constants.TextNodeParsers.Items)
         {
         }
 
@@ -31,7 +32,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         protected override void ParseLayoutTextNode(ItemParseContext context, Item item, ITextNode layoutTextNode)
         {
-            var parser = new YamlLayoutTextNodeParser(ReferenceParser);
+            var parser = new YamlLayoutTextNodeParser(Factory, ReferenceParser);
             parser.Parse(context, layoutTextNode, item);
         }
 

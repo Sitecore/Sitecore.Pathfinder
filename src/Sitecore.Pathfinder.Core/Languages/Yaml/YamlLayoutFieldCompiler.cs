@@ -3,6 +3,7 @@
 using System;
 using System.Composition;
 using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
@@ -14,19 +15,15 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     public class YamlLayoutFieldCompiler : FieldCompilerBase
     {
         [ImportingConstructor]
-        public YamlLayoutFieldCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem) : base(Constants.FieldCompilers.Normal)
+        public YamlLayoutFieldCompiler([NotNull] IFactory factory) : base(Constants.FieldCompilers.Normal)
         {
-            Trace = trace;
-            FileSystem = fileSystem;
+            Factory = factory;
         }
 
         public override bool IsExclusive { get; } = true;
 
         [NotNull]
-        protected ITraceService Trace { get; }
-
-        [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFactory Factory { get; }
 
         public override bool CanCompile(IFieldCompileContext context, Field field)
         {
@@ -53,11 +50,10 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return field.Value;
             }
 
-            var layoutResolveContext = new LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
+            var layoutResolveContext = Factory.LayoutCompileContext(field.Item.Project, field.Database, textSnapshot);
+            var layoutCompiler = Factory.LayoutCompiler();
 
-            var resolver = new LayoutCompiler(Trace, FileSystem);
-
-            return resolver.Compile(layoutResolveContext, textNode);
+            return layoutCompiler.Compile(layoutResolveContext, textNode);
         }
     }
 }

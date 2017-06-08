@@ -1,12 +1,14 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System.IO;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.ProjectTrees
 {
     public class FileProjectTreeItem : ProjectTreeItemBase, IProjectTreeSourceFile
     {
+        [FactoryConstructor]
         public FileProjectTreeItem([NotNull] IProjectTree projectTree, [NotNull] string fileName) : base(projectTree, new ProjectTreeUri(fileName))
         {
             FileName = fileName;

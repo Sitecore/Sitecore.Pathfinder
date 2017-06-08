@@ -7,7 +7,6 @@ using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.IO;
-using Sitecore.Pathfinder.Languages;
 using Sitecore.Pathfinder.Parsing;
 using Sitecore.Pathfinder.Projects;
 using Sitecore.Pathfinder.Snapshots;
@@ -20,9 +19,6 @@ namespace Sitecore.Pathfinder.Helpers
         public ICheckerService CheckerService { get; set; }
 
         [NotNull]
-        public ICompositionService CompositionService { get; private set; }
-
-        [NotNull]
         public IConfiguration Configuration { get; private set; }
 
         [NotNull]
@@ -30,6 +26,9 @@ namespace Sitecore.Pathfinder.Helpers
 
         [NotNull]
         public IFileSystemService FileSystem { get; private set; }
+
+        [NotNull]
+        public IFactory Factory { get; private set; }
 
         [NotNull]
         public IParseService ParseService { get; private set; }
@@ -47,14 +46,14 @@ namespace Sitecore.Pathfinder.Helpers
         public Services Start([NotNull] IHostService host)
         {
             Configuration = host.Configuration;
-            CompositionService = host.CompositionService;
-            Trace = CompositionService.Resolve<ITraceService>();
-            FileSystem = CompositionService.Resolve<IFileSystemService>();
-            ParseService = CompositionService.Resolve<IParseService>();
-            ProjectService = CompositionService.Resolve<IProjectService>();
-            ConfigurationService = CompositionService.Resolve<IConfigurationService>();
-            SnapshotService = CompositionService.Resolve<ISnapshotService>();
-            CheckerService = CompositionService.Resolve<ICheckerService>();
+            Factory = host.Factory;
+            Trace = Factory.Resolve<ITraceService>();
+            FileSystem = Factory.Resolve<IFileSystemService>();
+            ParseService = Factory.Resolve<IParseService>();
+            ProjectService = Factory.Resolve<IProjectService>();
+            ConfigurationService = Factory.Resolve<IConfigurationService>();
+            SnapshotService = Factory.Resolve<ISnapshotService>();
+            CheckerService = Factory.Resolve<ICheckerService>();
 
             return this;
         }

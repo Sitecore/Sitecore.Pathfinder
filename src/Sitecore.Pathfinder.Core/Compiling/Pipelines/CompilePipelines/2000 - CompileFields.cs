@@ -1,8 +1,7 @@
 using System.Composition;
 using System.Linq;
-using Sitecore.Pathfinder.Compiling.FieldCompilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 
 namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
@@ -11,17 +10,17 @@ namespace Sitecore.Pathfinder.Compiling.Pipelines.CompilePipelines
     public class CompileFields : PipelineProcessorBase<CompilePipeline>
     {
         [ImportingConstructor]
-        public CompileFields([NotNull] ICompositionService compositionService) : base(2000)
+        public CompileFields([NotNull] IFactory factory) : base(2000)
         {
-            CompositionService = compositionService;
+            Factory = factory;
         }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
+        protected IFactory Factory { get; }
 
         protected override void Process(CompilePipeline pipeline)
         {
-            var context = CompositionService.Resolve<IFieldCompileContext>();
+            var context = Factory.FieldCompileContext();
 
             // tried to use multi-threading here, but compilers update the templates, which then throws an exception
             foreach (var field in pipeline.Context.Project.Items.SelectMany(item => item.Fields))

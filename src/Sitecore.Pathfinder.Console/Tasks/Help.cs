@@ -1,4 +1,4 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+// // © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Sitecore.Pathfinder.Building;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -19,14 +20,14 @@ namespace Sitecore.Pathfinder.Tasks
     public class Help : BuildTaskBase
     {
         [ImportingConstructor]
-        public Help([NotNull] Sitecore.Pathfinder.Extensibility.ICompositionService compositionService, [NotNull] IFileSystemService fileSystem) : base("help")
+        public Help([NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem) : base("help")
         {
-            CompositionService = compositionService;
+            Factory = factory;
             FileSystem = fileSystem;
         }
 
         [NotNull]
-        protected Sitecore.Pathfinder.Extensibility.ICompositionService CompositionService { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystemService FileSystem { get; }
@@ -91,7 +92,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual void WriteListOfTasks([NotNull] IBuildContext context)
         {
-            var build = CompositionService.Resolve<Builder>();
+            var build = Factory.Resolve<Builder>();
 
             foreach (var task in build.Tasks.Where(t => !t.IsHidden).OrderBy(t => t.TaskName))
             {
@@ -160,7 +161,7 @@ namespace Sitecore.Pathfinder.Tasks
 
         private void WriteCommandHelp([NotNull] IBuildContext context, [NotNull] string taskName)
         {
-            var build = CompositionService.Resolve<Builder>();
+            var build = Factory.Resolve<Builder>();
             var task = build.Tasks.Where(t => !t.IsHidden).FirstOrDefault(t => string.Equals(t.TaskName, taskName, StringComparison.OrdinalIgnoreCase));
             if (task == null)
             {

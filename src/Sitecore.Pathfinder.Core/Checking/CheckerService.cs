@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Sitecore.Pathfinder.Checking.Checkers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
@@ -33,10 +34,10 @@ namespace Sitecore.Pathfinder.Checking
         private const string BasedOn = "based-on";
 
         [ImportingConstructor]
-        public CheckerService([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService trace, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
+        public CheckerService([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull, ItemNotNull, ImportMany] IEnumerable<IChecker> checkers)
         {
             Configuration = configuration;
-            CompositionService = compositionService;
+            Factory = factory;
             Trace = trace;
 
             var list = new List<CheckerInfo>();
@@ -64,17 +65,17 @@ namespace Sitecore.Pathfinder.Checking
         public int EnabledCheckersCount { get; protected set; }
 
         [NotNull]
-        protected ICompositionService CompositionService { get; }
-
-        [NotNull]
         protected ITraceService Trace { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
 
+        [NotNull]
+        protected IFactory Factory { get; }
+
         public virtual void CheckProject(IProjectBase project)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project);
+            var context = Factory.CheckerContext(project);
 
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
@@ -86,7 +87,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public void CheckProject(IProjectBase project, IEnumerable<string> checkerNames)
         {
-            var context = CompositionService.Resolve<ICheckerContext>().With(project);
+            var context = Factory.CheckerContext(project);
             var treatWarningsAsErrors = Configuration.GetBool(Constants.Configuration.CheckProject.TreatWarningsAsErrors);
             var isMultiThreaded = Configuration.GetBool(Constants.Configuration.System.MultiThreaded, true);
 
@@ -97,7 +98,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public virtual IEnumerable<CheckerInfo> GetEnabledCheckers()
         {
-            var context = CompositionService.Resolve<ICheckerContext>();
+            var context = Factory.Resolve<ICheckerContext>();
             return GetCheckers(context);
         }
 
