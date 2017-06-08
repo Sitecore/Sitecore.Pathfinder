@@ -11,17 +11,17 @@ namespace Sitecore.Pathfinder.Languages.Xml
     public class XmlSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public XmlSnapshotLoader([NotNull] IFactory factory)
+        public XmlSnapshotLoader([NotNull] IFactory factory) : base(1000)
         {
             Factory = factory;
-            Priority = 1000;
         }
 
+        // todo: handle schemas
         [NotNull]
-        public string SchemaFileName { get; protected set; } = string.Empty;
+        public string SchemaFileName { get; private set; } = string.Empty;
 
         [NotNull]
-        public string SchemaNamespace { get; protected set; } = string.Empty;
+        public string SchemaNamespace { get; private set; } = string.Empty;
 
         [NotNull]
         protected IFactory Factory { get; }

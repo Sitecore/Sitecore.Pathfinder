@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
             Indent = indent;
         }
 
-        public int Indent { get; protected set; }
+        public int Indent { get; private set; }
 
         public int Indentation { get; set; } = 4;
 

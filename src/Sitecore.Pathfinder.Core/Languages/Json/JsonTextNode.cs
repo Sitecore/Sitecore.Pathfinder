@@ -1,5 +1,6 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sitecore.Pathfinder.Diagnostics;
@@ -12,12 +13,12 @@ namespace Sitecore.Pathfinder.Languages.Json
         [NotNull, ItemCanBeNull]
         private readonly JToken _jtoken;
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JObject jobject) : base(snapshot, key, string.Empty, GetTextSpan(jobject))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JObject jobject, [ItemNotNull, NotNull] IEnumerable<ITextNode> attributes, [ItemNotNull, NotNull] IEnumerable<ITextNode> childNodes) : base(snapshot, key, string.Empty, GetTextSpan(jobject), attributes, childNodes)
         {
             _jtoken = jobject;
         }
 
-        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JArray jarray) : base(snapshot, key, string.Empty, GetTextSpan(jarray))
+        public JsonTextNode([NotNull] ISnapshot snapshot, [NotNull] string key, [NotNull, ItemCanBeNull] JArray jarray, [ItemNotNull, NotNull] IEnumerable<ITextNode> attributes, [ItemNotNull, NotNull] IEnumerable<ITextNode> childNodes) : base(snapshot, key, string.Empty, GetTextSpan(jarray), attributes, childNodes)
         {
             _jtoken = jarray;
         }

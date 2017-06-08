@@ -71,31 +71,32 @@ namespace Sitecore.Pathfinder.Languages.Json
                 }
 
                 _root = Parse(property.Name, value);
+                return _root;
             }
 
             var jarray = RootToken as JArray;
             if (jarray != null)
             {
-                var jsonTextNode = new JsonTextNode(this, string.Empty, jarray);
-                _root = jsonTextNode;
+                var childNodes = new List<ITextNode>();
 
                 foreach (var jobj in jarray.OfType<JObject>())
                 {
                     var textNode = Parse(string.Empty, jobj);
-                    ((ICollection<ITextNode>)jsonTextNode.ChildNodes).Add(textNode);
+                    childNodes.Add(textNode);
                 }
+
+                _root = new JsonTextNode(this, string.Empty, jarray, Enumerable.Empty<ITextNode>(), childNodes);
+                return _root;
             }
 
-            return _root;
+            throw new InvalidOperationException("Invalid Json document");
         }
 
         [NotNull]
         protected virtual ITextNode Parse([NotNull] string name, [NotNull, ItemNotNull] JObject jobject)
         {
-            var treeNode = new JsonTextNode(this, name, jobject);
-
-            var childNodes = (ICollection<ITextNode>)treeNode.ChildNodes;
-            var attributes = (ICollection<ITextNode>)treeNode.Attributes;
+            var childNodes = new List<ITextNode>();
+            var attributes = new List<ITextNode>();
 
             foreach (var property in jobject.Properties())
             {
@@ -127,7 +128,7 @@ namespace Sitecore.Pathfinder.Languages.Json
                 }
             }
 
-            return treeNode;
+            return new JsonTextNode(this, name, jobject, attributes, childNodes);
         }
     }
 }

@@ -4,7 +4,12 @@ namespace Sitecore.Pathfinder.Snapshots
 {
     public abstract class SnapshotLoaderBase : ISnapshotLoader
     {
-        public double Priority { get; protected set; }
+        protected SnapshotLoaderBase(double priority)
+        {
+            Priority = priority;
+        }
+
+        public double Priority { get; }
 
         public abstract bool CanLoad(ISourceFile sourceFile);
 

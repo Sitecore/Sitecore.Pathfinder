@@ -19,6 +19,7 @@ namespace Sitecore.Pathfinder.Tasks
         {
             FileSystem = fileSystem;
             PipelineService = pipelineService;
+            IsHidden = true;
         }
 
         [NotNull]

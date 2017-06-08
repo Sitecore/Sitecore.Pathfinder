@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         public IFileSystemService FileSystem { get; }
 
         [NotNull]
-        public ZipWriter Zip { get; protected set; }
+        public ZipWriter Zip { get; private set; }
 
         [NotNull]
         protected IFactory Factory { get; }

@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Checking
 
         public IEnumerable<CheckerInfo> Checkers { get; }
 
-        public int EnabledCheckersCount { get; protected set; }
+        public int EnabledCheckersCount { get; private set; }
 
         [NotNull]
         protected ITraceService Trace { get; }

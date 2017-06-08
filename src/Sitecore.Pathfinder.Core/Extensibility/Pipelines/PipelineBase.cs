@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
     public abstract class PipelineBase<T> : IPipeline<T> where T : IPipeline<T>
     {
         [CanBeNull]
-        public IPipelineProcessor<T> Current { get; protected set; }
+        public IPipelineProcessor<T> Current { get; private set; }
 
         public bool IsAborted { get; set; }
 

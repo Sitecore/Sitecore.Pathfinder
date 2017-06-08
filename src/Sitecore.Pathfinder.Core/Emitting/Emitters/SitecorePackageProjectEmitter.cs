@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         public IFileSystemService FileSystem { get; }
 
         [NotNull]
-        public ZipWriter Zip { get; protected set; }
+        protected ZipWriter Zip { get; set; }
 
         public override bool CanEmit(string format)
         {

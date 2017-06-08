@@ -13,10 +13,9 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     public class SerializationSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public SerializationSnapshotLoader([NotNull] IFactory factory)
+        public SerializationSnapshotLoader([NotNull] IFactory factory) : base(1000)
         {
             Factory = factory;
-            Priority = 1000;
         }
 
         [NotNull]

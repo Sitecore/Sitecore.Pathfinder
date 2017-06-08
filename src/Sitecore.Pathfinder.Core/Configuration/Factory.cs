@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
 using System.Composition;
 using System.IO;
 using System.Text;
@@ -8,7 +10,6 @@ using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Projects.Items;
-using Sitecore.Pathfinder.Snapshots;
 
 // to generate Factory.generated.cs, run "gulp generate-factory" in the root directory
 
@@ -68,6 +69,7 @@ namespace Sitecore.Pathfinder.Configuration
             return System.Xml.XmlWriter.Create(writer, settings);
         }
 
+        // ReSharper disable once InconsistentNaming
         public XmlWriter XmlWriter(StringBuilder writer, bool encoderShouldEmitUTF8Identifier = false)
         {
             var settings = new XmlWriterSettings

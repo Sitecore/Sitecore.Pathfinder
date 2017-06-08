@@ -10,6 +10,14 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class CollectionExtensions
     {
+        public static void AddIfNotNull<T>([NotNull, ItemNotNull] this ICollection<T> collection, [CanBeNull] T item)
+        {
+            if (item != null)
+            {
+                collection.Add(item);
+            }
+        }
+
         public static void AddRange<T>([NotNull, ItemNotNull] this ICollection<T> collection, [NotNull, ItemNotNull] IEnumerable<T> items)
         {
             foreach (var item in items)

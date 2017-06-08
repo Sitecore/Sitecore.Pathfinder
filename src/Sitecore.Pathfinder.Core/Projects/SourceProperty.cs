@@ -225,8 +225,7 @@ namespace Sitecore.Pathfinder.Projects
             }
             else if (typeof(T) == typeof(int))
             {
-                int i;
-                if (!int.TryParse(textNode.Value, out i))
+                if (!int.TryParse(textNode.Value, out var i))
                 {
                     throw new InvalidOperationException("Cannot convert string to int");
                 }

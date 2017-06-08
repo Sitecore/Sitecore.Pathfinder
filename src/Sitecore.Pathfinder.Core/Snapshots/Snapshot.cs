@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Snapshots
         }
 
         [NotNull]
-        public static readonly ISnapshot Empty = new Snapshot().With(Snapshots.SourceFile.Empty);
+        public static readonly ISnapshot Empty = new Snapshot();
 
         public ISourceFile SourceFile { get; private set; } = Snapshots.SourceFile.Empty;
 

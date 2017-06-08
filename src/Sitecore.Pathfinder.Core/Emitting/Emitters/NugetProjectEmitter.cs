@@ -45,7 +45,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         public IFileSystemService FileSystem { get; }
 
         [NotNull]
-        public string OutputDirectory { get; protected set; }
+        public string OutputDirectory { get; }
 
         public override bool CanEmit(string format)
         {

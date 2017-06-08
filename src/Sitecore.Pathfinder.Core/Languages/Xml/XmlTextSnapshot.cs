@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Composition;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -23,7 +24,7 @@ namespace Sitecore.Pathfinder.Languages.Xml
         {
         }
 
-        public override ITextNode Root => _root ?? (_root = RootElement != null ? Parse(null, RootElement) : TextNode.Empty);
+        public override ITextNode Root => _root ?? (_root = RootElement != null ? Parse(RootElement) : TextNode.Empty);
 
         [NotNull]
         public string SchemaFileName { get; private set; } = string.Empty;
@@ -63,32 +64,12 @@ namespace Sitecore.Pathfinder.Languages.Xml
         }
 
         [NotNull]
-        protected virtual ITextNode Parse([CanBeNull] ITextNode parent, [NotNull] XElement element)
+        protected virtual ITextNode Parse([NotNull] XElement element)
         {
-            var childNodes = (ICollection<ITextNode>)parent?.ChildNodes;
+            var attributes = element.Attributes().Where(a => a.Name.LocalName != "xmlns").Select(a => new XmlTextNode(this, a)).ToArray();
+            var childNodes = element.Elements().Select(Parse).ToArray();
 
-            var treeNode = new XmlTextNode(this, element);
-            childNodes?.Add(treeNode);
-
-            var attributes = (ICollection<ITextNode>)treeNode.Attributes;
-
-            foreach (var attribute in element.Attributes())
-            {
-                if (attribute.Name.LocalName == "xmlns")
-                {
-                    continue;
-                }
-
-                var attributeTreeNode = new XmlTextNode(this, attribute);
-                attributes.Add(attributeTreeNode);
-            }
-
-            foreach (var child in element.Elements())
-            {
-                Parse(treeNode, child);
-            }
-
-            return treeNode;
+            return new XmlTextNode(this, element, attributes, childNodes);
         }
     }
 }

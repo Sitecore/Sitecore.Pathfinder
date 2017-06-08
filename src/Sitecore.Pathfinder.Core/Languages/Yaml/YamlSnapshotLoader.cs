@@ -12,28 +12,22 @@ namespace Sitecore.Pathfinder.Languages.Yaml
     [Export(typeof(ISnapshotLoader)), Shared]
     public class YamlSnapshotLoader : SnapshotLoaderBase
     {
+        [ImportingConstructor]
+        public YamlSnapshotLoader([NotNull] IFactory factory) : base(1000)
+        {
+            Factory = factory;
+        }
+
         [NotNull]
         protected IFactory Factory { get; }
 
-        [ImportingConstructor]
-        public YamlSnapshotLoader([NotNull] IFactory factory)
-        {
-            Factory = factory;
-            Priority = 1000;
-        }
-
-        public override bool CanLoad(ISourceFile sourceFile)
-        {
-            return string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanLoad(ISourceFile sourceFile) => string.Equals(Path.GetExtension(sourceFile.AbsoluteFileName), ".yaml", StringComparison.OrdinalIgnoreCase);
 
         public override ISnapshot Load(SnapshotParseContext snapshotParseContext, ISourceFile sourceFile)
         {
             var contents = sourceFile.ReadAsText(snapshotParseContext.Tokens);
 
-            var yamlTextSnapshot = Factory.YamlTextSnapshot(sourceFile, contents);
-
-            return yamlTextSnapshot;
+            return Factory.YamlTextSnapshot(sourceFile, contents);
         }
     }
 }

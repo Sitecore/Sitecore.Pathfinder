@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         public IFileSystemService FileSystem { get; }
 
         [NotNull]
-        public string OutputDirectory { get; protected set; }
+        public string OutputDirectory { get; }
 
         public virtual void EmitFile([NotNull] IEmitContext context, [NotNull] File file)
         {

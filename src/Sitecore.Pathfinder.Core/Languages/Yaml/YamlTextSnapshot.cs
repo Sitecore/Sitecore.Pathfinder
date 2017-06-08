@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Composition;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.Languages.Yaml
@@ -43,25 +44,19 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 return null;
             }
 
-            var textNode = new YamlTextNode(this, tokenizer.Token.KeyTextSpan, tokenizer.Token.Key, tokenizer.Token.Value);
-
-            var attributes = (ICollection<ITextNode>)textNode.Attributes;
-            var childNodes = (ICollection<ITextNode>)textNode.ChildNodes;
-
-            var startIndent = tokenizer.Token.Indent;
+            var attributes = new List<ITextNode>();
+            var childNodes = new List<ITextNode>();
+            var keyToken = tokenizer.Token;
+            var keyIndent = tokenizer.Token.Indent;
 
             tokenizer.Match();
 
-            while (tokenizer.Token != null && tokenizer.Token.Indent > startIndent)
+            while (tokenizer.Token != null && tokenizer.Token.Indent > keyIndent)
             {
                 if (tokenizer.Token.IsNested)
                 {
                     var childNode = Parse(tokenizer);
-                    if (childNode != null)
-                    {
-                        childNodes.Add(childNode);
-                    }
-
+                    childNodes.AddIfNotNull(childNode);
                     continue;
                 }
 
@@ -70,7 +65,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
                 tokenizer.Match();
             }
 
-            return textNode;
+            return new YamlTextNode(this, keyToken.KeyTextSpan, keyToken.Key, keyToken.Value, attributes, childNodes);
         }
     }
 }

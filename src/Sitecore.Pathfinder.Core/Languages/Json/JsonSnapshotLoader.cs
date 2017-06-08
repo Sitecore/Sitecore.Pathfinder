@@ -13,10 +13,9 @@ namespace Sitecore.Pathfinder.Languages.Json
     public class JsonSnapshotLoader : SnapshotLoaderBase
     {
         [ImportingConstructor]
-        public JsonSnapshotLoader([NotNull] IFactory factory)
+        public JsonSnapshotLoader([NotNull] IFactory factory) : base(1000)
         {
             Factory = factory;
-            Priority = 1000;
         }
 
         [NotNull]

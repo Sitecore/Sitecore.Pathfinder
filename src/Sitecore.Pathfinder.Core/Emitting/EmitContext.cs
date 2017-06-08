@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Emitting
 
         public IProjectBase Project { get; private set; } = Projects.Project.Empty;
 
-        public IProjectEmitter ProjectEmitter { get; protected set; }
+        public IProjectEmitter ProjectEmitter { get; private set; }
 
         public virtual IEmitContext With(IProjectEmitter projectEmitter, IProjectBase project)
         {
