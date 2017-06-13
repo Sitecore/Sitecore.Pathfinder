@@ -10,18 +10,10 @@ namespace Sitecore.Pathfinder.Parsing
 {
     public class PathMappingContext
     {
-        [NotNull]
-        public static PathMappingContext Empty = new PathMappingContext();
-
         [FactoryConstructor]
         public PathMappingContext([NotNull] IPathMapperService pathMapper)
         {
             PathMapper = pathMapper;
-        }
-
-        // ReSharper disable once NotNullMemberIsNotInitialized
-        private PathMappingContext()
-        {
         }
 
         [NotNull]
@@ -46,7 +38,7 @@ namespace Sitecore.Pathfinder.Parsing
         [NotNull]
         public PathMappingContext Parse([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile)
         {
-            ItemName = PathHelper.GetItemName(sourceFile);
+            ItemName = sourceFile.GetFileNameWithoutExtensions();
             Database = project.GetDatabase(project.Options.DatabaseName);
 
             var projectFileName = "/" + PathHelper.NormalizeItemPath(PathHelper.UnmapPath(project.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');

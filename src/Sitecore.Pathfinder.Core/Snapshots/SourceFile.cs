@@ -45,7 +45,22 @@ namespace Sitecore.Pathfinder.Snapshots
         [NotNull]
         protected IFileSystem FileSystem { get; }
 
-        public virtual string GetFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
+        public virtual string GetDirectoryAndFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
+
+        public virtual string GetFileNameWithoutExtensions()
+        {
+            var fileName = PathHelper.NormalizeItemPath(AbsoluteFileName);
+
+            var s = fileName.LastIndexOf('/') + 1;
+            var e = fileName.IndexOf('.', s);
+
+            if (e < 0)
+            {
+                return fileName.Mid(s);
+            }
+
+            return fileName.Mid(s, e - s);
+        }
 
         public virtual string[] ReadAsLines() => FileSystem.ReadAllLines(AbsoluteFileName);
 

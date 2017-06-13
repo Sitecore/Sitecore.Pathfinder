@@ -44,7 +44,7 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public virtual ISnapshot LoadSnapshot(IProjectBase project, ISourceFile sourceFile, PathMappingContext pathMappingContext)
         {
-            var itemName = PathHelper.GetItemName(sourceFile);
+            var itemName = sourceFile.GetFileNameWithoutExtensions();
             var filePath = pathMappingContext.FilePath;
             if (filePath.StartsWith("~/"))
             {

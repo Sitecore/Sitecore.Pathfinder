@@ -58,12 +58,12 @@ namespace Sitecore.Pathfinder.IO
         {
             Start();
 
-            Assert.AreEqual("test", PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, "\\sitecore\\client\\test.txt")));
-            Assert.AreEqual("test", PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, "/sitecore/client/test.txt")));
-            Assert.AreEqual("test", PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, "/sitecore/client/test")));
-            Assert.AreEqual("test", PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, "test.txt")));
-            Assert.AreEqual("test", PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, "test")));
-            Assert.ThrowsException<ArgumentException>(() => PathHelper.GetItemName(new SourceFile(Services.Configuration, Services.FileSystem, string.Empty)));
+            Assert.AreEqual("test", new SourceFile(Services.Configuration, Services.FileSystem, "\\sitecore\\client\\test.txt").GetFileNameWithoutExtensions());
+            Assert.AreEqual("test", new SourceFile(Services.Configuration, Services.FileSystem, "/sitecore/client/test.txt").GetFileNameWithoutExtensions());
+            Assert.AreEqual("test", new SourceFile(Services.Configuration, Services.FileSystem, "/sitecore/client/test").GetFileNameWithoutExtensions());
+            Assert.AreEqual("test", new SourceFile(Services.Configuration, Services.FileSystem, "test.txt").GetFileNameWithoutExtensions());
+            Assert.AreEqual("test", new SourceFile(Services.Configuration, Services.FileSystem, "test").GetFileNameWithoutExtensions());
+            Assert.ThrowsException<ArgumentException>(() => new SourceFile(Services.Configuration, Services.FileSystem, string.Empty).GetFileNameWithoutExtensions());
         }
 
         [TestMethod]

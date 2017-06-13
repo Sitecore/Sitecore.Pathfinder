@@ -70,7 +70,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
 
                 foreach (var snapshot in projectItem.GetSnapshots())
                 {
-                    SourceFileIndex.Add(snapshot.SourceFile.GetFileNameWithoutExtensions(), projectItem);
+                    SourceFileIndex.Add(snapshot.SourceFile.GetDirectoryAndFileNameWithoutExtensions(), projectItem);
                 }
 
                 if (projectItem is DatabaseProjectItem databaseProjectItem)
@@ -139,7 +139,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
         [ItemNotNull, NotNull]
         public virtual IEnumerable<T> GetBySourceFile<T>([NotNull] ISourceFile sourceFile) where T : class, IProjectItem
         {
-            return SourceFileIndex.Where<T>(sourceFile.GetFileNameWithoutExtensions());
+            return SourceFileIndex.Where<T>(sourceFile.GetDirectoryAndFileNameWithoutExtensions());
         }
 
         public virtual void Remove([NotNull] IProjectItem projectItem)
@@ -153,7 +153,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
 
                 foreach (var snapshot in projectItem.GetSnapshots())
                 {
-                    SourceFileIndex.Remove(snapshot.SourceFile.GetFileNameWithoutExtensions());
+                    SourceFileIndex.Remove(snapshot.SourceFile.GetDirectoryAndFileNameWithoutExtensions());
                 }
 
                 var databaseProjectItem = projectItem as DatabaseProjectItem;
