@@ -15,12 +15,11 @@ namespace Sitecore.Pathfinder.Tasks
     public class ListInformation : BuildTaskBase
     {
         [ImportingConstructor]
-        public ListInformation([NotNull] IConsoleService console, [NotNull] ICheckerService checkerService) : base("list-information")
+        public ListInformation([NotNull] IConsoleService console, [NotNull] ICheckerService checkerService) : base("list-information", "list")
         {
             Console = console;
             CheckerService = checkerService;
 
-            Alias = "list";
             Shortcut = "l";
         }
 
@@ -157,8 +156,7 @@ namespace Sitecore.Pathfinder.Tasks
             {
                 var qualifiedName = projectItem.QualifiedName;
 
-                var file = projectItem as File;
-                if (file != null)
+                if (projectItem is File)
                 {
                     qualifiedName = "\\" + PathHelper.UnmapPath(project.ProjectDirectory, qualifiedName);
                 }

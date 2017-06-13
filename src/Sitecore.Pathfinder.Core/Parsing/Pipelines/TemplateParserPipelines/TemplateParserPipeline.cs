@@ -14,10 +14,10 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines
         public ItemParseContext Context { get; private set; }
 
         [NotNull]
-        public Template Template { get; private set; }
+        public Template Template { get; private set; } = Template.Empty;
 
         [NotNull]
-        public ITextNode TextNode { get; private set; }
+        public ITextNode TextNode { get; private set; } = Snapshots.TextNode.Empty;
 
         public void Execute([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode textNode)
         {

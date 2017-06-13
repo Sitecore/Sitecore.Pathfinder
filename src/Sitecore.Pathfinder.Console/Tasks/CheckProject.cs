@@ -13,10 +13,9 @@ namespace Sitecore.Pathfinder.Tasks
     public class CheckProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public CheckProject([NotNull] ICheckerService checkerService) : base("check-project")
+        public CheckProject([NotNull] ICheckerService checkerService) : base("check-project", "check")
         {
             CheckerService = checkerService;
-            Alias = "check";
             Shortcut = "c";
         }
 

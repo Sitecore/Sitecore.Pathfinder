@@ -15,12 +15,11 @@ namespace Sitecore.Pathfinder.Tasks
     public class PublishProject : BuildTaskBase
     {
         [ImportingConstructor]
-        public PublishProject([NotNull] IFactory factory, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project")
+        public PublishProject([NotNull] IFactory factory, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("publish-project", "publish")
         {
             Factory = factory;
             ProjectEmitters = projectEmitters;
 
-            Alias = "publish";
             Shortcut = "p";
         }
 

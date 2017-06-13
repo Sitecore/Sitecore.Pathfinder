@@ -6,7 +6,6 @@ using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects.Items;
 
 namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
 {
@@ -47,7 +46,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var isImport = pipeline.Configuration.GetBool(key + ":is-import");
                     var uploadMedia = pipeline.Configuration.GetBool(key + ":upload-media", true);
 
-                    var pathMatcher = GetDirectoryPathMatcher(projectDirectory, include, exclude);
+                    var pathMatcher = GetFileNamePathMatcher(projectDirectory, include, exclude);
 
                     var projectDirectoryToWebsiteItemPathMapper = new ProjectDirectoryToWebsiteItemPathMapper(pathMatcher, projectDirectory, databaseName, itemPath, isImport, uploadMedia);
                     pipeline.ProjectDirectoryToWebsiteItemPaths.Add(projectDirectoryToWebsiteItemPathMapper);
@@ -67,7 +66,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var include = pipeline.Configuration.GetString(key + ":file-name-include");
                     var exclude = pipeline.Configuration.GetString(key + ":file-name-exclude");
 
-                    var pathMatcher = GetDirectoryPathMatcher(projectDirectory, include, exclude);
+                    var pathMatcher = GetFileNamePathMatcher(projectDirectory, include, exclude);
 
                     var projectDirectoryToWebsiteDirectoryMapper = new ProjectDirectoryToWebsiteDirectoryMapper(pathMatcher, projectDirectory, websiteDirectory);
                     pipeline.ProjectDirectoryToWebsiteDirectories.Add(projectDirectoryToWebsiteDirectoryMapper);
@@ -142,7 +141,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var include = pipeline.Configuration.GetString(key + ":file-name-include");
                     var exclude = pipeline.Configuration.GetString(key + ":file-name-exclude");
 
-                    var pathMatcher = GetDirectoryPathMatcher(websiteDirectory, include, exclude);
+                    var pathMatcher = GetFileNamePathMatcher(websiteDirectory, include, exclude);
 
                     var websiteDirectoryToProjectDirectoryMapper = new WebsiteDirectoryToProjectDirectoryMapper(pathMatcher, websiteDirectory, projectDirectory);
                     pipeline.WebsiteDirectoryToProjectDirectories.Add(websiteDirectoryToProjectDirectoryMapper);
@@ -174,7 +173,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
         }
 
         [CanBeNull]
-        protected virtual IPathMatcher GetDirectoryPathMatcher([NotNull] string directory, [NotNull] string include, [NotNull] string exclude)
+        protected virtual IPathMatcher GetFileNamePathMatcher([NotNull] string directory, [NotNull] string include, [NotNull] string exclude)
         {
             if (string.IsNullOrEmpty(include) && string.IsNullOrEmpty(exclude))
             {

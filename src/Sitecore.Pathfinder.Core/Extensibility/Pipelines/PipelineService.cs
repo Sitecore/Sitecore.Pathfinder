@@ -11,30 +11,22 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
     public class PipelineService : IPipelineService
     {
         [ImportingConstructor]
-        public PipelineService([ImportMany, NotNull, ItemNotNull]   IEnumerable<IPipelineProcessor> pipelineProcessors)
+        public PipelineService([ImportMany, NotNull, ItemNotNull] IEnumerable<IPipelineProcessor> processors)
         {
-            PipelineProcessors = pipelineProcessors;
+            Processors = processors;
         }
 
         [NotNull, ItemNotNull]
-        protected IEnumerable<IPipelineProcessor> PipelineProcessors { get; }
+        protected IEnumerable<IPipelineProcessor> Processors { get; }
 
-        public virtual T Resolve<T>() where T : IPipeline<T>, new()
+        public virtual T GetPipeline<T>() where T : IPipeline<T>, new()
         {
-            var result = new T();
-            return PopulateProcessors(result);
-        }
+            var pipeline = new T();
 
-        [NotNull]
-        protected virtual T PopulateProcessors<T>([NotNull] T result) where T : IPipeline<T>
-        {
-            var processors = PipelineProcessors.Where(p => p is IPipelineProcessor<T>).OrderBy(p => p.Sortorder).ToList();
-            foreach (var processor in processors)
-            {
-                result.Processors.Add((IPipelineProcessor<T>)processor);
-            }
+            var processors = Processors.OfType<IPipelineProcessor<T>>().OrderBy(p => p.Sortorder).ToArray();
+            pipeline.With(processors);
 
-            return result;
+            return pipeline;
         }
     }
 }

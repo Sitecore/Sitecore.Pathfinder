@@ -7,6 +7,6 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
     public interface IPipelineService
     {
         [NotNull]
-        T Resolve<T>() where T : IPipeline<T>, new();
+        T GetPipeline<T>() where T : IPipeline<T>, new();
     }
 }

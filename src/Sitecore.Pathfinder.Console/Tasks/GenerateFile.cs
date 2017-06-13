@@ -16,12 +16,11 @@ namespace Sitecore.Pathfinder.Tasks
     public class GenerateFile : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateFile([NotNull] IFileSystem fileSystem, [NotNull] IPathMapperService pathMapper) : base("generate-file")
+        public GenerateFile([NotNull] IFileSystem fileSystem, [NotNull] IPathMapperService pathMapper) : base("generate-file", "generate")
         {
             FileSystem = fileSystem;
             PathMapper = pathMapper;
 
-            Alias = "generate";
             Shortcut = "g";
         }
 
@@ -77,8 +76,10 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            var macros = new Dictionary<string, string>();
-            macros["name"] = FileName;
+            var macros = new Dictionary<string, string>
+            {
+                ["name"] = FileName
+            };
 
             var textFileExtensions = context.Configuration.GetArray(Constants.Configuration.GenerateFile.TextFileExtensions);
 

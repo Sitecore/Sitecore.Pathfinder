@@ -1,6 +1,5 @@
 ﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
 
-using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
@@ -12,10 +11,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
     public class ReferenceParserPipeline : PipelineBase<ReferenceParserPipeline>
     {
         [NotNull]
-        public string DatabaseName { get; private set; }
-
-        [NotNull]
-        public IFactory Factory { get; private set; }
+        public Database Database { get; private set; }
 
         [NotNull]
         public IProjectItem ProjectItem { get; private set; }
@@ -30,13 +26,12 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
         public ITextNode SourceTextNode { get; private set; }
 
         [NotNull]
-        public ReferenceParserPipeline Execute([NotNull] IFactory factory, [NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] string databaseName)
+        public ReferenceParserPipeline Execute([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] Database database)
         {
-            Factory = factory;
             ProjectItem = projectItem;
             SourceTextNode = sourceTextNode;
             ReferenceText = referenceText;
-            DatabaseName = databaseName;
+            Database = database;
 
             Execute();
 

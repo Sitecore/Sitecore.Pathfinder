@@ -90,7 +90,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 ParseSection(context, template, sectionTreeNode);
             }
 
-            Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
+            Pipelines.GetPipeline<TemplateParserPipeline>().Execute(context, template, textNode);
 
             context.ParseContext.Project.AddOrMerge(template);
             context.ParseContext.Project.AddOrMerge(standardValuesItem);

@@ -268,7 +268,7 @@ namespace Sitecore.Pathfinder.Projects
             Trace.SetOut(CaptureTrace);
             try
             {
-                Pipelines.Resolve<CompilePipeline>().Execute(context);
+                Pipelines.GetPipeline<CompilePipeline>().Execute(context);
             }
             finally
             {
@@ -280,6 +280,11 @@ namespace Sitecore.Pathfinder.Projects
 
         public Database GetDatabase(string databaseName)
         {
+            if (string.IsNullOrEmpty(databaseName))
+            {
+                return Database.Empty;
+            }
+
             var database = _databases[databaseName.ToUpperInvariant()];
             if (database == null)
             {

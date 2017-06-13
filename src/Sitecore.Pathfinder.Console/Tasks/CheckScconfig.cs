@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return;
             }
 
-            PipelineService.Resolve<BeforeBuildPipeline>().Execute(context);
+            PipelineService.GetPipeline<BeforeBuildPipeline>().Execute(context);
         }
     }
 }

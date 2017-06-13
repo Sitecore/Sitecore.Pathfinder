@@ -11,9 +11,8 @@ namespace Sitecore.Pathfinder.Tasks
     public class InitProject : NewProjectTaskBase
     {
         [ImportingConstructor]
-        public InitProject([NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem) : base(console, fileSystem, "init-project")
+        public InitProject([NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem) : base(console, fileSystem, "init-project", "init")
         {
-            Alias = "init";
             Shortcut = "i";
         }
 

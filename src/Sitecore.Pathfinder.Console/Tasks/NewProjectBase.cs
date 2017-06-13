@@ -1181,6 +1181,12 @@ namespace Sitecore.Pathfinder.Tasks
             FileSystem = fileSystem;
         }
 
+        protected NewProjectTaskBase([NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem, [NotNull] string taskName, [NotNull] string alias) : base(taskName, alias)
+        {
+            Console = console;
+            FileSystem = fileSystem;
+        }
+
         [NotNull]
         protected IConsoleService Console { get; }
 

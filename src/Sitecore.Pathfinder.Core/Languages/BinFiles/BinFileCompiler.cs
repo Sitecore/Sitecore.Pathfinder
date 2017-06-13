@@ -66,7 +66,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
                 foreach (var type in assembly.GetExportedTypes())
                 {
-                    Pipelines.Resolve<BinFileCompilerPipeline>().Execute(context, binFile, type);
+                    Pipelines.GetPipeline<BinFileCompilerPipeline>().Execute(context, binFile, type);
                 }
             }
             catch (Exception ex)

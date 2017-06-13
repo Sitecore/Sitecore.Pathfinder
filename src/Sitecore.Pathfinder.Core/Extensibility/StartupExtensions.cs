@@ -140,15 +140,11 @@ namespace Sitecore.Pathfinder.Extensibility
             }
             catch (ReflectionTypeLoadException ex)
             {
-                // ignore the Diagnostics Toolset feature as it requires a path to the SDT installation
-                if (fileName != "Sitecore.Pathfinder.DiagnosticsToolset.dll")
-                {
-                    Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
+                Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
 
-                    foreach (var loaderException in ex.LoaderExceptions)
-                    {
-                        Console.WriteLine($"    LoaderException: {loaderException.Message}");
-                    }
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    Console.WriteLine($"    LoaderException: {loaderException.Message}");
                 }
             }
             catch (FileLoadException ex)

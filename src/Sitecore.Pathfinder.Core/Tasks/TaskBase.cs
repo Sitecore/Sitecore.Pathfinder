@@ -24,9 +24,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public bool IsHidden { get; protected set; } = false;
 
-        public string Alias { get; set; } = string.Empty;
+        public string Alias { get; } = string.Empty;
 
-        public string Shortcut { get; set; } = string.Empty;
+        public string Shortcut { get; protected set; } = string.Empty;
 
         public string TaskName { get; }
 

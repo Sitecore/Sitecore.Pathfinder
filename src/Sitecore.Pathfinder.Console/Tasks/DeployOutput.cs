@@ -14,11 +14,10 @@ namespace Sitecore.Pathfinder.Tasks
     public class DeployOutput : BuildTaskBase
     {
         [ImportingConstructor]
-        public DeployOutput([NotNull] IFileSystem fileSystem) : base("deploy-output")
+        public DeployOutput([NotNull] IFileSystem fileSystem) : base("deploy-output", "deploy")
         {
             FileSystem = fileSystem;
 
-            Alias = "deploy";
             Shortcut = "d";
         }
 
