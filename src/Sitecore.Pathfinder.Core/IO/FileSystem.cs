@@ -10,42 +10,16 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Sitecore.Pathfinder.Diagnostics;
-using ZetaLongPaths;
-using FileHelper = ZetaLongPaths.ZlpIOHelper;
 
 namespace Sitecore.Pathfinder.IO
 {
-    [Export(typeof(IFileSystemService))]
-    public class FileSystemService : IFileSystemService
+    [Export(typeof(IFileSystem))]
+    public class FileSystem : IFileSystem
     {
-        [ImportingConstructor]
-        public FileSystemService([NotNull] IConsoleService console)
-        {
-            Console = console;
-        }
-
-        [NotNull]
-        protected IConsoleService Console { get; }
-
-        public virtual bool CanWriteDirectory(string directory)
-        {
-            try
-            {
-                // Directory.GetAccessControl(directory);
-                return true;
-            }
-            catch (UnauthorizedAccessException)
-            {
-                return false;
-            }
-        }
-
         public virtual void Copy(string sourceFileName, string destinationFileName, bool forceUpdate = true)
         {
             if (!forceUpdate)
             {
-                // var fileInfo1 = new ZlpFileInfo(sourceFileName);
-                // var fileInfo2 = new ZlpFileInfo(destinationFileName);
                 var fileInfo1 = new FileInfo(sourceFileName);
                 var fileInfo2 = new FileInfo(destinationFileName);
 
@@ -55,16 +29,9 @@ namespace Sitecore.Pathfinder.IO
                 }
             }
 
-            var directoryName = Path.GetDirectoryName(destinationFileName);
-            if (string.IsNullOrEmpty(directoryName))
-            {
-                throw new DirectoryNotFoundException();
-            }
-
-            FileHelper.CreateDirectory(directoryName);
-
-            FileHelper.CopyFile(sourceFileName, destinationFileName, true);
-            FileHelper.SetFileLastWriteTime(destinationFileName, FileHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime());
+            CreateDirectoryFromFileName(destinationFileName);
+            Copy(sourceFileName, destinationFileName);
+            File.SetLastWriteTime(destinationFileName, File.GetLastWriteTime(sourceFileName).ToUniversalTime());
         }
 
         public bool CopyIfNewer(string sourceFileName, string targetFileName)
@@ -72,7 +39,7 @@ namespace Sitecore.Pathfinder.IO
             if (!FileExists(targetFileName))
             {
                 CreateDirectoryFromFileName(targetFileName);
-                FileHelper.CopyFile(sourceFileName, targetFileName, true);
+                Copy(sourceFileName, targetFileName);
                 return true;
             }
 
@@ -82,7 +49,7 @@ namespace Sitecore.Pathfinder.IO
                 var targetVersion = GetVersion(targetFileName);
                 if (targetVersion < sourceVersion)
                 {
-                    FileHelper.CopyFile(sourceFileName, targetFileName, true);
+                    Copy(sourceFileName, targetFileName);
                     return true;
                 }
             }
@@ -92,7 +59,7 @@ namespace Sitecore.Pathfinder.IO
             var targetFileInfo = new FileInfo(targetFileName);
             if (sourceFileInfo.Length != targetFileInfo.Length || sourceFileInfo.LastWriteTimeUtc > targetFileInfo.LastWriteTimeUtc)
             {
-                FileHelper.CopyFile(sourceFileName, targetFileName, true);
+                File.Copy(sourceFileName, targetFileName, true);
                 return true;
             }
 
@@ -103,7 +70,7 @@ namespace Sitecore.Pathfinder.IO
         {
             if (!string.IsNullOrEmpty(directory))
             {
-                FileHelper.CreateDirectory(directory);
+                Directory.CreateDirectory(directory);
             }
         }
 
@@ -118,40 +85,19 @@ namespace Sitecore.Pathfinder.IO
             CreateDirectory(directory);
         }
 
-        public virtual void DeleteDirectory(string directory) => FileHelper.DeleteDirectory(directory, true);
+        public virtual void DeleteDirectory(string directory) => Directory.Delete(directory, true);
 
-        public virtual void DeleteFile(string fileName) => FileHelper.DeleteFile(fileName);
+        public virtual void DeleteFile(string fileName) => File.Delete(fileName);
 
-        public virtual bool DirectoryExists(string directory) => FileHelper.DirectoryExists(directory);
+        public virtual bool DirectoryExists(string directory) => Directory.Exists(directory);
 
-        public virtual bool FileExists(string fileName) => FileHelper.FileExists(fileName);
+        public virtual bool FileExists(string fileName) => File.Exists(fileName);
 
-        public bool FileExistsInPath(string fileName)
-        {
-            if (FileExists(fileName))
-            {
-                return true;
-            }
+        public virtual IEnumerable<string> GetDirectories(string directory) => Directory.GetDirectories(directory).ToArray();
 
-            var paths = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
-            foreach (var path in paths.Split(';'))
-            {
-                var fullPath = Path.Combine(path.Trim(), fileName);
+        public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => Directory.GetFiles(directory, "*", searchOptions).ToArray();
 
-                if (FileExists(fullPath))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public virtual IEnumerable<string> GetDirectories(string directory) => FileHelper.GetDirectories(directory).Select(d => d.FullName).ToArray();
-
-        public virtual IEnumerable<string> GetFiles(string directory, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => FileHelper.GetFiles(directory, "*", searchOptions).Select(f => f.FullName).ToArray();
-
-        public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => FileHelper.GetFiles(directory, pattern, searchOptions).Select(d => d.FullName).ToArray();
+        public virtual IEnumerable<string> GetFiles(string directory, string pattern, SearchOption searchOptions = SearchOption.TopDirectoryOnly) => Directory.GetFiles(directory, pattern, searchOptions).ToArray();
 
         public virtual DateTime GetLastWriteTimeUtc(string sourceFileName)
         {
@@ -160,7 +106,7 @@ namespace Sitecore.Pathfinder.IO
                 throw new ArgumentException(Texts.sourceFileName_cannot_be_empty, nameof(sourceFileName));
             }
 
-            return FileHelper.GetFileLastWriteTime(sourceFileName).ToUniversalTime();
+            return File.GetLastWriteTime(sourceFileName).ToUniversalTime();
         }
 
         public string GetUniqueFileName(string fileName)
@@ -182,6 +128,7 @@ namespace Sitecore.Pathfinder.IO
 
         public virtual void Mirror(string sourceDirectory, string destinationDirectory)
         {
+            // todo: rewrite for cross platform
             var proc = new Process
             {
                 StartInfo =
@@ -197,33 +144,21 @@ namespace Sitecore.Pathfinder.IO
             proc.WaitForExit();
         }
 
-        public Stream OpenRead(string fileName) => new FileStream(fileName, FileMode.Open, FileAccess.Read);
+        public StreamWriter OpenStreamWriter(string fileName) => new StreamWriter(new FileStream(fileName, FileMode.Create));
 
-        public StreamReader OpenStreamReader(string fileName) => new StreamReader(new FileStream(fileName, FileMode.Open));
+        public Stream OpenWrite(string fileName) => new FileStream(fileName, FileMode.Create);
 
-        public StreamWriter OpenStreamWriter(string fileName)
-        {
-            // todo: there is a weird bug in ZetaLongPath that does not truncate the file
-            return new StreamWriter(new FileStream(fileName, FileMode.Create));
-        }
+        public virtual string[] ReadAllLines(string fileName) => File.ReadAllLines(fileName);
 
-        public Stream OpenWrite(string fileName)
-        {
-            // todo: there is a weird bug in ZetaLongPath that does not truncate the file
-            return new FileStream(fileName, FileMode.Create);
-        }
-
-        public virtual string[] ReadAllLines(string fileName) => FileHelper.ReadAllLines(fileName);
-
-        public virtual string ReadAllText(string fileName) => FileHelper.ReadAllText(fileName);
+        public virtual string ReadAllText(string fileName) => File.ReadAllText(fileName);
 
         public XDocument ReadXml(string fileName, LoadOptions loadOptions = LoadOptions.None)
         {
-            var fileInfo = new ZlpFileInfo(fileName);
+            var fileInfo = new FileInfo(fileName);
             return XDocument.Load(fileInfo.OpenRead(), loadOptions);
         }
 
-        public void Rename(string oldFileName, string newFileName) => FileHelper.MoveFile(oldFileName, newFileName);
+        public void Rename(string oldFileName, string newFileName) => File.Move(oldFileName, newFileName);
 
         public void Unzip(string zipFileName, string destinationDirectory)
         {
@@ -231,35 +166,29 @@ namespace Sitecore.Pathfinder.IO
             {
                 foreach (var entry in zip.Entries)
                 {
-                    try
+                    if (entry.FullName.EndsWith("/"))
                     {
-                        if (entry.FullName.EndsWith("/"))
-                        {
-                            FileHelper.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
-                        }
-                        else
-                        {
-                            var fileName = Path.Combine(destinationDirectory, entry.FullName);
-                            CreateDirectoryFromFileName(fileName);
-                            entry.ExtractToFile(fileName, true);
-                        }
+                        Directory.CreateDirectory(Path.Combine(destinationDirectory, entry.FullName));
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine(ex.Message);
+                        var fileName = Path.Combine(destinationDirectory, entry.FullName);
+                        CreateDirectoryFromFileName(fileName);
+                        entry.ExtractToFile(fileName, true);
                     }
                 }
             }
         }
 
-        public virtual void WriteAllBytes(string fileName, byte[] bytes) => FileHelper.WriteAllBytes(fileName, bytes);
+        public virtual void WriteAllBytes(string fileName, byte[] bytes) => File.WriteAllBytes(fileName, bytes);
 
-        public virtual void WriteAllText(string fileName, string contents) => FileHelper.WriteAllText(fileName, contents, Encoding.UTF8);
+        public virtual void WriteAllText(string fileName, string contents) => File.WriteAllText(fileName, contents, Encoding.UTF8);
 
-        public virtual void WriteAllText(string fileName, string contents, Encoding encoding) => FileHelper.WriteAllText(fileName, contents, encoding);
+        public virtual void WriteAllText(string fileName, string contents, Encoding encoding) => File.WriteAllText(fileName, contents, encoding);
 
         public virtual void XCopy(string sourceDirectory, string destinationDirectory)
         {
+            // todo: rewrite for cross platform
             var proc = new Process
             {
                 StartInfo =

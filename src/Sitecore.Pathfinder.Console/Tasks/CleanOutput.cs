@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class CleanOutput : BuildTaskBase
     {
         [ImportingConstructor]
-        public CleanOutput([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem) : base("clean-output")
+        public CleanOutput([NotNull] IConfiguration configuration, [NotNull] IFileSystem fileSystem) : base("clean-output")
         {
             Configuration = configuration;
             FileSystem = fileSystem;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

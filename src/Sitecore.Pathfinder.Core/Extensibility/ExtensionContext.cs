@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Extensibility
     public class ExtensionContext : IExtensionContext
     {
         [ImportingConstructor]
-        public ExtensionContext([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ITraceService trace)
+        public ExtensionContext([NotNull] IConfiguration configuration, [NotNull] IFileSystem fileSystem, [NotNull] ITraceService trace)
         {
             Configuration = configuration;
             FileSystem = fileSystem;
@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Extensibility
 
         public IConfiguration Configuration { get; }
 
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         public ITraceService Trace { get; }
     }

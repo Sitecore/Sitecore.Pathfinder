@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public SitecorePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters)
         {
             Factory = factory;
             FileSystem = fileSystem;
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         protected IFactory Factory { get; }
 
         [NotNull]
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         [NotNull]
         protected ZipWriter Zip { get; set; }

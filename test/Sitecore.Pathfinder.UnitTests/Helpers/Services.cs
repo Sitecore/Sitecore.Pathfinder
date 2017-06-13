@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Helpers
         public IConfigurationService ConfigurationService { get; private set; }
 
         [NotNull]
-        public IFileSystemService FileSystem { get; private set; }
+        public IFileSystem FileSystem { get; private set; }
 
         [NotNull]
         public IFactory Factory { get; private set; }
@@ -48,7 +48,7 @@ namespace Sitecore.Pathfinder.Helpers
             Configuration = host.Configuration;
             Factory = host.Factory;
             Trace = Factory.Resolve<ITraceService>();
-            FileSystem = Factory.Resolve<IFileSystemService>();
+            FileSystem = Factory.Resolve<IFileSystem>();
             ParseService = Factory.Resolve<IParseService>();
             ProjectService = Factory.Resolve<IProjectService>();
             ConfigurationService = Factory.Resolve<IConfigurationService>();

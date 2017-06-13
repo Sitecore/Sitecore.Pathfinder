@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class DeployOutput : BuildTaskBase
     {
         [ImportingConstructor]
-        public DeployOutput([NotNull] IFileSystemService fileSystem) : base("deploy-output")
+        public DeployOutput([NotNull] IFileSystem fileSystem) : base("deploy-output")
         {
             FileSystem = fileSystem;
 
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

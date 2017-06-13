@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class WriteExports : BuildTaskBase
     {
         [ImportingConstructor]
-        public WriteExports([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem) : base("write-exports")
+        public WriteExports([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem) : base("write-exports")
         {
             Configuration = configuration;
             Factory = factory;
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

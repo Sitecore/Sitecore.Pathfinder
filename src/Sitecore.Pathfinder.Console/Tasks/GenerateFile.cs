@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class GenerateFile : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateFile([NotNull] IFileSystemService fileSystem, [NotNull] IPathMapperService pathMapper) : base("generate-file")
+        public GenerateFile([NotNull] IFileSystem fileSystem, [NotNull] IPathMapperService pathMapper) : base("generate-file")
         {
             FileSystem = fileSystem;
             PathMapper = pathMapper;
@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Tasks
         public string FileName { get; set; } = string.Empty;
 
         [NotNull]
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }

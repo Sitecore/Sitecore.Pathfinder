@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class NewSolution : NewProjectTaskBase
     {
         [ImportingConstructor]
-        public NewSolution([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base(console, fileSystem, "new-solution")
+        public NewSolution([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem) : base(console, fileSystem, "new-solution")
         {
             Configuration = configuration;
         }

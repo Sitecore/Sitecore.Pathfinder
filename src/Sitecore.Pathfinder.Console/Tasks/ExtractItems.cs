@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class ExtractItems : BuildTaskBase
     {
         [ImportingConstructor]
-        public ExtractItems([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
+        public ExtractItems([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] IProjectService projectService, [ItemNotNull, NotNull, ImportMany] IEnumerable<IProjectEmitter> projectEmitters) : base("extract-items")
         {
             Configuration = configuration;
             Factory = factory;
@@ -52,7 +52,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

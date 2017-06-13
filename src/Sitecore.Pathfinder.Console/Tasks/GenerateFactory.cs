@@ -229,7 +229,7 @@ namespace Sitecore.Pathfinder.Tasks
                 return "Console";
             }
 
-            if (type == typeof(IFileSystemService))
+            if (type == typeof(IFileSystem))
             {
                 return "FileSystem";
             }

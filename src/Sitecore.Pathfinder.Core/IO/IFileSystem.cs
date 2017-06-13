@@ -9,10 +9,8 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
 {
-    public interface IFileSystemService
+    public interface IFileSystem
     {
-        bool CanWriteDirectory([NotNull] string directory);
-
         void Copy([NotNull] string sourceFileName, [NotNull] string destinationFileName, bool forceUpdate = true);
 
         bool CopyIfNewer([NotNull] string sourceFileName, [NotNull] string targetFileName);
@@ -29,8 +27,6 @@ namespace Sitecore.Pathfinder.IO
 
         bool FileExists([NotNull] string fileName);
 
-        bool FileExistsInPath([NotNull] string fileName);
-
         [NotNull, ItemNotNull]
         IEnumerable<string> GetDirectories([NotNull] string directory);
 
@@ -46,12 +42,6 @@ namespace Sitecore.Pathfinder.IO
         string GetUniqueFileName([NotNull] string fileName);
 
         void Mirror([NotNull] string sourceDirectory, [NotNull] string destinationDirectory);
-
-        [NotNull]
-        Stream OpenRead([NotNull] string fileName);
-
-        [NotNull]
-        StreamReader OpenStreamReader([NotNull] string fileName);
 
         [NotNull]
         StreamWriter OpenStreamWriter([NotNull] string fileName);

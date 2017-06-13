@@ -1175,7 +1175,7 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         private string _websiteDirectory = string.Empty;
 
-        protected NewProjectTaskBase([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem, [NotNull] string taskName) : base(taskName)
+        protected NewProjectTaskBase([NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem, [NotNull] string taskName) : base(taskName)
         {
             Console = console;
             FileSystem = fileSystem;
@@ -1185,7 +1185,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IConsoleService Console { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         protected virtual void CopyCmd([NotNull] IBuildContext context, [NotNull] string projectDirectory)
         {

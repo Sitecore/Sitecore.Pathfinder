@@ -50,9 +50,8 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private string _projectUniqueId;
 
-        [FactoryConstructor]
-        [ImportingConstructor]
-        public Project([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
+        [ImportingConstructor, FactoryConstructor]
+        public Project([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
         {
             Configuration = configuration;
             Trace = trace;
@@ -136,7 +135,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IParseService ParseService { get; }

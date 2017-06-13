@@ -11,8 +11,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
     [Export(typeof(ICompileContext))]
     public class CompileContext : ICompileContext
     {
-        [FactoryConstructor]
-        [ImportingConstructor]
+        [ImportingConstructor, FactoryConstructor]
         public CompileContext([ImportMany, NotNull, ItemNotNull] IEnumerable<ICompiler> compilers)
         {
             Compilers = compilers;
@@ -20,7 +19,7 @@ namespace Sitecore.Pathfinder.Compiling.Compilers
 
         public IEnumerable<ICompiler> Compilers { get; }
 
-        public IProject Project { get; private set; } = (IProject) Projects.Project.Empty;
+        public IProject Project { get; private set; } = (IProject)Projects.Project.Empty;
 
         public ICompileContext With(IProject project)
         {

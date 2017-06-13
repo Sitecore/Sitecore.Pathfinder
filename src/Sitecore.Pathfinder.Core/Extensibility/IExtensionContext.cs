@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Extensibility
         IConfiguration Configuration { get; }
 
         [NotNull]
-        IFileSystemService FileSystem { get; }
+        IFileSystem FileSystem { get; }
 
         [NotNull]
         ITraceService Trace { get; }

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Building
     public class Builder : TaskRunnerBase
     {
         [ImportingConstructor]
-        public Builder([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
+        public Builder([NotNull] IConfiguration configuration, [NotNull] IConsoleService console, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] IProjectService projectService, [NotNull, ItemNotNull, ImportMany] IEnumerable<ITask> tasks) : base(configuration, tasks)
         {
             Console = console;
             FileSystem = fileSystem;
@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Building
         protected IConsoleService Console { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IProjectService ProjectService { get; }

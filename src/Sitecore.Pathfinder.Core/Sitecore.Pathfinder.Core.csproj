@@ -47,7 +47,6 @@
     <PackageReference Include="System.Diagnostics.FileVersionInfo" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
-    <PackageReference Include="ZetaLongPaths.NetStandard" Version="1.0.0.16" />
   </ItemGroup>
 
   <ItemGroup>

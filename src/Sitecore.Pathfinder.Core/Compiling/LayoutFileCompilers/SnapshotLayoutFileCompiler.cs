@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
     public class SnapshotLayoutFileCompiler : LayoutFileCompilerBase
     {
         [ImportingConstructor]
-        public SnapshotLayoutFileCompiler([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper) : base(factory)
+        public SnapshotLayoutFileCompiler([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IFileSystem fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper) : base(factory)
         {
             Trace = trace;
             FileSystem = fileSystem;
@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Compiling.LayoutFileCompilers
         protected ITraceService Trace { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }

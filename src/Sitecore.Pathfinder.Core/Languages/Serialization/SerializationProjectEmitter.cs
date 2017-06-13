@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
     public class SerializationProjectEmitter : DirectoryProjectEmitterBase
     {
         [ImportingConstructor]
-        public SerializationProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters, fileSystem)
+        public SerializationProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters, fileSystem)
         {
         }
 

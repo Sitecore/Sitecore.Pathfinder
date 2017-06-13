@@ -19,13 +19,13 @@ namespace Sitecore.Pathfinder.CodeGeneration.Razor
     public class RazorCodeGenerator : ICodeGenerator
     {
         [ImportingConstructor]
-        public RazorCodeGenerator([NotNull] IFileSystemService fileSystem)
+        public RazorCodeGenerator([NotNull] IFileSystem fileSystem)
         {
             FileSystem = fileSystem;
         }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public void Generate(IBuildContext context, ITextTemplatingEngine textTemplatingEngine, IProjectBase project)
         {

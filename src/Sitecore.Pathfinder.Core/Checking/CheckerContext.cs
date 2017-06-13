@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking
     {
         [FactoryConstructor]
         [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem)
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFileSystem fileSystem)
         {
             FileSystem = fileSystem;
             Culture = configuration.GetCulture();
@@ -25,7 +25,7 @@ namespace Sitecore.Pathfinder.Checking
         public int CheckCount { get; set; }
 
         // keep this - for easy use in Checkers
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         public IDictionary<string, CheckerSeverity> Checkers { get; } = new Dictionary<string, CheckerSeverity>();
 

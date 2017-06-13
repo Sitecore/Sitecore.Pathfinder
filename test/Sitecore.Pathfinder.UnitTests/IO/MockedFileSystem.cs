@@ -4,12 +4,8 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.IO
 {
-    internal class MockedFileSystemService : FileSystemService
+    internal class MockedFileSystem : FileSystem
     {
-        public MockedFileSystemService([NotNull] IConsoleService console) : base(console)
-        {
-        }
-
         [NotNull]
         public string Contents { get; set; } = string.Empty;
 

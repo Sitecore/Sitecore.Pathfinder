@@ -21,7 +21,7 @@ namespace Sitecore.Pathfinder.Languages.Unicorn
     public class UnicornProjectEmitter : DirectoryProjectEmitterBase
     {
         [ImportingConstructor]
-        public UnicornProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters, fileSystem)
+        public UnicornProjectEmitter([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters, fileSystem)
         {
         }
 

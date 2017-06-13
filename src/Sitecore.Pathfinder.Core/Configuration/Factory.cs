@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Configuration
     public partial class Factory
     {
         [ImportingConstructor]
-        public Factory([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService trace, [NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem)
+        public Factory([NotNull] IConfiguration configuration, [NotNull] ICompositionService compositionService, [NotNull] ITraceService trace, [NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem)
         {
             Configuration = configuration;
             CompositionService = compositionService;
@@ -38,7 +38,7 @@ namespace Sitecore.Pathfinder.Configuration
         protected IConsoleService Console { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected ITraceService Trace { get; }

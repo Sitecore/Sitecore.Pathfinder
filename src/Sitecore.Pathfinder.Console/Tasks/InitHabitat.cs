@@ -12,7 +12,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class InitHabitat : BuildTaskBase
     {
         [ImportingConstructor]
-        public InitHabitat([NotNull] IConsoleService console, [NotNull] IFileSystemService fileSystem) : base("init-habitat")
+        public InitHabitat([NotNull] IConsoleService console, [NotNull] IFileSystem fileSystem) : base("init-habitat")
         {
             Console = console;
             FileSystem = fileSystem;
@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IConsoleService Console { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

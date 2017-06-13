@@ -24,13 +24,13 @@ namespace Sitecore.Pathfinder.Tasks
         public const string Xs = "xs";
 
         [ImportingConstructor]
-        public GenerateSchemas([NotNull] IFileSystemService fileSystem) : base("generate-schemas")
+        public GenerateSchemas([NotNull] IFileSystem fileSystem) : base("generate-schemas")
         {
             FileSystem = fileSystem;
         }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

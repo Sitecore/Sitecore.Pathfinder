@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class CheckScconfig : BuildTaskBase
     {
         [ImportingConstructor]
-        public CheckScconfig([NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelineService) : base("check-scconfig")
+        public CheckScconfig([NotNull] IFileSystem fileSystem, [NotNull] IPipelineService pipelineService) : base("check-scconfig")
         {
             FileSystem = fileSystem;
             PipelineService = pipelineService;
@@ -23,7 +23,7 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IPipelineService PipelineService { get; }

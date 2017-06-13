@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class GenerateCode : BuildTaskBase
     {
         [ImportingConstructor]
-        public GenerateCode([NotNull] IFileSystemService fileSystem, [NotNull] ITextTemplatingEngine textTemplatingEngine, [NotNull, ImportMany, ItemNotNull] IEnumerable<ICodeGenerator> codeGenerators) : base("generate-code")
+        public GenerateCode([NotNull] IFileSystem fileSystem, [NotNull] ITextTemplatingEngine textTemplatingEngine, [NotNull, ImportMany, ItemNotNull] IEnumerable<ICodeGenerator> codeGenerators) : base("generate-code")
         {
             FileSystem = fileSystem;
             TextTemplatingEngine = textTemplatingEngine;
@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
         public ITextTemplatingEngine TextTemplatingEngine { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {

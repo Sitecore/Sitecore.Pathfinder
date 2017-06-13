@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class ComparePackages : BuildTaskBase
     {
         [ImportingConstructor]
-        public ComparePackages([NotNull] IFileSystemService fileSystem, [NotNull] IProjectService projectService) : base("compare-projects")
+        public ComparePackages([NotNull] IFileSystem fileSystem, [NotNull] IProjectService projectService) : base("compare-projects")
         {
             FileSystem = fileSystem;
             ProjectService = projectService;
@@ -27,7 +27,7 @@ namespace Sitecore.Pathfinder.Tasks
         public string Header { get; set; } = string.Empty;
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IProjectService ProjectService { get; }

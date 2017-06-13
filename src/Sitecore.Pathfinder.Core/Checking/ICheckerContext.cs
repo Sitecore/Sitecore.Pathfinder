@@ -15,7 +15,7 @@ namespace Sitecore.Pathfinder.Checking
         CultureInfo Culture { get; }
 
         [NotNull]
-        IFileSystemService FileSystem { get; }
+        IFileSystem FileSystem { get; }
 
         bool IsAborted { get; set; }
 

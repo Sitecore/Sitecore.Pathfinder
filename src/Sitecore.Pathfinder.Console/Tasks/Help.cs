@@ -20,7 +20,7 @@ namespace Sitecore.Pathfinder.Tasks
     public class Help : BuildTaskBase
     {
         [ImportingConstructor]
-        public Help([NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem) : base("help")
+        public Help([NotNull] IFactory factory, [NotNull] IFileSystem fileSystem) : base("help")
         {
             Factory = factory;
             FileSystem = fileSystem;
@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Tasks
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         public override void Run(IBuildContext context)
         {
