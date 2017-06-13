@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IPathMatcher PathMatcher { get; }
 
         public virtual IEnumerable<string> GetSourceFiles()
         {

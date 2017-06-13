@@ -7,38 +7,14 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 {
     public class WebsiteDirectoryToProjectDirectoryMapper : IWebsiteToProjectFileNameMapper
     {
-        public WebsiteDirectoryToProjectDirectoryMapper([NotNull] string websiteDirectory, [NotNull] string projectDirectory, [NotNull] string include, [NotNull] string exclude)
+        public WebsiteDirectoryToProjectDirectoryMapper([CanBeNull] IPathMatcher pathMatcher, [NotNull] string websiteDirectory, [NotNull] string projectDirectory)
         {
             IsMapped = !string.IsNullOrEmpty(projectDirectory);
 
+            PathMatcher = pathMatcher;
             WebsiteDirectory = '\\' + PathHelper.NormalizeFilePath(websiteDirectory).Trim('\\');
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
-            Include = include;
-            Exclude = exclude;
-
-            if (string.IsNullOrEmpty(Include) && string.IsNullOrEmpty(Exclude))
-            {
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(include))
-            {
-                include = WebsiteDirectory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(include).Trim('\\');
-            }
-
-            if (!string.IsNullOrEmpty(exclude))
-            {
-                exclude = WebsiteDirectory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(exclude).Trim('\\');
-            }
-
-            PathMatcher = new PathMatcher(include, exclude);
         }
-
-        [NotNull]
-        public string Exclude { get; }
-
-        [NotNull]
-        public string Include { get; }
 
         public bool IsMapped { get; }
 
@@ -48,7 +24,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         public string WebsiteDirectory { get; }
 
         [CanBeNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IPathMatcher PathMatcher { get; }
 
         public bool TryGetProjectFileName(string websiteFileName, out string projectFileName)
         {
@@ -75,3 +51,4 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         }
     }
 }
+

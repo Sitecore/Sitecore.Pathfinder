@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using RazorLight;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
@@ -19,10 +20,14 @@ namespace Sitecore.Pathfinder.CodeGeneration.Razor
     public class RazorCodeGenerator : ICodeGenerator
     {
         [ImportingConstructor]
-        public RazorCodeGenerator([NotNull] IFileSystem fileSystem)
+        public RazorCodeGenerator([NotNull] IFactory factory, [NotNull] IFileSystem fileSystem)
         {
+            Factory = factory;
             FileSystem = fileSystem;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IFileSystem FileSystem { get; }
@@ -30,7 +35,7 @@ namespace Sitecore.Pathfinder.CodeGeneration.Razor
         public void Generate(IBuildContext context, ITextTemplatingEngine textTemplatingEngine, IProjectBase project)
         {
             var extension = '.' + context.Configuration.GetString(Constants.Configuration.GenerateCode.Extension, ".*").TrimStart('.');
-            var pathMatcher = new PathMatcher(context.Configuration.GetString(Constants.Configuration.GenerateCode.Include), context.Configuration.GetString(Constants.Configuration.GenerateCode.Exclude));
+            var pathMatcher = Factory.PathMatcher(context.Configuration.GetString(Constants.Configuration.GenerateCode.Include), context.Configuration.GetString(Constants.Configuration.GenerateCode.Exclude));
 
             foreach (var fileName in FileSystem.GetFiles(context.ProjectDirectory, "*" + extension, SearchOption.AllDirectories))
             {

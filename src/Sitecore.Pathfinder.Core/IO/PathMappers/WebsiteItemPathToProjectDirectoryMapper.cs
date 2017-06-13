@@ -7,48 +7,16 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 {
     public class WebsiteItemPathToProjectDirectoryMapper : IItemPathToProjectFileNameMapper
     {
-        public WebsiteItemPathToProjectDirectoryMapper([NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude, [NotNull] string templateNameInclude, [NotNull] string templateNameExclude)
+        public WebsiteItemPathToProjectDirectoryMapper([CanBeNull] IPathMatcher itemNamePathMatcher, [CanBeNull] IPathMatcher templateNamePathMatcher, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string projectDirectory, [NotNull] string format)
         {
             IsMapped = !string.IsNullOrEmpty(projectDirectory);
 
             ItemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
+            ItemNamePathMatcher = itemNamePathMatcher;
+            TemplateNamePathMatcher = templateNamePathMatcher;
             DatabaseName = databaseName;
             Format = format;
-            ItemNameInclude = itemNameInclude;
-            ItemNameExclude = itemNameExclude;
-            TemplateNameInclude = templateNameInclude;
-            TemplateNameExclude = templateNameExclude;
-
-            if (!string.IsNullOrEmpty(ItemNameInclude) || !string.IsNullOrEmpty(ItemNameExclude))
-            {
-                if (!string.IsNullOrEmpty(itemNameInclude))
-                {
-                    itemNameInclude = ItemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(itemNameInclude).Trim('/');
-                }
-
-                if (!string.IsNullOrEmpty(itemNameExclude))
-                {
-                    itemNameExclude = ItemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(itemNameExclude).Trim('/');
-                }
-
-                ItemNamePathMatcher = new PathMatcher(itemNameInclude, itemNameExclude);
-            }
-
-            if (!string.IsNullOrEmpty(TemplateNameInclude) || !string.IsNullOrEmpty(TemplateNameExclude))
-            {
-                if (!string.IsNullOrEmpty(templateNameInclude))
-                {
-                    templateNameInclude = ItemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(templateNameInclude).Trim('/');
-                }
-
-                if (!string.IsNullOrEmpty(templateNameExclude))
-                {
-                    templateNameExclude = ItemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(templateNameExclude).Trim('/');
-                }
-
-                TemplateNamePathMatcher = new PathMatcher(templateNameInclude, templateNameExclude);
-            }
         }
 
         public string DatabaseName { get; }
@@ -57,28 +25,16 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 
         public bool IsMapped { get; }
 
-        [NotNull]
-        public string ItemNameExclude { get; }
-
-        [NotNull]
-        public string ItemNameInclude { get; }
-
         public string ItemPath { get; }
 
         [NotNull]
         public string ProjectDirectory { get; }
 
-        [NotNull]
-        public string TemplateNameExclude { get; }
-
-        [NotNull]
-        public string TemplateNameInclude { get; }
+        [CanBeNull]
+        protected IPathMatcher ItemNamePathMatcher { get; }
 
         [CanBeNull]
-        protected PathMatcher ItemNamePathMatcher { get; }
-
-        [CanBeNull]
-        protected PathMatcher TemplateNamePathMatcher { get; }
+        protected IPathMatcher TemplateNamePathMatcher { get; }
 
         public bool TryGetProjectFileName(string itemPath, string templateName, out string projectFileName, out string format)
         {

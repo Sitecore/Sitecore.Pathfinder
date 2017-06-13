@@ -106,7 +106,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Parsing.PathMappingContext PathMappingContext([NotNull] Sitecore.Pathfinder.IO.IPathMapperService pathMapper);
 
         [NotNull]
-        Sitecore.Pathfinder.IO.PathMatcher PathMatcher([NotNull] string include, [NotNull] string exclude);
+        Sitecore.Pathfinder.IO.IPathMatcher PathMatcher([NotNull] string include, [NotNull] string exclude);
 
         [NotNull]
         Sitecore.Pathfinder.Projects.IProject Project([NotNull] Sitecore.Pathfinder.Projects.ProjectOptions projectOptions, [NotNull] System.Collections.Generic.IEnumerable<string> sourceFileNames);

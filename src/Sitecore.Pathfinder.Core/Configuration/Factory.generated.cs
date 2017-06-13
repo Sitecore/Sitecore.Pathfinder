@@ -74,7 +74,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Parsing.PathMappingContext PathMappingContext(Sitecore.Pathfinder.IO.IPathMapperService pathMapper) => new Sitecore.Pathfinder.Parsing.PathMappingContext(pathMapper);
 
-        public virtual Sitecore.Pathfinder.IO.PathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
+        public virtual Sitecore.Pathfinder.IO.IPathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
 
         public virtual Sitecore.Pathfinder.Projects.IProject Project(Sitecore.Pathfinder.Projects.ProjectOptions projectOptions, System.Collections.Generic.IEnumerable<string> sourceFileNames) => Resolve<Sitecore.Pathfinder.Projects.IProject>().With(projectOptions, sourceFileNames);
 
