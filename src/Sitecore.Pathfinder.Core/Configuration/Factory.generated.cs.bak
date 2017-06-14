@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Projects.References.DeviceReference DeviceReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, string referenceText, string databaseName) => new Sitecore.Pathfinder.Projects.References.DeviceReference(owner, sourceProperty, referenceText, databaseName);
 
-        public virtual Sitecore.Pathfinder.Projects.Diagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
+        public virtual Sitecore.Pathfinder.Projects.IDiagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
 
         public virtual Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem DirectoryProjectTreeItem(Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, string directory) => new Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem(projectTree, directory);
 
@@ -41,6 +41,8 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual Sitecore.Pathfinder.Projects.Items.Field Field(Sitecore.Pathfinder.Projects.Items.Item item) => new Sitecore.Pathfinder.Projects.Items.Field(item);
 
         public virtual Sitecore.Pathfinder.Compiling.FieldCompilers.IFieldCompileContext FieldCompileContext() => Resolve<Sitecore.Pathfinder.Compiling.FieldCompilers.IFieldCompileContext>();
+
+        public virtual Sitecore.Pathfinder.Projects.Files.File File(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string filePath) => new Sitecore.Pathfinder.Projects.Files.File(project, snapshot, filePath);
 
         public virtual Sitecore.Pathfinder.ProjectTrees.FileProjectTreeItem FileProjectTreeItem(Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, string fileName) => new Sitecore.Pathfinder.ProjectTrees.FileProjectTreeItem(projectTree, fileName);
 
@@ -72,7 +74,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Parsing.PathMappingContext PathMappingContext(Sitecore.Pathfinder.IO.IPathMapperService pathMapper) => new Sitecore.Pathfinder.Parsing.PathMappingContext(pathMapper);
 
-        public virtual Sitecore.Pathfinder.IO.PathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
+        public virtual Sitecore.Pathfinder.IO.IPathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
 
         public virtual Sitecore.Pathfinder.Projects.IProject Project(Sitecore.Pathfinder.Projects.ProjectOptions projectOptions, System.Collections.Generic.IEnumerable<string> sourceFileNames) => Resolve<Sitecore.Pathfinder.Projects.IProject>().With(projectOptions, sourceFileNames);
 

@@ -13,12 +13,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ReferenceCheckers : Checker
     {
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ReferenceNotFound([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ReferenceNotFound([NotNull] ICheckerContext context)
         {
             return from projectItem in context.Project.ProjectItems
                 from reference in projectItem.References
                 where !reference.IsValid
-                select Error(Msg.C1000, "Reference not found", reference.TextNode, (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText + (!string.IsNullOrEmpty(reference.DatabaseName) ? " [" + reference.DatabaseName + "]" : string.Empty));
+                select Error(context, Msg.C1000, "Reference not found", reference.TextNode, details: (reference is FileReference ? "file:/" : string.Empty) + reference.ReferenceText + (!string.IsNullOrEmpty(reference.DatabaseName) ? " [" + reference.DatabaseName + "]" : string.Empty));
         }
     }
 }

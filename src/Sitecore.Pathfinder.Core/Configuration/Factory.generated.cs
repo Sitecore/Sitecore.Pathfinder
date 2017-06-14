@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Projects.References.DeviceReference DeviceReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, string referenceText, string databaseName) => new Sitecore.Pathfinder.Projects.References.DeviceReference(owner, sourceProperty, referenceText, databaseName);
 
-        public virtual Sitecore.Pathfinder.Projects.Diagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
+        public virtual Sitecore.Pathfinder.Projects.IDiagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
 
         public virtual Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem DirectoryProjectTreeItem(Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, string directory) => new Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem(projectTree, directory);
 
@@ -117,6 +117,8 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual Sitecore.Pathfinder.Projects.Templates.TemplateSection TemplateSection(Sitecore.Pathfinder.Projects.Templates.Template template, System.Guid guid) => new Sitecore.Pathfinder.Projects.Templates.TemplateSection(template, guid);
 
         public virtual Sitecore.Pathfinder.Snapshots.TextNode TextNode(Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string key, string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan) => new Sitecore.Pathfinder.Snapshots.TextNode(snapshot, key, value, textSpan);
+
+        public virtual Sitecore.Pathfinder.Snapshots.TextNode TextNode(Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string key, string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan, System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> attributes, System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> childNodes) => new Sitecore.Pathfinder.Snapshots.TextNode(snapshot, key, value, textSpan, attributes, childNodes);
 
         public virtual Sitecore.Pathfinder.Projects.Items.Version Version(int number) => new Sitecore.Pathfinder.Projects.Items.Version(number);
 

@@ -18,34 +18,34 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ItemCheckers : Checker
     {
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> AvoidManyChildren([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> AvoidManyChildren([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 let count = item.Children.Count()
                 where count > 100
-                select Warning(Msg.C1009, "Avoid items with many children", TraceHelper.GetTextNode(item), $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children");
+                select Warning(context, Msg.C1009, "Avoid items with many children", TraceHelper.GetTextNode(item), $"The item has {count} children. Items with more than 100 children decrease performance. Change the structure of the tree to reduce the number of children");
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> AvoidManyVersions([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> AvoidManyVersions([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 from language in item.Versions.GetLanguages()
                 let count = item.Versions.GetVersions(language).Count()
                 where count >= 10
-                select Warning(Msg.C1010, "Avoid items with many version", TraceHelper.GetTextNode(item), $"The item has {count} versions in the {language} language. Items with more than 10 version decrease performance. Remove some of the older versions.");
+                select Warning(context, Msg.C1010, "Avoid items with many version", TraceHelper.GetTextNode(item), $"The item has {count} versions in the {language} language. Items with more than 10 version decrease performance. Remove some of the older versions.");
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> AvoidSpacesInItemNames([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> AvoidSpacesInItemNames([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 where item.ItemName.IndexOf(' ') >= 0 && !item.Paths.IsStandardValuesHolder
-                select Warning(Msg.C1003, "Avoid spaces in item names. Use a display name instead", TraceHelper.GetTextNode(item.ItemNameProperty), item.ItemName);
+                select Warning(context, Msg.C1003, "Avoid spaces in item names. Use a display name instead", TraceHelper.GetTextNode(item.ItemNameProperty), item.ItemName);
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> FieldIsNotDefinedInTemplate([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> FieldIsNotDefinedInTemplate([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 where item.Template != Template.Empty
@@ -53,11 +53,11 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                 from field in item.Fields
                 let templateField = templateFields.FirstOrDefault(f => string.Equals(f.FieldName, field.FieldName, StringComparison.OrdinalIgnoreCase))
                 where templateField == null
-                select Error(Msg.C1005, "Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field, field.Item), "field: " + field.FieldName + ", template: " + item.TemplateName);
+                select Error(context, Msg.C1005, "Field is not defined in the template", TraceHelper.GetTextNode(field.FieldNameProperty, field, field.Item), details: "field: " + field.FieldName + ", template: " + item.TemplateName);
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ItemsWithSameDisplayName([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ItemsWithSameDisplayName([NotNull] ICheckerContext context)
         {
             var parents = new HashSet<Item>();
 
@@ -96,7 +96,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                             if (same.Any())
                             {
-                                yield return Error(Msg.C1006, "Items with same display name on same level", TraceHelper.GetTextNode(child0, child1), $"Two or more items have the same display name \"{displayNames0.First()}\" on the same level. Change the display name of one or more of the items.");
+                                yield return Error(context, Msg.C1006, "Items with same display name on same level", TraceHelper.GetTextNode(child0, child1), details: $"Two or more items have the same display name \"{displayNames0.First()}\" on the same level. Change the display name of one or more of the items.");
                             }
                         }
                     }
@@ -105,7 +105,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ItemsWithSameName([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ItemsWithSameName([NotNull] ICheckerContext context)
         {
             var parents = new HashSet<Item>();
 
@@ -135,7 +135,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                         if (string.Equals(child0.ItemName, child1.ItemName, StringComparison.OrdinalIgnoreCase))
                         {
-                            yield return Error(Msg.C1007, "Items with same name on same level", TraceHelper.GetTextNode(child0.ItemNameProperty, child1.ItemNameProperty, child0, child1), $"Two or more items have the same name \"{child0.ItemName}\" on the same level. Change the name of one or more of the items.");
+                            yield return Error(context, Msg.C1007, "Items with same name on same level", TraceHelper.GetTextNode(child0.ItemNameProperty, child1.ItemNameProperty, child0, child1), details: $"Two or more items have the same name \"{child0.ItemName}\" on the same level. Change the name of one or more of the items.");
                         }
                     }
                 }
@@ -143,43 +143,43 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ItemTemplateNotFound([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ItemTemplateNotFound([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 where item.Template == Template.Empty
-                select Error(Msg.C1004, "Template not found", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item, item.ItemNameProperty), item.TemplateIdOrPath);
+                select Error(context, Msg.C1004, "Template not found", TraceHelper.GetTextNode(item.TemplateIdOrPathProperty, item, item.ItemNameProperty), details: item.TemplateIdOrPath);
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ReminderDateIsAfterArchiveDate([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ReminderDateIsAfterArchiveDate([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 let archiveDate = item[Constants.Fields.ArchiveDate].FromIsoToDateTime()
                 let reminderDate = item[Constants.Fields.ReminderDate].FromIsoToDateTime()
                 where reminderDate != DateTime.MinValue && archiveDate != DateTime.MinValue && reminderDate > archiveDate
-                select Warning(Msg.C1002, "The Reminder date is after the Archive date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ArchiveDate], item.Fields[Constants.Fields.ReminderDate], item), "Change either the Reminder date or the Archive date.");
+                select Warning(context, Msg.C1002, "The Reminder date is after the Archive date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ArchiveDate], item.Fields[Constants.Fields.ReminderDate], item), "Change either the Reminder date or the Archive date.");
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> UnpublishDateIsBeforePublishDate([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> UnpublishDateIsBeforePublishDate([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 where !item.Publishing.NeverPublish
                 let publishDate = item.Publishing.PublishDate
                 let unpublishDate = item.Publishing.PublishDate
                 where publishDate != DateTime.MinValue && unpublishDate != DateTime.MinValue && publishDate > unpublishDate
-                select Warning(Msg.C1011, "The Publish date is after the Unpublish date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.PublishDate], item.Fields[Constants.Fields.UnpublishDate], item), "Change either the Publish date or the Unpublish date");
+                select Warning(context, Msg.C1011, "The Publish date is after the Unpublish date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.PublishDate], item.Fields[Constants.Fields.UnpublishDate], item), "Change either the Publish date or the Unpublish date");
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> ValidToDateIsBeforeValidFromDate([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ValidToDateIsBeforeValidFromDate([NotNull] ICheckerContext context)
         {
             return from item in context.Project.Items
                 where !item.Publishing.NeverPublish
                 let validFrom = item.Publishing.ValidFrom
                 let validTo = item.Publishing.ValidTo
                 where validFrom != DateTime.MinValue && validTo != DateTime.MinValue && validFrom > validTo
-                select Warning(Msg.C1021, "The Valid From date is after the Valid To date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "Change either the Valid From date or the Valid To date");
+                select Warning(context, Msg.C1021, "The Valid From date is after the Valid To date", TraceHelper.GetTextNode(item.Fields[Constants.Fields.ValidFrom], item.Fields[Constants.Fields.ValidTo], item), "Change either the Valid From date or the Valid To date");
         }
     }
 }

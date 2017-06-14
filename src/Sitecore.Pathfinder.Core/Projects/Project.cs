@@ -32,7 +32,7 @@ namespace Sitecore.Pathfinder.Projects
         private readonly IDictionary<string, Database> _databases = new Dictionary<string, Database>();
 
         [NotNull, ItemNotNull]
-        private readonly IList<Diagnostic> _diagnostics;
+        private readonly IList<IDiagnostic> _diagnostics;
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -65,7 +65,7 @@ namespace Sitecore.Pathfinder.Projects
             Indexes = Factory.ProjectIndexes(this);
 
             _projectItems = new LockableList<IProjectItem>(this);
-            _diagnostics = new SynchronizedList<Diagnostic>();
+            _diagnostics = new SynchronizedList<IDiagnostic>();
 
             Options = ProjectOptions.Empty;
 
@@ -93,7 +93,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public IEnumerable<Database> Databases => _databases.Values;
 
-        public IEnumerable<Diagnostic> Diagnostics
+        public IEnumerable<IDiagnostic> Diagnostics
         {
             get
             {

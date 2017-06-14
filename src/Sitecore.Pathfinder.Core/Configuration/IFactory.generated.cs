@@ -43,7 +43,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Projects.References.DeviceReference DeviceReference([NotNull] Sitecore.Pathfinder.Projects.IProjectItem owner, [NotNull] Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        Sitecore.Pathfinder.Projects.Diagnostic Diagnostic(int msg, [NotNull] string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, [NotNull] string text);
+        Sitecore.Pathfinder.Projects.IDiagnostic Diagnostic(int msg, [NotNull] string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, [NotNull] string text);
 
         [NotNull]
         Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem DirectoryProjectTreeItem([NotNull] Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, [NotNull] string directory);
@@ -170,6 +170,9 @@ namespace Sitecore.Pathfinder.Configuration
 
         [NotNull]
         Sitecore.Pathfinder.Snapshots.TextNode TextNode([NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string key, [NotNull] string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan);
+
+        [NotNull]
+        Sitecore.Pathfinder.Snapshots.TextNode TextNode([NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string key, [NotNull] string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan, [NotNull] System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> attributes, [NotNull] System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> childNodes);
 
         [NotNull]
         Sitecore.Pathfinder.Projects.Items.Version Version(int number);

@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class GuidCheckers : Checker
     {
         [NotNull, ItemNotNull, Check]
-        public IEnumerable<Diagnostic> GuidClash([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> GuidClash([NotNull] ICheckerContext context)
         {
             var items = context.Project.ProjectItems.ToArray();
 
@@ -64,7 +64,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                     context.IsDeployable = false;
 
-                    yield return Error(Msg.C1001, Texts.Unique_ID_clash, TraceHelper.GetTextNode(item2, item1), PathHelper.UnmapPath(context.Project.ProjectDirectory, projectItem2.Snapshot.SourceFile.AbsoluteFileName));
+                    yield return Error(context, Msg.C1001, Texts.Unique_ID_clash, TraceHelper.GetTextNode(item2, item1), details: PathHelper.UnmapPath(context.Project.ProjectDirectory, projectItem2.Snapshot.SourceFile.AbsoluteFileName));
                 }
             }
         }

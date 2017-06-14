@@ -212,7 +212,7 @@ namespace Sitecore.Pathfinder.Checking
             return Checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
-        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] IDiagnostic[] diagnostics, bool treatWarningsAsErrors)
         {
             if (checker.Severity == CheckerSeverity.Default)
             {

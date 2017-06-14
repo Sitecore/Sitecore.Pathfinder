@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Checking
     [DebuggerDisplay("{GetType().Name,nq}: {Name}, {Category}")]
     public class CheckerInfo
     {
-        public CheckerInfo([NotNull] string category, [NotNull] string name, [NotNull] Func<ICheckerContext, IEnumerable<Diagnostic>> checker)
+        public CheckerInfo([NotNull] string category, [NotNull] string name, [NotNull] Func<ICheckerContext, IEnumerable<IDiagnostic>> checker)
         {
             Name = name;
             Category = category;
@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Checking
         public string Category { get; }
 
         [NotNull]
-        public Func<ICheckerContext, IEnumerable<Diagnostic>> Checker { get; }
+        public Func<ICheckerContext, IEnumerable<IDiagnostic>> Checker { get; }
 
         [NotNull]
         public string Name { get; }

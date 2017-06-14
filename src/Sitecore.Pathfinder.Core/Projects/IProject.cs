@@ -8,7 +8,7 @@ namespace Sitecore.Pathfinder.Projects
     public interface IProject : IProjectBase
     {
         [NotNull, ItemNotNull]
-        IEnumerable<Diagnostic> Diagnostics { get; }
+        IEnumerable<IDiagnostic> Diagnostics { get; }
 
         long Ducats { get; set; }
 

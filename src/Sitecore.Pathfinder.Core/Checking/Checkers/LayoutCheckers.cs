@@ -15,20 +15,20 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class LayoutCheckers : Checker
     {
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> PlaceholdersShouldHaveAPlaceholderSettingsName([NotNull] ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 from placeholder in rendering.Placeholders
                 where context.Project.Items.FirstOrDefault(i => i.ItemName == placeholder && i.TemplateName == "Placeholder") == null
-                select Warning(Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\"" + placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
+                select Warning(context, Msg.C1105, "Placeholders should have a Placeholder Settings item", new StringTextNode("Placeholder(\"" + placeholder + "\")", rendering.Snapshot), $"To fix, create a '/sitecore/layout/Placeholder Settings/{placeholder}' item");
         }
 
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> RenderingNameAndFileNameShouldMatch([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> RenderingNameAndFileNameShouldMatch([NotNull] ICheckerContext context)
         {
             return from rendering in context.Project.ProjectItems.OfType<Rendering>()
                 where rendering.ItemName != PathHelper.GetFileNameWithoutExtensions(rendering.FilePath)
-                select Warning(Msg.C1106, "Rendering item name should match file name", rendering.Snapshot.SourceFile, "To fix, rename the rendering file or rename the rendering item");
+                select Warning(context, Msg.C1106, "Rendering item name should match file name", rendering.Snapshot.SourceFile, "To fix, rename the rendering file or rename the rendering item");
         }
     }
 }

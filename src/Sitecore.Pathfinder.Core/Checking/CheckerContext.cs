@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+
+using System.Collections.Generic;
 using System.Composition;
 using System.Globalization;
 using Sitecore.Pathfinder.Configuration;
@@ -13,23 +15,27 @@ namespace Sitecore.Pathfinder.Checking
     [Export(typeof(ICheckerContext))]
     public class CheckerContext : ICheckerContext
     {
-        [FactoryConstructor]
-        [ImportingConstructor]
-        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFileSystem fileSystem)
+        [ImportingConstructor, FactoryConstructor]
+        public CheckerContext([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem)
         {
+            Factory = factory;
             FileSystem = fileSystem;
+
             Culture = configuration.GetCulture();
             IsDeployable = true;
         }
 
         public int CheckCount { get; set; }
 
-        // keep this - for easy use in Checkers
-        public IFileSystem FileSystem { get; }
-
         public IDictionary<string, CheckerSeverity> Checkers { get; } = new Dictionary<string, CheckerSeverity>();
 
         public CultureInfo Culture { get; }
+
+        // keep this - for easy use in Checkers
+        public IFactory Factory { get; }
+
+        // keep this - for easy use in Checkers
+        public IFileSystem FileSystem { get; }
 
         public bool IsAborted { get; set; }
 
