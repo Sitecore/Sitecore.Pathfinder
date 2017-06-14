@@ -174,7 +174,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         {
             var url = new UrlString(value);
             var result = new UrlString();
-            Database database = null;
+            IDatabase database = null;
 
             var project = field.Item.Project;
 

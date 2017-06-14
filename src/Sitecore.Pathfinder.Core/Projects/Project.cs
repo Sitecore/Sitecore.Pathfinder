@@ -29,7 +29,7 @@ namespace Sitecore.Pathfinder.Projects
         public static readonly IProjectBase Empty = new Project();
 
         [NotNull]
-        private readonly IDictionary<string, Database> _databases = new Dictionary<string, Database>();
+        private readonly IDictionary<string, IDatabase> _databases = new Dictionary<string, IDatabase>();
 
         [NotNull, ItemNotNull]
         private readonly IList<IDiagnostic> _diagnostics;
@@ -91,7 +91,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public ProjectContext Context { get; }
 
-        public IEnumerable<Database> Databases => _databases.Values;
+        public IEnumerable<IDatabase> Databases => _databases.Values;
 
         public IEnumerable<IDiagnostic> Diagnostics
         {
@@ -278,7 +278,7 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public Database GetDatabase(string databaseName)
+        public IDatabase GetDatabase(string databaseName)
         {
             if (string.IsNullOrEmpty(databaseName))
             {

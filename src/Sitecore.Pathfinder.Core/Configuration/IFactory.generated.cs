@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Languages.Content.ContentFile ContentFile([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string filePath);
 
         [NotNull]
-        Sitecore.Pathfinder.Projects.Database Database([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] string databaseName, [NotNull] System.Collections.Generic.IEnumerable<string> languageNames);
+        Sitecore.Pathfinder.Projects.IDatabase Database([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] string databaseName, [NotNull] System.Collections.Generic.IEnumerable<string> languageNames);
 
         [NotNull]
         Sitecore.Pathfinder.Projects.References.DeviceReference DeviceReference([NotNull] Sitecore.Pathfinder.Projects.IProjectItem owner, [NotNull] Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
@@ -70,10 +70,10 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Projects.References.FileReference FileReference([NotNull] Sitecore.Pathfinder.Projects.IProjectItem owner, [NotNull] Sitecore.Pathfinder.Snapshots.ITextNode textNode, [NotNull] string referenceText);
 
         [NotNull]
-        Sitecore.Pathfinder.Projects.Items.Item Item([NotNull] Sitecore.Pathfinder.Projects.Database database, System.Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
+        Sitecore.Pathfinder.Projects.Items.Item Item([NotNull] Sitecore.Pathfinder.Projects.IDatabase database, System.Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath);
 
         [NotNull]
-        Sitecore.Pathfinder.Parsing.Items.ItemParseContext ItemParseContext([NotNull] Sitecore.Pathfinder.Parsing.IParseContext parseContext, [NotNull] Sitecore.Pathfinder.Parsing.Items.ItemParser parser, [NotNull] Sitecore.Pathfinder.Projects.Database database, [NotNull] string parentItemPath, bool isImport);
+        Sitecore.Pathfinder.Parsing.Items.ItemParseContext ItemParseContext([NotNull] Sitecore.Pathfinder.Parsing.IParseContext parseContext, [NotNull] Sitecore.Pathfinder.Parsing.Items.ItemParser parser, [NotNull] Sitecore.Pathfinder.Projects.IDatabase database, [NotNull] string parentItemPath, bool isImport);
 
         [NotNull]
         Sitecore.Pathfinder.Languages.Json.JsonTextSnapshot JsonTextSnapshot([NotNull] Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, [NotNull] string contents);
@@ -82,7 +82,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Projects.Items.Language Language([NotNull] string languageName);
 
         [NotNull]
-        Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext LayoutCompileContext([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] Sitecore.Pathfinder.Projects.Database database, [NotNull] Sitecore.Pathfinder.Snapshots.ITextSnapshot snapshot);
+        Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext LayoutCompileContext([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] Sitecore.Pathfinder.Projects.IDatabase database, [NotNull] Sitecore.Pathfinder.Snapshots.ITextSnapshot snapshot);
 
         [NotNull]
         Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompiler LayoutCompiler();
@@ -94,7 +94,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Projects.References.LayoutRenderingReference LayoutRenderingReference([NotNull] Sitecore.Pathfinder.Projects.IProjectItem owner, [NotNull] Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        Sitecore.Pathfinder.Languages.Media.MediaFile MediaFile([NotNull] Sitecore.Pathfinder.Projects.Database database, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
+        Sitecore.Pathfinder.Languages.Media.MediaFile MediaFile([NotNull] Sitecore.Pathfinder.Projects.IDatabase database, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string itemName, [NotNull] string itemPath, [NotNull] string filePath);
 
         [NotNull]
         Sitecore.Pathfinder.Tasks.Building.OutputFile OutputFile([NotNull] string fileName);
@@ -139,7 +139,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Projects.References.Reference Reference([NotNull] Sitecore.Pathfinder.Projects.IProjectItem owner, [NotNull] Sitecore.Pathfinder.Snapshots.ITextNode textNode, [NotNull] string referenceText, [NotNull] string databaseName);
 
         [NotNull]
-        Sitecore.Pathfinder.Languages.Renderings.Rendering Rendering([NotNull] Sitecore.Pathfinder.Projects.Database database, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
+        Sitecore.Pathfinder.Languages.Renderings.Rendering Rendering([NotNull] Sitecore.Pathfinder.Projects.IDatabase database, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string itemPath, [NotNull] string itemName, [NotNull] string filePath, [NotNull] string templateIdOrPath);
 
         [NotNull]
         Sitecore.Pathfinder.Languages.Serialization.SerializationFile SerializationFile([NotNull] Sitecore.Pathfinder.Projects.IProjectBase project, [NotNull] Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, [NotNull] string filePath);
@@ -160,7 +160,7 @@ namespace Sitecore.Pathfinder.Configuration
         Sitecore.Pathfinder.Snapshots.SourceFile SourceFile([NotNull] string absoluteFileName);
 
         [NotNull]
-        Sitecore.Pathfinder.Projects.Templates.Template Template([NotNull] Sitecore.Pathfinder.Projects.Database database, System.Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath);
+        Sitecore.Pathfinder.Projects.Templates.Template Template([NotNull] Sitecore.Pathfinder.Projects.IDatabase database, System.Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath);
 
         [NotNull]
         Sitecore.Pathfinder.Projects.Templates.TemplateField TemplateField([NotNull] Sitecore.Pathfinder.Projects.Templates.Template template, System.Guid guid);

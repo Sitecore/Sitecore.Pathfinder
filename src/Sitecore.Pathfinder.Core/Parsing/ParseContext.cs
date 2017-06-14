@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.Parsing
 
         public CultureInfo Culture { get; }
 
-        public virtual Database Database { get; } = Database.Empty;
+        public virtual IDatabase Database { get; } = Projects.Database.Empty;
 
         public virtual string FilePath { get; }
 

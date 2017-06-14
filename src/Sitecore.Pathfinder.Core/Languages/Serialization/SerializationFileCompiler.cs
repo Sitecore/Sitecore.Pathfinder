@@ -231,7 +231,7 @@ namespace Sitecore.Pathfinder.Languages.Serialization
             return lines.Length;
         }
 
-        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] Database database, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
+        protected virtual int ParseVersion([NotNull] ICompileContext context, [NotNull] IDatabase database, [NotNull] ITextSnapshot textSnapshot, [NotNull] LanguageVersionBuilder languageVersionBuilder, [NotNull, ItemNotNull] string[] lines, int lineNumber)
         {
             for (var n = lineNumber; n < lines.Length; n++)
             {

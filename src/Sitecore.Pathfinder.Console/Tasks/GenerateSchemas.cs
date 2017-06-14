@@ -49,7 +49,7 @@ namespace Sitecore.Pathfinder.Tasks
         }
 
         [NotNull]
-        protected virtual Dictionary<string, Template> GetTemplates([NotNull] IProject project, [NotNull] Database database)
+        protected virtual Dictionary<string, Template> GetTemplates([NotNull] IProject project, [NotNull] IDatabase database)
         {
             var templates = new Dictionary<string, Template>();
             foreach (var template in project.ProjectItems.OfType<Template>().Where(i => i.Database == database))
@@ -144,7 +144,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void WriteJsonSchema([NotNull] JsonTextWriter output, [NotNull] IProject project, [NotNull] Database database)
+        protected virtual void WriteJsonSchema([NotNull] JsonTextWriter output, [NotNull] IProject project, [NotNull] IDatabase database)
         {
             var pairs = GetTemplates(project, database);
             var languages = database.Languages.ToArray();
@@ -475,7 +475,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void WriteXmlSchema([NotNull] XmlWriter output, [NotNull] Database database, [NotNull] string nameSpace, [NotNull, ItemNotNull] IEnumerable<Template> templates)
+        protected virtual void WriteXmlSchema([NotNull] XmlWriter output, [NotNull] IDatabase database, [NotNull] string nameSpace, [NotNull, ItemNotNull] IEnumerable<Template> templates)
         {
             output.WriteProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
             output.WriteStartElement(Xs, "schema", Namespace);
@@ -511,13 +511,15 @@ namespace Sitecore.Pathfinder.Tasks
             output.WriteEndElement();
         }
 
-        protected virtual void WriteXmlTemplateFields([NotNull] XmlWriter output, [NotNull] Database database, [NotNull] Template template)
+        protected virtual void WriteXmlTemplateFields([NotNull] XmlWriter output, [NotNull] IDatabase database, [NotNull] Template template)
         {
-            var fieldNames = new List<string>();
-            fieldNames.Add("Name");
-            fieldNames.Add("Id");
-            fieldNames.Add("ParentItemPath");
-            fieldNames.Add("__Icon");
+            var fieldNames = new List<string>
+            {
+                "Name",
+                "Id",
+                "ParentItemPath",
+                "__Icon"
+            };
 
             foreach (var field in template.GetAllFields().OrderBy(f => f.FieldName))
             {
@@ -575,7 +577,7 @@ namespace Sitecore.Pathfinder.Tasks
             }
         }
 
-        protected virtual void WriteXmlTemplates([NotNull] XmlWriter output, [NotNull] Database database, [NotNull, ItemNotNull] IEnumerable<Template> templates)
+        protected virtual void WriteXmlTemplates([NotNull] XmlWriter output, [NotNull] IDatabase database, [NotNull, ItemNotNull] IEnumerable<Template> templates)
         {
             foreach (var template in templates)
             {

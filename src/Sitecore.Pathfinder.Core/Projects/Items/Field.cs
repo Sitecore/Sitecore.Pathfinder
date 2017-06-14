@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public string CompiledValue { get; private set; } = string.Empty;
 
         [NotNull]
-        public Database Database => Item.Database;
+        public IDatabase Database => Item.Database;
 
         [NotNull]
         public string DatabaseName => Item.DatabaseName;

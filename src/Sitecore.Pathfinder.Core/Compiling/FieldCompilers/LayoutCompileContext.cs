@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
     public class LayoutCompileContext
     {
         [FactoryConstructor]
-        public LayoutCompileContext([NotNull] IProjectBase project, [NotNull] Database database, [NotNull] ITextSnapshot snapshot)
+        public LayoutCompileContext([NotNull] IProjectBase project, [NotNull] IDatabase database, [NotNull] ITextSnapshot snapshot)
         {
             Project = project;
             Database = database;
@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         }
 
         [NotNull]
-        public Database Database { get; }
+        public IDatabase Database { get; }
 
         [NotNull]
         public IProjectBase Project { get; }

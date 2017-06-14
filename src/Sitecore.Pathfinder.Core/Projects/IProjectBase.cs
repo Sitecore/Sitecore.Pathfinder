@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Projects
         ProjectContext Context { get; }
 
         [ItemNotNull, NotNull]
-        IEnumerable<Database> Databases { get; }
+        IEnumerable<IDatabase> Databases { get; }
 
         [NotNull, ItemNotNull]
         IEnumerable<File> Files { get; }
@@ -41,6 +41,6 @@ namespace Sitecore.Pathfinder.Projects
         IEnumerable<Template> Templates { get; }
 
         [NotNull]
-        Database GetDatabase([NotNull] string databaseName);
+        IDatabase GetDatabase([NotNull] string databaseName);
     }
 }

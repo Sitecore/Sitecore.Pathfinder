@@ -17,7 +17,7 @@ namespace Sitecore.Pathfinder.Parsing
         }
 
         [NotNull]
-        public Database Database { get; private set; } = Database.Empty;
+        public IDatabase Database { get; private set; } = Projects.Database.Empty;
 
         [NotNull]
         public string FilePath { get; private set; } = string.Empty;

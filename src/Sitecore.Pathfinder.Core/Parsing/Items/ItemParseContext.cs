@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
     public class ItemParseContext
     {
         [FactoryConstructor]
-        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] Database database, [NotNull] string parentItemPath, bool isImport)
+        public ItemParseContext([NotNull] IParseContext parseContext, [NotNull] ItemParser parser, [NotNull] IDatabase database, [NotNull] string parentItemPath, bool isImport)
         {
             ParseContext = parseContext;
             Parser = parser;
@@ -19,7 +19,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         }
 
         [NotNull]
-        public Database Database { get; }
+        public IDatabase Database { get; }
 
         public bool IsImport { get; }
 

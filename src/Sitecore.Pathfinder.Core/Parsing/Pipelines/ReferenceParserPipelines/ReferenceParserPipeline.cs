@@ -11,7 +11,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
     public class ReferenceParserPipeline : PipelineBase<ReferenceParserPipeline>
     {
         [NotNull]
-        public Database Database { get; private set; }
+        public IDatabase Database { get; private set; }
 
         [NotNull]
         public IProjectItem ProjectItem { get; private set; }
@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
         public ITextNode SourceTextNode { get; private set; }
 
         [NotNull]
-        public ReferenceParserPipeline Execute([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] Database database)
+        public ReferenceParserPipeline Execute([NotNull] IProjectItem projectItem, [NotNull] ITextNode sourceTextNode, [NotNull] string referenceText, [NotNull] IDatabase database)
         {
             ProjectItem = projectItem;
             SourceTextNode = sourceTextNode;

@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         }
 
         [NotNull]
-        public Database Database => Template.Database;
+        public IDatabase Database => Template.Database;
 
         [NotNull]
         public string DatabaseName => Template.DatabaseName;

@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private int? _itemPathLevel;
 
-        protected DatabaseProjectItem([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database.Project, new ProjectItemUri(database.DatabaseName, guid))
+        protected DatabaseProjectItem([NotNull] IDatabase database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database.Project, new ProjectItemUri(database.DatabaseName, guid))
         {
             ItemNameProperty = NewSourceProperty("ItemName", string.Empty, SourcePropertyFlags.IsShort);
             IconProperty = NewSourceProperty("Icon", string.Empty);
@@ -39,7 +39,7 @@ namespace Sitecore.Pathfinder.Projects
         public IEnumerable<ITextNode> AdditionalSourceTextNodes => _sourceTextNodes.Skip(1);
 
         [NotNull]
-        public Database Database { get; }
+        public IDatabase Database { get; }
 
         [NotNull]
         public string DatabaseName => Database.DatabaseName;
