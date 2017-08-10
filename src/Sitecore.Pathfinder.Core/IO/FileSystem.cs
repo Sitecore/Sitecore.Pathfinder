@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder.IO
             }
 
             CreateDirectoryFromFileName(destinationFileName);
-            Copy(sourceFileName, destinationFileName);
+            File.Copy(sourceFileName, destinationFileName);
             File.SetLastWriteTime(destinationFileName, File.GetLastWriteTime(sourceFileName).ToUniversalTime());
         }
 
