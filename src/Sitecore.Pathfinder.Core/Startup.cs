@@ -30,7 +30,7 @@ namespace Sitecore.Pathfinder
 
         public Extensibility.StartupExtensions.CompositionOptions CompositionOptions { get; private set; } = Extensibility.StartupExtensions.CompositionOptions.None;
 
-        public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Noninteractive;
+        public ConfigurationOptions ConfigurationOptions { get; private set; } = ConfigurationOptions.Interactive;
 
         [NotNull]
         public string DataFolderDirectory { get; private set; } = string.Empty;
@@ -52,22 +52,6 @@ namespace Sitecore.Pathfinder
 
         [NotNull]
         public string WebsiteDirectory { get; private set; } = string.Empty;
-
-        [NotNull]
-        public virtual Startup AsInteractive()
-        {
-            ConfigurationOptions = ConfigurationOptions.Interactive;
-            CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.IgnoreServerAssemblies;
-            return this;
-        }
-
-        [NotNull]
-        public virtual Startup AsNoninteractive()
-        {
-            ConfigurationOptions = ConfigurationOptions.Noninteractive;
-            CompositionOptions &= ~Extensibility.StartupExtensions.CompositionOptions.IgnoreServerAssemblies;
-            return this;
-        }
 
         [NotNull]
         public Startup DisableExtensions()
@@ -236,13 +220,6 @@ namespace Sitecore.Pathfinder
         public virtual Startup WithToolsDirectory([NotNull] string toolsDirectory)
         {
             ToolsDirectory = toolsDirectory;
-            return this;
-        }
-
-        [NotNull]
-        public virtual Startup WithWebsiteAssemblyResolver()
-        {
-            CompositionOptions |= Extensibility.StartupExtensions.CompositionOptions.AddWebsiteAssemblyResolver;
             return this;
         }
 

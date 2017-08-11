@@ -85,7 +85,13 @@ namespace Sitecore.Pathfinder.IO
             CreateDirectory(directory);
         }
 
-        public virtual void DeleteDirectory(string directory) => Directory.Delete(directory, true);
+        public virtual void DeleteDirectory(string directory)
+        {
+            if (Directory.Exists(directory))
+            {
+                Directory.Delete(directory, true);
+            }
+        }
 
         public virtual void DeleteFile(string fileName) => File.Delete(fileName);
 
