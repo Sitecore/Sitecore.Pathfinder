@@ -135,7 +135,7 @@ namespace Sitecore.Pathfinder.Tasks
                 {
                     var output = new JsonTextWriter(writer)
                     {
-                        Formatting = Formatting.Indented,
+                        Formatting = Newtonsoft.Json.Formatting.Indented,
                         Indentation = 4
                     };
 
