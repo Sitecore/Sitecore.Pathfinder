@@ -3,7 +3,7 @@
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
       "commandLineArgs": "b",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Demo"
+      "workingDirectory": "E:\\Sitecore\\Sitecore.ContentDelivery\\code"
     }
   }
 }

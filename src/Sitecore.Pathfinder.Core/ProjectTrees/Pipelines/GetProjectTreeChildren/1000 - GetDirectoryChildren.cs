@@ -6,6 +6,7 @@ using System.Linq;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
+using Sitecore.Pathfinder.IO;
 
 namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 {
@@ -38,9 +39,11 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
                 return;
             }
 
+            var projectDirectory = pipeline.ProjectTreeItem.ProjectTree.ProjectDirectory;
+
             foreach (var dir in fileSystem.GetDirectories(directory).OrderBy(d => d))
             {
-                var directoryName = Path.GetFileName(dir);
+                var directoryName = PathHelper.UnmapPath(projectDirectory, dir);
                 Assert.IsNotNullOrEmpty(directoryName);
 
                 if (projectTree.IsDirectoryIncluded(directoryName))
@@ -51,7 +54,7 @@ namespace Sitecore.Pathfinder.ProjectTrees.Pipelines.GetProjectTreeChildren
 
             foreach (var fileName in fileSystem.GetFiles(directory).OrderBy(f => f))
             {
-                var name = Path.GetFileName(fileName);
+                var name = PathHelper.UnmapPath(projectDirectory, fileName);
                 Assert.IsNotNullOrEmpty(name);
 
                 if (projectTree.IsFileIncluded(name))
