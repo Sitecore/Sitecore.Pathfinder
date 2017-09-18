@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1;net461</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
-    <Version>0.9.0</Version>
+    <Version>0.10.0-v1</Version>
     <Description>Core assembly for Sitecore Pathfinder</Description>
     <Copyright>Copyright (C) 2017 by Sitecore A/S</Copyright>
     <PackageProjectUrl>https://github.com/JakobChristensen/Sitecore.Pathfinder</PackageProjectUrl>

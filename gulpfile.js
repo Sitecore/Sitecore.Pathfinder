@@ -10,7 +10,7 @@
 //
 // 9. Done
 
-var version = "0.9.0";
+var version = "0.10.0";
 
 var gulp = require("gulp");
 var del = require("del");
@@ -29,7 +29,7 @@ if (process.env.APPVEYOR_BUILD_VERSION) {
 gulp.task("build-project", function() {
     return gulp.src("./Sitecore.Pathfinder.sln").pipe(msbuild({
         targets: ["Clean", "Build"],
-        configuration: "Debug",
+        configuration: "Release",
         logCommand: false,
         verbosity: "minimal",
         maxcpucount: 0,
@@ -61,7 +61,7 @@ gulp.task("copy-npm-files", ["clean-npm-directory"], function() {
 
 gulp.task("copy-npm-directory", ["clean-npm-directory", "copy-npm-files"], function() {
     return gulp.src(["./build/dist/**/*"]).
-        pipe(gulp.dest("./build/npm/"));
+        pipe(gulp.dest("./build/npm/bin/"));
 });
 
 gulp.task("build-npm-package", ["copy-npm-directory"], function() {
@@ -90,7 +90,7 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
             language: "en-us",
             projectUrl: "https://github.com/JakobChristensen/Sitecore.Pathfinder",
             licenseUrl: "https://github.com/JakobChristensen/Sitecore.Pathfinder/blob/master/LICENSE",
-            copyright: "Copyright 2016 by Sitecore A/S",
+            copyright: "Copyright 2016-2017 by Sitecore A/S",
             requireLicenseAcceptance: false,
             dependencies: [
             ],
