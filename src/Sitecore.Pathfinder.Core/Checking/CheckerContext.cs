@@ -22,7 +22,6 @@ namespace Sitecore.Pathfinder.Checking
             FileSystem = fileSystem;
 
             Culture = configuration.GetCulture();
-            IsDeployable = true;
         }
 
         public int CheckCount { get; set; }
@@ -36,10 +35,6 @@ namespace Sitecore.Pathfinder.Checking
 
         // keep this - for easy use in Checkers
         public IFileSystem FileSystem { get; }
-
-        public bool IsAborted { get; set; }
-
-        public bool IsDeployable { get; set; }
 
         public IProjectBase Project { get; private set; } = Projects.Project.Empty;
 

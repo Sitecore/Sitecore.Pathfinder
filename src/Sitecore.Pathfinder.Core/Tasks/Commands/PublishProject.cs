@@ -38,6 +38,12 @@ namespace Sitecore.Pathfinder.Tasks.Commands
 
             context.Trace.TraceInformation(Msg.D1029, "Publishing project...");
 
+            if (project.Diagnostics.Any(d => d.Severity == Severity.Error))
+            {
+                context.Trace.TraceError(Msg.E1048, "Project contains errors and will not be published");
+                return;
+            }
+
             var format = Format;
             if (string.IsNullOrEmpty(format))
             {

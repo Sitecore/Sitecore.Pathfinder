@@ -62,9 +62,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
                         continue;
                     }
 
-                    context.IsDeployable = false;
-
-                    yield return Error(context, Msg.C1001, Texts.Unique_ID_clash, TraceHelper.GetTextNode(item2, item1), details: PathHelper.UnmapPath(context.Project.ProjectDirectory, projectItem2.Snapshot.SourceFile.AbsoluteFileName));
+                    yield return Error(context, Msg.C1001, Texts.Unique_ID_clash, TraceHelper.GetTextNode(item2, item1), PathHelper.UnmapPath(context.Project.ProjectDirectory, projectItem2.Snapshot.SourceFile.AbsoluteFileName));
                 }
             }
         }

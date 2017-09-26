@@ -23,10 +23,6 @@ namespace Sitecore.Pathfinder.Checking
         [NotNull]
         IFileSystem FileSystem { get; }
 
-        bool IsAborted { get; set; }
-
-        bool IsDeployable { get; set; }
-
         [NotNull]
         IProjectBase Project { get; }
 
