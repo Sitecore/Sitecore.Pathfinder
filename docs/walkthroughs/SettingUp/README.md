@@ -4,7 +4,18 @@ This walkthrough shows how to setup Pathfinder initially.
 
 ## Download Pathfinder
 
-You can download Pathfinder from [here](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases). Unzip
+Run `npm install -g sitecore.pathfinder` to install Sitecore Pathfinder.
+
+You can also install Pathfinder locally by running `npm install -saveDev sitecore.pathfinder` and adding 
+a script to your package.json file:
+
+```js
+"scripts":{
+    "scc": "scc"
+}
+```
+   
+You can also download Pathfinder from [here](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases). Unzip
 the file to the Program Files folder, e.g. `C:\Program Files (x86)\SitecorePathfinder`.
 
 The path of the scc.cmd file should be something like `C:\Program Files (x86)\SitecorePathfinder\scc.cmd`.

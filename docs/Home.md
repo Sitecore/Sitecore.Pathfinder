@@ -8,8 +8,18 @@ An experimental CLI for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases) to 
-try it out.
+Run `npm install -g sitecore.pathfinder` to install Sitecore Pathfinder.
+
+You can also install Pathfinder locally by running `npm install -saveDev sitecore.pathfinder` and adding 
+a script to your package.json file:
+
+```js
+"scripts":{
+    "scc": "scc"
+}
+```
+
+Alternatively you can download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases).
 
 ## Common commands 
 

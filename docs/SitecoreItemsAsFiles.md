@@ -158,6 +158,37 @@ To infer and create the template add the "Template.CreateFromFields='true'" attr
 ```
 The example above creates the template "InferredTemplate" with a single template field "Text". The type of the field is "Rich Text".
 
+### Standard Values
+You can specify a special __Standard Values item in a template to defined Standard Values.
+
+```yaml
+- Folder: Tests
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/TemplateStandardValuesTest
+    Database: master
+    - Items: 
+        - Template:
+            Name: TemplateStandardValuesTest
+            - Section: Fields
+                - Field: IsActive
+                    Type: Checkbox
+                    Sharing: Shared
+                - Field: Text
+                    Type: Single-Line Text
+                    Sharing: Unversioned
+            - TemplateStandardValuesTest: __Standard Values
+                - Fields:
+                    IsActive: true
+                    - en:
+                        Text: Welcome to Sitecore
+                - Layout:
+                    - Default: Sample Layout
+                        - main:
+                            - Sample Sublayout:
+                                - centercolumn:
+                                    - Sample Inner Sublayout:
+                                        - content:
+                                            - Sample Rendering:
+```
 
 ## Item IDs
 Normally you do not need to specify the ID of an item, but in some cases, it may be necessary. Pathfinder supports soft IDs meaning that the

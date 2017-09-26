@@ -35,7 +35,7 @@ Well, use Xml or Yaml instead.
 
 #### _Pathfinder does not scale to big projects_
 
-This is possibly true - Pathfinder has not yet been use in a large project.
+This is possibly true - Pathfinder has not yet been used in a large project.
 
 However there is nothing in the architecture of Pathfinder, that prevents it from scaling. 
 
