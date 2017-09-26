@@ -87,10 +87,27 @@ namespace Sitecore.Pathfinder.Projects
         [TestMethod]
         public void TemplateIconTest()
         {
-            var item = Project.Templates.FirstOrDefault(i => i.QualifiedName == "/sitecore/client/Applications/SitecoreWorks/content/TemplateIconTest/TemplateIconTest");
-            Assert.IsNotNull(item);
+            var template = Project.Templates.FirstOrDefault(i => i.QualifiedName == "/sitecore/client/Applications/SitecoreWorks/content/TemplateIconTest/TemplateIconTest");
+            Assert.IsNotNull(template);
 
-            Assert.AreEqual("Applications/32x32/about.png", item.Icon);
+            Assert.AreEqual("Applications/32x32/about.png", template.Icon);
+        }
+
+        [TestMethod]
+        public void TemplateStandardValuesTest()
+        {
+            var template = Project.Templates.FirstOrDefault(i => i.QualifiedName == "/sitecore/client/Applications/SitecoreWorks/content/TemplateStandardValuesTest/TemplateStandardValuesTest");
+            Assert.IsNotNull(template);
+
+            var standardValuesItem = template.StandardValuesItem;
+            Assert.IsNotNull(standardValuesItem);
+
+            Assert.AreEqual("true", standardValuesItem.Fields.GetField("IsActive")?.Value);
+            Assert.AreEqual("Welcome to Sitecore", standardValuesItem.Fields.GetField("Text", new Language("en"))?.Value);
+            Assert.IsTrue(!string.IsNullOrEmpty(standardValuesItem.Fields.GetField(Constants.Fields.LayoutField)?.CompiledValue));
+
+            var item = Project.GetDatabase("master").GetItem("/sitecore/client/Applications/SitecoreWorks/content/TemplateStandardValuesTest/TemplateStandardValuesTest/__Standard Values");
+            Assert.AreEqual(standardValuesItem, item);
         }
     }
 }
