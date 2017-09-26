@@ -2,7 +2,7 @@
 The goal of Pathfinder is to make it easy to start working with Sitecore.
 
 ## Installing Pathfinder
-1. Run `npm install -g sitecore.pathfinder` to install Sitecore Pathfinder.
+1. Run `npm install -g sitecore-pathfinder` to install Sitecore Pathfinder.
 
 ## Creating a new project
 1. Install a Sitecore website (e.g. using [SIM (Sitecore Instance Manager)](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx)

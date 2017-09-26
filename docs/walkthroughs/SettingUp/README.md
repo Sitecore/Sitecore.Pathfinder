@@ -4,9 +4,9 @@ This walkthrough shows how to setup Pathfinder initially.
 
 ## Download Pathfinder
 
-Run `npm install -g sitecore.pathfinder` to install Sitecore Pathfinder.
+Run `npm install -g sitecore-pathfinder` to install Sitecore Pathfinder.
 
-You can also install Pathfinder locally by running `npm install -saveDev sitecore.pathfinder` and adding 
+You can also install Pathfinder locally by running `npm install -saveDev sitecore-pathfinder` and adding 
 a script to your package.json file:
 
 ```js

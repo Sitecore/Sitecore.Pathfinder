@@ -9,7 +9,7 @@ An experimental CLI for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Run `npm install -g sitecore.pathfinder` to install Sitecore Pathfinder.
+Run `npm install -g sitecore-pathfinder` to install Sitecore Pathfinder.
 
 Follow the walk-throughs:
 
