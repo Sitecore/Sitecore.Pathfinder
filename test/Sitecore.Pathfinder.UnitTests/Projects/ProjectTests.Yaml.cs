@@ -83,5 +83,14 @@ namespace Sitecore.Pathfinder.Projects
             Assert.IsNotNull(result);
             Assert.IsFalse(string.IsNullOrEmpty(result));
         }
+
+        [TestMethod]
+        public void TemplateIconTest()
+        {
+            var item = Project.Templates.FirstOrDefault(i => i.QualifiedName == "/sitecore/client/Applications/SitecoreWorks/content/TemplateIconTest/TemplateIconTest");
+            Assert.IsNotNull(item);
+
+            Assert.AreEqual("Applications/32x32/about.png", item.Icon);
+        }
     }
 }

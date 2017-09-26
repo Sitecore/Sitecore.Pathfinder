@@ -340,6 +340,9 @@
         "npm-directory": "node_modules"
     },
 
+    // project configuration file
+    "project": "scconfig.json", 
+
     // base unique id for item ID generation
     "project-unique-id": "Sitecore.Pathfinder",
 
