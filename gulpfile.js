@@ -30,7 +30,7 @@ gulp.task("build-project", function() {
     return gulp.src("./Sitecore.Pathfinder.sln").pipe(msbuild({
         targets: ["Clean", "Build"],
         configuration: "Release",
-        logCommand: false,
+        logCommand: true,
         verbosity: "minimal",
         maxcpucount: 0,
         toolsVersion: 15.0
@@ -59,7 +59,12 @@ gulp.task("copy-npm-files", ["clean-npm-directory"], function() {
         pipe(gulp.dest("./build/npm"));
 });
 
-gulp.task("copy-npm-directory", ["clean-npm-directory", "copy-npm-files"], function() {
+gulp.task("copy-npm-publish-files", ["copy-npm-files"], function() {
+    return gulp.src(["./build/publish/netcore1.1/*.dll"]).
+        pipe(gulp.dest("./build/npm/bin/"));
+});
+
+gulp.task("copy-npm-directory", ["copy-npm-publish-files"], function() {
     return gulp.src(["./build/dist/**/*"]).
         pipe(gulp.dest("./build/npm/bin/"));
 });
