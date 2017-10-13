@@ -41,7 +41,7 @@
 
     // item content files globs
     "items": {
-        "include": [ "**/*.content.yaml", "**/*.content.json", "**/*.content.xml" ],
+        "include": [ "**/*.content.yaml", "**/*.content.json", "**/*.content.xml", "**/*.yml" ],
         "exclude": []
     },
 
@@ -410,7 +410,7 @@
 
     "system": {
         // support for multi-threading
-        "multi-threaded": true,
+        "multi-threaded": false,
 
         // show stack trace on errors
         "show-stack-trace": false,

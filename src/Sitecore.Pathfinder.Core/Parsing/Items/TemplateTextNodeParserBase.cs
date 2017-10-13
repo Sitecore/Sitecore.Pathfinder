@@ -1,4 +1,4 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System;
 using System.IO;
@@ -29,10 +29,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
         }
 
         [NotNull]
-        protected IFactory Factory { get; }
+        public override ISchemaService SchemaService { get; }
 
         [NotNull]
-        protected ITraceService Trace { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IPipelineService Pipelines { get; }
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         protected IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
-        protected ISchemaService SchemaService { get; }
+        protected ITraceService Trace { get; }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
@@ -119,7 +119,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         {
             SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
 
-            GetName(context.ParseContext, templateFieldTextNode, out string fieldName, out ITextNode fieldNameTextNode, "Field", "Name");
+            GetName(context.ParseContext, templateFieldTextNode, out var fieldName, out var fieldNameTextNode, "Field", "Name");
             if (string.IsNullOrEmpty(fieldName))
             {
                 Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
@@ -182,7 +182,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
 
-            GetName(context.ParseContext, templateSectionTextNode, out string sectionName, out ITextNode sectionNameTextNode, "Section", "Name");
+            GetName(context.ParseContext, templateSectionTextNode, out var sectionName, out var sectionNameTextNode, "Section", "Name");
             if (string.IsNullOrEmpty(sectionName))
             {
                 Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);

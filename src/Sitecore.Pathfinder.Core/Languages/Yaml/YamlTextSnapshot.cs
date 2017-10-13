@@ -17,9 +17,8 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
         [NotNull]
         private string _contents = string.Empty;
-
-        [FactoryConstructor]
-        [ImportingConstructor]
+                             
+        [FactoryConstructor, ImportingConstructor]
         public YamlTextSnapshot([NotNull] ISnapshotService snapshotService) : base(snapshotService)
         {
         }
@@ -37,7 +36,7 @@ namespace Sitecore.Pathfinder.Languages.Yaml
         public override ITextNode Root => _root ?? (_root = Parse(new Tokenizer(_contents)) ?? TextNode.Empty);
 
         [CanBeNull]
-        protected ITextNode Parse([NotNull] Tokenizer tokenizer)
+        protected virtual ITextNode Parse([NotNull] Tokenizer tokenizer)
         {
             if (tokenizer.Token == null)
             {

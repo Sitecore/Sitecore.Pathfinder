@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         protected IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
-        protected ISchemaService SchemaService { get; }
+        public override ISchemaService SchemaService { get; }
 
         protected ContentTextNodeParserBase([NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IReferenceParserService referenceParser, [NotNull] ISchemaService schemaService, double priority) : base(priority)
         {

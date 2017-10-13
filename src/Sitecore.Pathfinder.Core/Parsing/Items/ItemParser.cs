@@ -100,7 +100,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
                     parsed = true;
 
-                    if (SchemaService.ValidateTextNodeSchema(textNode))
+                    if (textNodeParser.SchemaService == null || textNodeParser.SchemaService.ValidateTextNodeSchema(textNode))
                     {
                         textNodeParser.Parse(context, textNode);
                     }

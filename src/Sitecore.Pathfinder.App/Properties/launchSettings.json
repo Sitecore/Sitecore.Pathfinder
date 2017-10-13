@@ -2,8 +2,8 @@
   "profiles": {
     "Sitecore.Pathfinder.Console": {
       "commandName": "Project",
-      "commandLineArgs": "init /pause",
-      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\templateicon"
+      "commandLineArgs": "b /pause",
+      "workingDirectory": "E:\\Sitecore\\Sitecore.Pathfinder\\websites\\Habitat-3"
     }
   }
 }

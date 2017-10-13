@@ -606,6 +606,11 @@ namespace Sitecore.Pathfinder
         public const int P1032 = P + 32;
         public const int P1033 = P + 33;
         public const int P1034 = P + 34;
+        public const int P1035 = P + 35;
+        public const int P1036 = P + 36;
+        public const int P1037 = P + 37;
+        public const int P1038 = P + 38;
+        public const int P1039 = P + 39;
 
         private const int S = 6500;
 

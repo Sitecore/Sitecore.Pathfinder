@@ -183,6 +183,9 @@ namespace Sitecore.Pathfinder.Configuration
         [NotNull]
         Sitecore.Pathfinder.Languages.Yaml.YamlTextSnapshot YamlTextSnapshot([NotNull] Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, [NotNull] string contents);
 
+        [NotNull]
+        Sitecore.Pathfinder.Languages.Unicorn.UnicornTextSnapshot UnicornTextSnapshot([NotNull] Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, [NotNull] string contents);
+
     }
 
     #endregion

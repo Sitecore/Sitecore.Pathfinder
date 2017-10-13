@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Sitecore.Pathfinder.Languages.Unicorn;
+
 #pragma warning disable 1591
 
 namespace Sitecore.Pathfinder.Configuration
@@ -125,6 +127,8 @@ namespace Sitecore.Pathfinder.Configuration
         public virtual Sitecore.Pathfinder.Languages.Xml.XmlTextSnapshot XmlTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents, string schemaNamespace, string schemaFileName) => Resolve<Sitecore.Pathfinder.Languages.Xml.XmlTextSnapshot>().With(sourceFile, contents, schemaNamespace, schemaFileName);
 
         public virtual Sitecore.Pathfinder.Languages.Yaml.YamlTextSnapshot YamlTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents) => Resolve<Sitecore.Pathfinder.Languages.Yaml.YamlTextSnapshot>().With(sourceFile, contents);
+
+        public virtual Sitecore.Pathfinder.Languages.Unicorn.UnicornTextSnapshot UnicornTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents) => Resolve<Sitecore.Pathfinder.Languages.Unicorn.UnicornTextSnapshot>().With(sourceFile, contents) as UnicornTextSnapshot;
 
     }
 
