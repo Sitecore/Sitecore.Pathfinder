@@ -1,4 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,20 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             _item = item;
         }
+
+        /*
+        protected override IEnumerable<Field> FilteredList {
+            get
+            {
+                if (_item.Language == null)
+                {
+                    return List;
+                }
+
+                return this[_item.Language, _item.Version];
+            }
+        }
+        */
 
         [CanBeNull]
         public Field this[[NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldName, language, version);
@@ -72,7 +86,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             if (fieldName.IsGuidOrSoftGuid())
             {
-                if (!Guid.TryParse(fieldName, out Guid guid))
+                if (!Guid.TryParse(fieldName, out var guid))
                 {
                     guid = StringHelper.ToGuid(fieldName);
                 }
@@ -104,7 +118,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        protected Field GetField([NotNull, ItemNotNull]  Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
+        protected Field GetField([NotNull, ItemNotNull] Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
         {
             if (!fields.Any())
             {

@@ -136,6 +136,7 @@ namespace Sitecore.Pathfinder.Tasks.Commands
             yield return ("Yaml", "yaml");
             yield return ("Json", "json");
             yield return ("Xml", "xml");
+            yield return ("Webdeploy", "webdeploy");
             yield return ("Serialization", "serialization");
         }
 

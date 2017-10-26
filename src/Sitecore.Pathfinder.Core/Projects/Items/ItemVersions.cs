@@ -1,8 +1,9 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Pathfinder.Diagnostics;
+using Sitecore.Pathfinder.Extensions;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
@@ -57,6 +58,17 @@ namespace Sitecore.Pathfinder.Projects.Items
         public IEnumerable<Field> GetVersionedFields([NotNull] Language language, [NotNull] Version version)
         {
             return _item.Fields.Where(f => !f.TemplateField.Shared && !f.TemplateField.Unversioned && f.Language == language && f.Version == version);
+        }
+
+        [NotNull]
+        public VersionedItem GetVersionedItem([NotNull] Language language, [NotNull] Version version)
+        {
+            var versionedItem = new VersionedItem(_item.Database, _item.Uri.Guid, _item.ItemName, _item.ItemIdOrPath, _item.TemplateIdOrPath, language, version);
+
+            // todo: consider if fields should be cloned
+            versionedItem.Fields.AddRange(_item.Fields[language, version]);
+
+            return versionedItem;
         }
 
         [ItemNotNull, NotNull]

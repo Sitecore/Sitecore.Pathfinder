@@ -23,8 +23,8 @@ namespace Sitecore.Pathfinder.Tasks.Commands
             Shortcut = "p";
         }
 
-        [NotNull, Option("format", Alias = "f", IsRequired = true, PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, DefaultValue = "package")]
-        public string Format { get; set; } = "package";
+        [NotNull, Option("format", Alias = "f", PromptText = "Select output format", HelpText = "Output format", PositionalArg = 1, HasOptions = true, ConfigurationName = Constants.Configuration.Output.Format)]
+        public string Format { get; set; } = "";
 
         [NotNull]
         protected IFactory Factory { get; }
@@ -47,7 +47,7 @@ namespace Sitecore.Pathfinder.Tasks.Commands
             var format = Format;
             if (string.IsNullOrEmpty(format))
             {
-                format = context.Configuration.GetString(Constants.Configuration.Output.Format, "package");
+                format = "package";
             }
 
             var projectEmitters = ProjectEmitters.Where(p => p.CanEmit(format)).ToArray();
@@ -78,6 +78,7 @@ namespace Sitecore.Pathfinder.Tasks.Commands
             yield return ("Yaml", "yaml");
             yield return ("Json", "json");
             yield return ("Xml", "xml");
+            yield return ("Webdeploy", "webdeploy");
             yield return ("Serialization", "serialization");
         }
     }
