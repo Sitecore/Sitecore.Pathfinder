@@ -10,7 +10,7 @@
 //
 // 9. Done
 
-var version = "0.10.0";
+var version = "0.11.0";
 
 var gulp = require("gulp");
 var del = require("del");
@@ -44,7 +44,7 @@ gulp.task("clean-dist-directory", function() {
 });
 
 gulp.task("build-dist-directory", ["clean-dist-directory"], function() {
-    return gulp.src(["./bin/netcoreapp1.1/files/**/*", "./bin/netcoreapp1.1/help/**/*", "./bin/netcoreapp1.1/licenses/**/*", "./bin/netcoreapp1.1/*.dll", "./bin/netcoreapp1.1/*.zip", "./bin/netcoreapp1.1/scconfig.json", "./bin/netcoreapp1.1/scc.cmd"], { base: "./bin/netcoreapp1.1/" }).
+    return gulp.src(["./bin/netcoreapp2.0/files/**/*", "./bin/netcoreapp2.0/help/**/*", "./bin/netcoreapp2.0/licenses/**/*", "./bin/netcoreapp2.0/*.dll", "./bin/netcoreapp2.0/*.zip", "./bin/netcoreapp2.0/scconfig.json", "./bin/netcoreapp2.0/scc.cmd", "./bin/netcoreapp2.0/Sitecore-Pathfinder.psm1"], { base: "./bin/netcoreapp2.0/" }).
         pipe(gulp.dest("./build/dist"));
 });
 
@@ -60,7 +60,7 @@ gulp.task("copy-npm-files", ["clean-npm-directory"], function() {
 });
 
 gulp.task("copy-npm-publish-files", ["copy-npm-files"], function() {
-    return gulp.src(["./build/publish/netcore1.1/*.dll"]).
+    return gulp.src(["./build/publish/*.dll"]).
         pipe(gulp.dest("./build/npm/bin/"));
 });
 
@@ -80,7 +80,7 @@ gulp.task("publish-npm-package", ["copy-npm-directory"], function() {
 // nuget
 
 gulp.task("clean-nuget-package", function() {
-    return del("./build/Sitecore.Pathfinder.nupkg");
+    return del("./build/nuget/Sitecore.Pathfinder.nupkg");
 });
 
 gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
@@ -100,12 +100,11 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
             dependencies: [
             ],
             tags: "Sitecore, Pathfinder, compilation, nuget, npm",
-            excludes: ["./src/Sitecore.Pathfinder.Console/files/project/scc.cmd", "./src/Sitecore.Pathfinder.Console/files/project/sitecore.filetemplates"],
-            outputDir: "./build"
+            outputDir: "./build/nuget"
         },
         [
-            { src: "./build/dist", dest: "/content/sitecore.tools/" },
-            { src: "./src/Sitecore.Pathfinder.Console/files/project", dest: "/content/" }
+            { src: "./build/dist", dest: "/content/bin/" },
+            { src: "./build/publish/**/*.dll", dest: "/content/bin/" }
         ],
         callback
     );
@@ -134,6 +133,10 @@ gulp.task("default", ["build"], function() {
 
 gulp.task("build", function() {
     runSequence("build-project", "build-dist-directory", ["build-npm-package"]);
+});
+
+gulp.task("build-nuget", function() {
+    runSequence("build-project", "build-dist-directory", ["build-nuget-package"]);
 });
 
 gulp.task("publish", function() {
