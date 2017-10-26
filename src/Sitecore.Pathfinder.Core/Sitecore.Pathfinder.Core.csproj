@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Sitecore.Pathfinder</RootNamespace>
     <Version>0.10.0-v1</Version>
     <Description>Core assembly for Sitecore Pathfinder</Description>
