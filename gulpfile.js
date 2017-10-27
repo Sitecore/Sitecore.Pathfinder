@@ -10,7 +10,7 @@
 //
 // 9. Done
 
-var version = "0.11.0";
+var version = "0.11.1";
 
 var gulp = require("gulp");
 var del = require("del");
@@ -44,7 +44,7 @@ gulp.task("clean-dist-directory", function() {
 });
 
 gulp.task("build-dist-directory", ["clean-dist-directory"], function() {
-    return gulp.src(["./bin/netcoreapp2.0/files/**/*", "./bin/netcoreapp2.0/help/**/*", "./bin/netcoreapp2.0/licenses/**/*", "./bin/netcoreapp2.0/*.dll", "./bin/netcoreapp2.0/*.zip", "./bin/netcoreapp2.0/scconfig.json", "./bin/netcoreapp2.0/scc.cmd", "./bin/netcoreapp2.0/Sitecore-Pathfinder.psm1"], { base: "./bin/netcoreapp2.0/" }).
+    return gulp.src(["./bin/netcoreapp2.0/files/**/*", "./bin/netcoreapp2.0/help/**/*", "./bin/netcoreapp2.0/licenses/**/*", "./bin/netcoreapp2.0/*.dll", "./bin/netcoreapp2.0/*.zip", "./bin/netcoreapp2.0/scconfig.json", "./bin/netcoreapp2.0/scc.cmd", "./bin/netcoreapp2.0/Sitecore.Pathfinder.psm1", "./bin/netcoreapp2.0/Sitecore.Pathfinder.psd1"], { base: "./bin/netcoreapp2.0/" }).
         pipe(gulp.dest("./build/dist"));
 });
 
@@ -99,19 +99,26 @@ gulp.task("build-nuget-package", ["clean-nuget-package"], function(callback) {
             requireLicenseAcceptance: false,
             dependencies: [
             ],
+            excludes: ["./build/publish/Sitecore.Pathfinder.App.dll", "./build/publish/Sitecore.Pathfinder.Core.dll", "./build/publish/Sitecore.Pathfinder.psd1", , "./build/publish/Sitecore.Pathfinder.psm1"],
             tags: "Sitecore, Pathfinder, compilation, nuget, npm",
             outputDir: "./build/nuget"
         },
         [
-            { src: "./build/dist", dest: "/content/bin/" },
-            { src: "./build/publish/**/*.dll", dest: "/content/bin/" }
+            { src: "./build/dist/*.psd1", dest: "/" },
+            { src: "./build/dist/*.psm1", dest: "/" },
+            { src: "./build/dist", dest: "/bin/" },
+            { src: "./build/publish/**/*.dll", dest: "/bin/" }
         ],
         callback
     );
 });
 
 gulp.task("publish-nuget-package", ["build-nuget-package"], function() {
-    return spawn("../bin/nuget.exe", ["push", "Sitecore.Pathfinder." + version + ".nupkg"], { stdio: "inherit", "cwd": "./build/" });
+    return spawn("../bin/nuget.exe", ["push", "Sitecore.Pathfinder." + version + ".nupkg"], { stdio: "inherit", "cwd": "./build/nuget" });
+});
+
+gulp.task("publish-powershell-package", ["build-nuget-package"], function() {
+    return spawn("../bin/nuget.exe", ["push", "Sitecore-Pathfinder." + version + ".nupkg"], { stdio: "inherit", "cwd": "./build/nuget" });
 });
 
 // zip file

@@ -1,3 +1,5 @@
+// © 2015-2017 by Jakob Christensen. All rights reserved.
+
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -98,6 +100,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Template Template => Database.FindByIdOrPath<Template>(TemplateIdOrPath) ?? Template.Empty;
 
         [NotNull, Obsolete("Use Template.Uri.Guid instead")]
+
         // ReSharper disable once InconsistentNaming
         public ID TemplateID => Template.ID;
 

@@ -33,11 +33,34 @@ namespace Sitecore.Pathfinder.Projects
                     return FilteredList.ElementAt(index);
                 }
             }
-            set => throw new InvalidOperationException("Cannot assign to FilteredLockableList using index");
+            set
+            {
+                if (IsReadOnly)
+                {
+                    throw new InvalidOperationException("List is locked");
+                }
+
+                lock (_sync)
+                {
+                    var i = List.IndexOf(this[index]);
+                    if (i < 0)
+                    {
+                        return;
+                    }
+
+                    List[i] = value;
+                }
+
+                Changed();
+            }
         }
 
         [ItemNotNull, NotNull]
         protected virtual IEnumerable<T> FilteredList => List;
+
+        protected virtual void Changed()
+        {
+        }
 
         [NotNull, ItemNotNull]
         protected List<T> List { get; } = new List<T>();
@@ -56,6 +79,8 @@ namespace Sitecore.Pathfinder.Projects
             {
                 List.Add(item);
             }
+
+            Changed();
         }
 
         public void Clear()
@@ -69,6 +94,8 @@ namespace Sitecore.Pathfinder.Projects
             {
                 List.Clear();
             }
+
+            Changed();
         }
 
         public bool Contains([NotNull] T item)
@@ -81,14 +108,14 @@ namespace Sitecore.Pathfinder.Projects
 
         public void CopyTo([ItemNotNull] T[] array, int arrayIndex)
         {
-            throw new InvalidOperationException("Cannot copy from FilteredLockableList using index");
+            lock (_sync)
+            {
+                FilteredList.ToList().CopyTo(array, arrayIndex);
+            }
         }
 
         [NotNull]
-        public IEnumerator<T> GetEnumerator()
-        {
-            return FilteredList.GetEnumerator();
-        }
+        public IEnumerator<T> GetEnumerator() => FilteredList.GetEnumerator();
 
         public int IndexOf([NotNull] T item) => FilteredList.IndexOf(item);
 
@@ -103,6 +130,8 @@ namespace Sitecore.Pathfinder.Projects
             {
                 List.Insert(index, item);
             }
+
+            Changed();
         }
 
         public bool Remove([NotNull] T item)
@@ -112,17 +141,39 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException("List is locked");
             }
 
+            bool isRemoved;
+
             lock (_sync)
             {
-                return List.Remove(item);
+                isRemoved = List.Remove(item);
             }
+
+            Changed();
+
+            return isRemoved;
         }
 
-        public void RemoveAt(int index) => throw new InvalidOperationException("Cannot remove from FilteredLockableList using index");
-
-        IEnumerator IEnumerable.GetEnumerator()
+        public void RemoveAt(int index)
         {
-            return ((IEnumerable)FilteredList).GetEnumerator();
+            if (IsReadOnly)
+            {
+                throw new InvalidOperationException("List is locked");
+            }
+
+            lock (_sync)
+            {
+                var i = List.IndexOf(this[index]);
+                if (i < 0)
+                {
+                    return;
+                }
+
+                List.RemoveAt(i);
+            }
+
+            Changed();
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)FilteredList).GetEnumerator();
     }
 }

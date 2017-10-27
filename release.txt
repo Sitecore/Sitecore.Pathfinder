@@ -1,3 +1,13 @@
+# NPM
+
 1. Update version number in /src/buildfiles/npm/package.json
 2. Publish Sitecore.Pathfinder.App
 3. Run 'gulp publish'
+
+# NuGet / Powershell
+1. Update NuGet package version number in /gulpfile.js
+1. Update Powershell Manifest version number in /Sitecore.Pathfinder.psd1
+3. Publish Sitecore.Pathfinder.App
+4. Run 'gulp build-nuget'
+5. Run 'cd ..'
+6. Run 'push-powershell-gallery.cmd'
