@@ -26,6 +26,7 @@ namespace Sitecore.Pathfinder.Parsing
             ItemName = pathMappingContext.ItemName;
             ItemPath = pathMappingContext.ItemPath;
             Database = pathMappingContext.Database;
+            UploadMedia = pathMappingContext.UploadMedia;
         }
 
         public CultureInfo Culture { get; }
@@ -44,6 +45,6 @@ namespace Sitecore.Pathfinder.Parsing
 
         public ISnapshot Snapshot { get; }
 
-        public bool UploadMedia { get; private set; }
+        public bool UploadMedia { get; }
     }
 }
