@@ -8,9 +8,9 @@ using Sitecore.Pathfinder.Snapshots;
 namespace Sitecore.Pathfinder.Projects
 {
     [DebuggerDisplay("{GetType().Name,nq}: {Text}, {FileName}")]
-    public class Diagnostic
+    public class Diagnostic : IDiagnostic
     {
-        [FactoryConstructor]
+        [FactoryConstructor(typeof(IDiagnostic))]
         public Diagnostic(int msg, [NotNull] string fileName, TextSpan span, Severity severity, [NotNull] string text)
         {
             Msg = msg;
@@ -20,7 +20,6 @@ namespace Sitecore.Pathfinder.Projects
             Text = text;
         }
 
-        [NotNull]
         public string FileName { get; }
 
         public int Msg { get; }
@@ -29,7 +28,6 @@ namespace Sitecore.Pathfinder.Projects
 
         public TextSpan Span { get; }
 
-        [NotNull]
         public string Text { get; }
     }
 }

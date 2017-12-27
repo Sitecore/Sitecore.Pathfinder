@@ -4,6 +4,7 @@ using System;
 using System.Composition;
 using System.Runtime.Loader;
 using Sitecore.Pathfinder.Compiling.Compilers;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
@@ -18,15 +19,19 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
     public class BinFileCompiler : CompilerBase
     {
         [ImportingConstructor]
-        public BinFileCompiler([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IPipelineService pipelines) : base(1000)
+        public BinFileCompiler([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [NotNull] IPipelineService pipelines) : base(1000)
         {
             Configuration = configuration;
+            Factory = factory;
             Trace = trace;
             Pipelines = pipelines;
         }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IPipelineService Pipelines { get; }
@@ -49,7 +54,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
             var exclude = Configuration.GetString(Constants.Configuration.BuildProject.CompileBinFilesExclude);
 
-            var pathMatcher = new PathMatcher(include, exclude);
+            var pathMatcher = Factory.PathMatcher(include, exclude);
             if (!pathMatcher.IsMatch(binFile.FilePath))
             {
                 return;
@@ -61,7 +66,7 @@ namespace Sitecore.Pathfinder.Languages.BinFiles
 
                 foreach (var type in assembly.GetExportedTypes())
                 {
-                    Pipelines.Resolve<BinFileCompilerPipeline>().Execute(context, binFile, type);
+                    Pipelines.GetPipeline<BinFileCompilerPipeline>().Execute(context, binFile, type);
                 }
             }
             catch (Exception ex)

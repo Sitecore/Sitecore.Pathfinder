@@ -1,0 +1,7 @@
+- Folder: Tests
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/TemplateIconTest
+    Database: master
+    - Items: 
+        - Template:
+            Name: TemplateIconTest
+            Icon: Applications/32x32/about.png

@@ -16,12 +16,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class FileCheckers : Checker
     {
         [ItemNotNull, NotNull, Check]
-        public IEnumerable<Diagnostic> AvoidLargeMediaFiles([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> AvoidLargeMediaFiles([NotNull] ICheckerContext context)
         {
             return from mediaFile in context.Project.ProjectItems.OfType<MediaFile>()
                 let fileInfo = new FileInfo(mediaFile.Snapshot.SourceFile.AbsoluteFileName)
                 where fileInfo.Length > 5 * 1025 * 1025
-                select Warning(Msg.C1027, "Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
+                select Warning(context, Msg.C1027, "Media file size exceeds 5MB. Consider reducing the size of the file", mediaFile.Snapshot.SourceFile.AbsoluteFileName, TextSpan.Empty);
         }
     }
 }

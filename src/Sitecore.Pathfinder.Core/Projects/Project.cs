@@ -29,10 +29,10 @@ namespace Sitecore.Pathfinder.Projects
         public static readonly IProjectBase Empty = new Project();
 
         [NotNull]
-        private readonly IDictionary<string, Database> _databases = new Dictionary<string, Database>();
+        private readonly IDictionary<string, IDatabase> _databases = new Dictionary<string, IDatabase>();
 
         [NotNull, ItemNotNull]
-        private readonly IList<Diagnostic> _diagnostics;
+        private readonly IList<IDiagnostic> _diagnostics;
 
         [NotNull, ItemNotNull]
         private readonly IList<IProjectItem> _projectItems;
@@ -50,9 +50,8 @@ namespace Sitecore.Pathfinder.Projects
         [CanBeNull]
         private string _projectUniqueId;
 
-        [FactoryConstructor]
-        [ImportingConstructor]
-        public Project([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
+        [ImportingConstructor, FactoryConstructor]
+        public Project([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] IParseService parseService, [NotNull] IPipelineService pipelines, [NotNull] ICheckerService checker)
         {
             Configuration = configuration;
             Trace = trace;
@@ -66,7 +65,7 @@ namespace Sitecore.Pathfinder.Projects
             Indexes = Factory.ProjectIndexes(this);
 
             _projectItems = new LockableList<IProjectItem>(this);
-            _diagnostics = new SynchronizedList<Diagnostic>();
+            _diagnostics = new SynchronizedList<IDiagnostic>();
 
             Options = ProjectOptions.Empty;
 
@@ -92,9 +91,9 @@ namespace Sitecore.Pathfinder.Projects
 
         public ProjectContext Context { get; }
 
-        public IEnumerable<Database> Databases => _databases.Values;
+        public IEnumerable<IDatabase> Databases => _databases.Values;
 
-        public IEnumerable<Diagnostic> Diagnostics
+        public IEnumerable<IDiagnostic> Diagnostics
         {
             get
             {
@@ -136,7 +135,7 @@ namespace Sitecore.Pathfinder.Projects
         protected IConfiguration Configuration { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IParseService ParseService { get; }
@@ -269,7 +268,7 @@ namespace Sitecore.Pathfinder.Projects
             Trace.SetOut(CaptureTrace);
             try
             {
-                Pipelines.Resolve<CompilePipeline>().Execute(context);
+                Pipelines.GetPipeline<CompilePipeline>().Execute(context);
             }
             finally
             {
@@ -279,8 +278,13 @@ namespace Sitecore.Pathfinder.Projects
             return this;
         }
 
-        public Database GetDatabase(string databaseName)
+        public IDatabase GetDatabase(string databaseName)
         {
+            if (string.IsNullOrEmpty(databaseName))
+            {
+                return Database.Empty;
+            }
+
             var database = _databases[databaseName.ToUpperInvariant()];
             if (database == null)
             {

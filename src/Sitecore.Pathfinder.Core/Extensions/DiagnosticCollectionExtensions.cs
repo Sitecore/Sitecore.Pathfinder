@@ -9,7 +9,7 @@ namespace Sitecore.Pathfinder.Extensions
 {
     public static class DiagnosticCollectionExtensions
     {
-        public static void TraceDiagnostic([NotNull] this ITraceService trace, [NotNull] Diagnostic diagnostic, Severity severity, bool treatWarningsAsErrors)
+        public static void TraceDiagnostic([NotNull] this ITraceService trace, [NotNull] IDiagnostic diagnostic, Severity severity, bool treatWarningsAsErrors)
         {
             switch (severity)
             {
@@ -38,12 +38,12 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
-        public static void TraceDiagnostic([NotNull] this ITraceService trace, [NotNull] Diagnostic diagnostic, bool treatWarningsAsErrors)
+        public static void TraceDiagnostic([NotNull] this ITraceService trace, [NotNull] IDiagnostic diagnostic, bool treatWarningsAsErrors)
         {
             TraceDiagnostic(trace, diagnostic, diagnostic.Severity, treatWarningsAsErrors);
         }
 
-        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<Diagnostic> diagnostics, bool treatWarningsAsErrors)
+        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<IDiagnostic> diagnostics, bool treatWarningsAsErrors)
         {
             foreach (var diagnostic in diagnostics)
             {
@@ -51,7 +51,7 @@ namespace Sitecore.Pathfinder.Extensions
             }
         }
 
-        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<Diagnostic> diagnostics, Severity severity, bool treatWarningsAsErrors)
+        public static void TraceDiagnostics([NotNull] this ITraceService trace, [NotNull, ItemNotNull] IEnumerable<IDiagnostic> diagnostics, Severity severity, bool treatWarningsAsErrors)
         {
             foreach (var diagnostic in diagnostics)
             {

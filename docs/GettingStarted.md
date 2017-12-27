@@ -2,11 +2,7 @@
 The goal of Pathfinder is to make it easy to start working with Sitecore.
 
 ## Installing Pathfinder
-1. Download [the latest Pathfinder build](https://ci.appveyor.com/project/JakobChristensen/sitecore-pathfinder/build/artifacts)
-1. Unzip the file into an empty directory, e.g. c:\Program Files (x86)\Sitecore\Pathfinder (the path to scc.cmd should now be c:\Program Files (x86)\Sitecore\Pathfinder\scc.cmd)
-1. Optional: Add the directory to your Path environment variable
-1. Recommended: Some tasks require read/access to your tool directory and project directory, so make sure appropriate secutity settings are applied.
-1. Done
+1. Run `npm install -g sitecore-pathfinder` to install Sitecore Pathfinder.
 
 ## Creating a new project
 1. Install a Sitecore website (e.g. using [SIM (Sitecore Instance Manager)](https://marketplace.sitecore.net/modules/sitecore_instance_manager.aspx)

@@ -22,11 +22,7 @@ namespace Sitecore.Pathfinder.Extensibility
         {
             None = 0x0,
 
-            AddWebsiteAssemblyResolver = 0x01,
-
-            DisableExtensions = 0x02,
-
-            IgnoreServerAssemblies = 0x04
+            DisableExtensions = 0x01
         }
 
         [CanBeNull]
@@ -114,12 +110,6 @@ namespace Sitecore.Pathfinder.Extensibility
                     continue;
                 }
 
-                // skip server assemblies, if interactive
-                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && fileName.StartsWith("Sitecore.Pathfinder.Server.", StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
                 AddAssembly(catalogs, assemblyFileName);
             }
         }
@@ -140,15 +130,11 @@ namespace Sitecore.Pathfinder.Extensibility
             }
             catch (ReflectionTypeLoadException ex)
             {
-                // ignore the Diagnostics Toolset feature as it requires a path to the SDT installation
-                if (fileName != "Sitecore.Pathfinder.DiagnosticsToolset.dll")
-                {
-                    Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
+                Console.WriteLine(Texts.Failed_to_load_assembly___0____1_, ex.Message, assemblyFileName);
 
-                    foreach (var loaderException in ex.LoaderExceptions)
-                    {
-                        Console.WriteLine($"    LoaderException: {loaderException.Message}");
-                    }
+                foreach (var loaderException in ex.LoaderExceptions)
+                {
+                    Console.WriteLine($"    LoaderException: {loaderException.Message}");
                 }
             }
             catch (FileLoadException ex)
@@ -164,12 +150,6 @@ namespace Sitecore.Pathfinder.Extensibility
             {
                 var fileName = Path.GetFileName(assemblyFileName);
                 if (string.IsNullOrEmpty(fileName))
-                {
-                    continue;
-                }
-
-                // skip server assemblies, if interactive
-                if ((options & CompositionOptions.IgnoreServerAssemblies) == CompositionOptions.IgnoreServerAssemblies && fileName.StartsWith("Sitecore.Pathfinder.Server.", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }

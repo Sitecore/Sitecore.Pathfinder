@@ -1,4 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System;
 using Sitecore.Pathfinder.Diagnostics;
@@ -15,6 +15,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
         }
 
         public double Priority { get; }
+
+        public abstract ISchemaService SchemaService { get; }
 
         public abstract bool CanParse(ItemParseContext context, ITextNode textNode);
 

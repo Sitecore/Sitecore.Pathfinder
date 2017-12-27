@@ -16,7 +16,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
     {
         [ImportingConstructor]
         [FactoryConstructor]
-        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystemService fileSystem, [NotNull] IPipelineService pipelines)
+        public ProjectTree([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] IPipelineService pipelines)
         {
             Configuration = configuration;
             Factory = factory;
@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
             PathMatcher = Factory.PathMatcher(Configuration.GetString(Constants.Configuration.Files.Include), Configuration.GetString(Constants.Configuration.Files.Exclude));
         }
 
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         public IPipelineService Pipelines { get; }
 
@@ -53,7 +53,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IPathMatcher PathMatcher { get; }
 
         public virtual IEnumerable<string> GetSourceFiles()
         {

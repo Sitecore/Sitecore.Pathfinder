@@ -48,8 +48,7 @@ namespace Sitecore.Pathfinder.Projects
                 return null;
             }
 
-            object property;
-            return PropertyDictionary.TryGetValue(name, out property) ? (SourceProperty<T>)property : null;
+            return PropertyDictionary.TryGetValue(name, out var property) ? (SourceProperty<T>)property : null;
         }
 
         /// <summary>Get a value from the property bag.</summary>
@@ -60,8 +59,7 @@ namespace Sitecore.Pathfinder.Projects
                 return default(T);
             }
 
-            object property;
-            return PropertyDictionary.TryGetValue(name, out property) ? ((SourceProperty<T>)property).GetValue() : default(T);
+            return PropertyDictionary.TryGetValue(name, out var property) ? ((SourceProperty<T>)property).GetValue() : default(T);
         }
 
         /// <summary>Creates a new property in the property bag.</summary>
@@ -78,8 +76,7 @@ namespace Sitecore.Pathfinder.Projects
                 throw new InvalidOperationException("ProjectItem cannot be modified as it is frozen");
             }
 
-            object property;
-            if (!PropertyDictionary.TryGetValue(name, out property))
+            if (!PropertyDictionary.TryGetValue(name, out var property))
             {
                 throw new KeyNotFoundException();
             }

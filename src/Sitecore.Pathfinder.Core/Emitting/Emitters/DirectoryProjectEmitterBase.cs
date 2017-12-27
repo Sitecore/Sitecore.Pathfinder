@@ -17,14 +17,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
 {
     public abstract class DirectoryProjectEmitterBase : ProjectEmitterBase
     {
-        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        protected DirectoryProjectEmitterBase([NotNull] IConfiguration configuration, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters)
         {
             FileSystem = fileSystem;
             OutputDirectory = PathHelper.Combine(Configuration.GetProjectDirectory(), Configuration.GetString(Constants.Configuration.Output.Directory));
         }
 
         [NotNull]
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         [NotNull]
         public string OutputDirectory { get; }

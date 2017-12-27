@@ -7,44 +7,20 @@ namespace Sitecore.Pathfinder.IO.PathMappers
 {
     public class ProjectDirectoryToWebsiteItemPathMapper : IProjectFileNameToItemPathMapper
     {
-        public ProjectDirectoryToWebsiteItemPathMapper([NotNull] string projectDirectory, [NotNull] string databaseName, [NotNull] string itemPath, [NotNull] string include, [NotNull] string exclude, bool isImport, bool uploadMedia)
+        public ProjectDirectoryToWebsiteItemPathMapper([CanBeNull] IPathMatcher pathMatcher, [NotNull] string projectDirectory, [NotNull] string databaseName, [NotNull] string itemPath, bool isImport, bool uploadMedia)
         {
             IsMapped = !string.IsNullOrEmpty(itemPath);
 
+            PathMatcher = pathMatcher;
             ProjectDirectory = '\\' + PathHelper.NormalizeFilePath(projectDirectory).Trim('\\');
             ItemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
             DatabaseName = databaseName;
-            Include = include;
-            Exclude = exclude;
             IsImport = isImport;
             UploadMedia = uploadMedia;
-
-            if (string.IsNullOrEmpty(Include) && string.IsNullOrEmpty(Exclude))
-            {
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(include))
-            {
-                include = ProjectDirectory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(include).Trim('\\');
-            }
-
-            if (!string.IsNullOrEmpty(exclude))
-            {
-                exclude = ProjectDirectory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(exclude).Trim('\\');
-            }
-
-            PathMatcher = new PathMatcher(include, exclude);
         }
 
         [NotNull]
         public string DatabaseName { get; }
-
-        [NotNull]
-        public string Exclude { get; }
-
-        [NotNull]
-        public string Include { get; }
 
         public bool IsImport { get; }
 
@@ -59,7 +35,7 @@ namespace Sitecore.Pathfinder.IO.PathMappers
         public bool UploadMedia { get; }
 
         [CanBeNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IPathMatcher PathMatcher { get; }
 
         public bool TryGetWebsiteItemPath(string projectFileName, out string databaseName, out string itemPath, out bool isImport, out bool uploadMedia)
         {

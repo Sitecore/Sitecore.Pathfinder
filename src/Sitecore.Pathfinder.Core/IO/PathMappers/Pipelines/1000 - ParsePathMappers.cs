@@ -2,6 +2,7 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Extensions;
@@ -11,9 +12,14 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
     [Export(typeof(IPipelineProcessor)), Shared]
     public class ParsePathMappers : PipelineProcessorBase<ParsePathMappersPipeline>
     {
-        public ParsePathMappers() : base(1000)
+        [ImportingConstructor]
+        public ParsePathMappers([NotNull] IFactory factory) : base(1000)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         protected virtual void AddProjectToWebsiteMappings([NotNull] ParsePathMappersPipeline pipeline)
         {
@@ -40,7 +46,10 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var isImport = pipeline.Configuration.GetBool(key + ":is-import");
                     var uploadMedia = pipeline.Configuration.GetBool(key + ":upload-media", true);
 
-                    pipeline.ProjectDirectoryToWebsiteItemPaths.Add(new ProjectDirectoryToWebsiteItemPathMapper(projectDirectory, databaseName, itemPath, include, exclude, isImport, uploadMedia));
+                    var pathMatcher = GetFileNamePathMatcher(projectDirectory, include, exclude);
+
+                    var projectDirectoryToWebsiteItemPathMapper = new ProjectDirectoryToWebsiteItemPathMapper(pathMatcher, projectDirectory, databaseName, itemPath, isImport, uploadMedia);
+                    pipeline.ProjectDirectoryToWebsiteItemPaths.Add(projectDirectoryToWebsiteItemPathMapper);
                 }
 
                 var projectDirectoryToWebsiteDirectory = pipeline.Configuration.GetString(key + ":project-directory-to-website-directory");
@@ -57,7 +66,10 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var include = pipeline.Configuration.GetString(key + ":file-name-include");
                     var exclude = pipeline.Configuration.GetString(key + ":file-name-exclude");
 
-                    pipeline.ProjectDirectoryToWebsiteDirectories.Add(new ProjectDirectoryToWebsiteDirectoryMapper(projectDirectory, websiteDirectory, include, exclude));
+                    var pathMatcher = GetFileNamePathMatcher(projectDirectory, include, exclude);
+
+                    var projectDirectoryToWebsiteDirectoryMapper = new ProjectDirectoryToWebsiteDirectoryMapper(pathMatcher, projectDirectory, websiteDirectory);
+                    pipeline.ProjectDirectoryToWebsiteDirectories.Add(projectDirectoryToWebsiteDirectoryMapper);
                 }
 
                 foreach (var fileNamePair in pipeline.Configuration.GetSubKeys(key))
@@ -108,7 +120,11 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var templateNameInclude = pipeline.Configuration.GetString(key + ":template-name-include");
                     var templateNameExclude = pipeline.Configuration.GetString(key + ":template-name-exclude");
 
-                    pipeline.WebsiteItemPathToProjectDirectories.Add(new WebsiteItemPathToProjectDirectoryMapper(databaseName, itemPath, projectDirectory, format, itemNameInclude, itemNameExclude, templateNameInclude, templateNameExclude));
+                    var itemNamePathMatcher = GetItemPathPathMatcher(itemPath, itemNameInclude, itemNameExclude); 
+                    var templateNamePathMatcher = GetItemPathPathMatcher(itemPath, templateNameInclude, templateNameExclude); 
+
+                    var websiteItemPathToProjectDirectoryMapper = new WebsiteItemPathToProjectDirectoryMapper(itemNamePathMatcher, templateNamePathMatcher, databaseName, itemPath, projectDirectory, format);
+                    pipeline.WebsiteItemPathToProjectDirectories.Add(websiteItemPathToProjectDirectoryMapper);
                 }
 
                 var projectDirectoryToWebsiteDirectory = pipeline.Configuration.GetString(key + ":website-directory-to-project-directory");
@@ -125,9 +141,59 @@ namespace Sitecore.Pathfinder.IO.PathMappers.Pipelines
                     var include = pipeline.Configuration.GetString(key + ":file-name-include");
                     var exclude = pipeline.Configuration.GetString(key + ":file-name-exclude");
 
-                    pipeline.WebsiteDirectoryToProjectDirectories.Add(new WebsiteDirectoryToProjectDirectoryMapper(websiteDirectory, projectDirectory, include, exclude));
+                    var pathMatcher = GetFileNamePathMatcher(websiteDirectory, include, exclude);
+
+                    var websiteDirectoryToProjectDirectoryMapper = new WebsiteDirectoryToProjectDirectoryMapper(pathMatcher, websiteDirectory, projectDirectory);
+                    pipeline.WebsiteDirectoryToProjectDirectories.Add(websiteDirectoryToProjectDirectoryMapper);
                 }
             }
+        }
+
+        [CanBeNull]
+        protected virtual IPathMatcher GetItemPathPathMatcher([NotNull] string itemPath, [NotNull] string itemNameInclude, [NotNull] string itemNameExclude)
+        {
+            if (string.IsNullOrEmpty(itemNameInclude) && string.IsNullOrEmpty(itemNameExclude))
+            {
+                return null;
+            }
+             
+            itemPath = '/' + PathHelper.NormalizeItemPath(itemPath).Trim('/');
+
+            if (!string.IsNullOrEmpty(itemNameInclude))
+            {
+                itemNameInclude = itemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(itemNameInclude).Trim('/');
+            }
+
+            if (!string.IsNullOrEmpty(itemNameExclude))
+            {
+                itemNameExclude = itemPath.TrimEnd('/') + '/' + PathHelper.NormalizeItemPath(itemNameExclude).Trim('/');
+            }
+
+            return Factory.PathMatcher(itemNameInclude, itemNameExclude);
+        }
+
+        [CanBeNull]
+        protected virtual IPathMatcher GetFileNamePathMatcher([NotNull] string directory, [NotNull] string include, [NotNull] string exclude)
+        {
+            if (string.IsNullOrEmpty(include) && string.IsNullOrEmpty(exclude))
+            {
+                return null;
+            }
+
+            directory = '\\' + PathHelper.NormalizeFilePath(directory).Trim('\\');
+
+            if (!string.IsNullOrEmpty(include))
+            {
+                include = directory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(include).Trim('\\');
+            }
+
+            if (!string.IsNullOrEmpty(exclude))
+            {                          
+                exclude = directory.TrimEnd('\\') + '\\' + PathHelper.NormalizeFilePath(exclude).Trim('\\');
+            }
+
+            return Factory.PathMatcher(include, exclude);
+
         }
 
         protected override void Process(ParsePathMappersPipeline pipeline)

@@ -1,4 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects.Items
 {
-    public class FieldCollection : LockableList<Field>
+    public class FieldCollection : FilteredLockableList<Field>
     {
         [NotNull]
         private readonly Item _item;
@@ -18,6 +18,20 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             _item = item;
         }
+
+        /*
+        protected override IEnumerable<Field> FilteredList {
+            get
+            {
+                if (_item.Language == Language.Undefined || _item.Language == Language.Empty)
+                {
+                    return List;
+                }
+
+                return this[_item.Language, _item.Version];
+            }
+        }
+        */
 
         [CanBeNull]
         public Field this[[NotNull] string fieldName, [CanBeNull] Language language = null, [CanBeNull] Version version = null] => GetField(fieldName, language, version);
@@ -31,16 +45,16 @@ namespace Sitecore.Pathfinder.Projects.Items
             get
             {
                 var fields = this.Where(f => f.TemplateField.Shared || f.Language == language).ToArray();
+
                 foreach (var field in fields)
                 {
                     if (field.TemplateField.Shared || field.TemplateField.Unversioned)
                     {
                         yield return field;
-
                         continue;
                     }
 
-                    if (version != null)
+                    if (version != null && version != Version.Undefined)
                     {
                         var isLatestVersion = _item.Versions.IsLatestVersion(language, version);
                         if (field.Version == version || isLatestVersion && field.Version == Version.Latest)
@@ -54,7 +68,6 @@ namespace Sitecore.Pathfinder.Projects.Items
                     if (field.Version == Version.Latest)
                     {
                         yield return field;
-
                         continue;
                     }
 
@@ -72,7 +85,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         {
             if (fieldName.IsGuidOrSoftGuid())
             {
-                if (!Guid.TryParse(fieldName, out Guid guid))
+                if (!Guid.TryParse(fieldName, out var guid))
                 {
                     guid = StringHelper.ToGuid(fieldName);
                 }
@@ -104,7 +117,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         }
 
         [CanBeNull]
-        protected Field GetField([NotNull, ItemNotNull]  Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
+        protected Field GetField([NotNull, ItemNotNull] Field[] fields, [CanBeNull] Language language, [CanBeNull] Version version)
         {
             if (!fields.Any())
             {

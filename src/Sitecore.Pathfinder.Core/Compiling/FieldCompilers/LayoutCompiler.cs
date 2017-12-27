@@ -61,7 +61,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         };
 
         [FactoryConstructor]
-        public LayoutCompiler([NotNull] ITraceService trace, [NotNull] IFileSystemService fileSystem)
+        public LayoutCompiler([NotNull] ITraceService trace, [NotNull] IFileSystem fileSystem)
         {
             Trace = trace;
             FileSystem = fileSystem;
@@ -71,7 +71,7 @@ namespace Sitecore.Pathfinder.Compiling.FieldCompilers
         protected ITraceService Trace { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         public virtual string Compile([NotNull] LayoutCompileContext context, [NotNull] ITextNode textNode)

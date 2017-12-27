@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{3FD15219-6CAE-4865-A054-8E9E2A5EDF4E}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,12 +12,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentat
 		THANKS.md = THANKS.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Console", "src\Sitecore.Pathfinder.Console\Sitecore.Pathfinder.Console.csproj", "{C73D309B-6D61-42BD-A5B1-661710F1CDC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sitecore.Pathfinder.App", "src\Sitecore.Pathfinder.App\Sitecore.Pathfinder.App.csproj", "{C73D309B-6D61-42BD-A5B1-661710F1CDC7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{42808013-7A25-4C07-91FA-BE4F7AA8E0B1} = {42808013-7A25-4C07-91FA-BE4F7AA8E0B1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Core", "src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj", "{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sitecore.Pathfinder.Core", "src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj", "{C674EEBF-BBF6-4EDA-AF5B-A4D58D0BE986}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{049B9C99-6613-43BB-BF14-A60D7C9F7F57}"
 EndProject
@@ -55,7 +55,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hello world", "Hello world"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.Server", "src\Sitecore.Pathfinder.Server\Sitecore.Pathfinder.Server.csproj", "{42808013-7A25-4C07-91FA-BE4F7AA8E0B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Pathfinder.UnitTests", "test\Sitecore.Pathfinder.UnitTests\Sitecore.Pathfinder.UnitTests.csproj", "{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sitecore.Pathfinder.UnitTests", "test\Sitecore.Pathfinder.UnitTests\Sitecore.Pathfinder.UnitTests.csproj", "{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,5 +89,8 @@ Global
 		{ED92B747-FD90-4DE5-BB52-96DC808B58C0} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
 		{B86678EC-8111-4D28-9B60-1DF723E2CB6E} = {626A72A8-4461-4E2E-BB10-2A36D9D1BB5D}
 		{D1AD9A66-2EF0-4D84-873F-10E6C8BBA929} = {049B9C99-6613-43BB-BF14-A60D7C9F7F57}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7642C94-484D-4A74-ADDE-43D42CC2263B}
 	EndGlobalSection
 EndGlobal

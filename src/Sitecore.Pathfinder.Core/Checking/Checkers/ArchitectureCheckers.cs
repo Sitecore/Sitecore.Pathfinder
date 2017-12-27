@@ -21,12 +21,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
     public class ArchitectureCheckers : Checker
     {
         [ImportingConstructor]
-        public ArchitectureCheckers([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IFactory factory, [NotNull] IPathMapperService pathMapper)
+        public ArchitectureCheckers([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] IFileSystem fileSystem, [NotNull] ISnapshotService snapshotService, [NotNull] IPathMapperService pathMapper)
         {
             Configuration = configuration;
+            Factory = factory;
             FileSystem = fileSystem;
             SnapshotService = snapshotService;
-            Factory = factory;
             PathMapper = pathMapper;
         }
 
@@ -37,7 +37,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         protected IFactory Factory { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
         [NotNull]
         protected IPathMapperService PathMapper { get; }
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         protected ISnapshotService SnapshotService { get; }
 
         [NotNull, ItemNotNull, Check]
-        public IEnumerable<Diagnostic> ArchitectureSchema([NotNull] ICheckerContext context)
+        public IEnumerable<IDiagnostic> ArchitectureSchema([NotNull] ICheckerContext context)
         {
             var roots = LoadSchemas(context).ToArray();
 
@@ -187,7 +187,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [NotNull, ItemNotNull]
-        protected virtual IEnumerable<Diagnostic> Match([NotNull] Item item, [NotNull] ITextNode schemaTextNode)
+        protected virtual IEnumerable<IDiagnostic> Match([NotNull] Item item, [NotNull] ITextNode schemaTextNode)
         {
             var textNode = schemaTextNode;
 
@@ -251,13 +251,13 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull]
-        protected virtual IEnumerable<Diagnostic> MatchUnexpectedItems([NotNull] Item item, [NotNull, ItemNotNull] Item[] children, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes)
+        protected virtual IEnumerable<IDiagnostic> MatchUnexpectedItems([NotNull] Item item, [NotNull, ItemNotNull] Item[] children, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes)
         {
             foreach (var child in children)
             {
                 if (!schemaChildNodes.Any(c => IsMatch(child, c)))
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(child).TextSpan, Severity.Error, $"Unexpected item '{child.ItemIdOrPath}' [ArchitectureSchema]");
+                    yield return Factory.Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(child).TextSpan, Severity.Error, $"Unexpected item '{child.ItemIdOrPath}' [ArchitectureSchema]");
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace Sitecore.Pathfinder.Checking.Checkers
         }
 
         [ItemNotNull, NotNull]
-        private IEnumerable<Diagnostic> MatchFields([NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
+        private IEnumerable<IDiagnostic> MatchFields([NotNull] Item item, [NotNull] ITextNode fieldsTextNode)
         {
             foreach (var childNode in fieldsTextNode.ChildNodes)
             {
@@ -294,13 +294,13 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (use == "required" && string.IsNullOrEmpty(fieldValue))
                 {
-                    yield return new Diagnostic(Msg.C1065, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item.Fields[fieldName], item).TextSpan, Severity.Error, $"Field '{fieldName}' is required [ArchitectureSchema]");
+                    yield return Factory.Diagnostic(Msg.C1065, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item.Fields[fieldName], item).TextSpan, Severity.Error, $"Field '{fieldName}' is required [ArchitectureSchema]");
                 }
             }
         }
 
         [ItemNotNull, NotNull]
-        private IEnumerable<Diagnostic> MatchMinMaxOccurs([NotNull] Item item, [NotNull] ITextNode schemaTextNode, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes, [NotNull, ItemNotNull] Item[] children)
+        private IEnumerable<IDiagnostic> MatchMinMaxOccurs([NotNull] Item item, [NotNull] ITextNode schemaTextNode, [NotNull, ItemNotNull] ITextNode[] schemaChildNodes, [NotNull, ItemNotNull] Item[] children)
         {
             foreach (var schemaChildNode in schemaChildNodes)
             {
@@ -343,12 +343,12 @@ namespace Sitecore.Pathfinder.Checking.Checkers
 
                 if (minOccurs > 0 && count < minOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times [ArchitectureSchema]");
+                    yield return Factory.Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must occur at least {minOccurs} times [ArchitectureSchema]");
                 }
 
                 if (maxOccurs > 0 && count > maxOccurs)
                 {
-                    yield return new Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureSchema]");
+                    yield return Factory.Diagnostic(Msg.D1025, item.Snapshot.SourceFile.RelativeFileName, TraceHelper.GetTextNode(item).TextSpan, Severity.Error, $"Item {GetText(schemaChildNode)} must not occur more than {maxOccurs} times [ArchitectureSchema]");
                 }
             }
         }

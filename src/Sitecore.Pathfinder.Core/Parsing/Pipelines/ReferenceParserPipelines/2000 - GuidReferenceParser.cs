@@ -2,6 +2,8 @@
 
 using System;
 using System.Composition;
+using Sitecore.Pathfinder.Configuration;
+using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensibility.Pipelines;
 using Sitecore.Pathfinder.Projects;
 
@@ -10,9 +12,14 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
     [Export(typeof(IPipelineProcessor)), Shared]
     public class GuidReferenceParser : PipelineProcessorBase<ReferenceParserPipeline>
     {
-        public GuidReferenceParser() : base(2000)
+        [ImportingConstructor]
+        public GuidReferenceParser([NotNull] IFactory factory) : base(2000)
         {
+            Factory = factory;
         }
+
+        [NotNull]
+        protected IFactory Factory { get; }
 
         protected override void Process(ReferenceParserPipeline pipeline)
         {
@@ -25,8 +32,8 @@ namespace Sitecore.Pathfinder.Parsing.Pipelines.ReferenceParserPipelines
             var sourceProperty = new SourceProperty<string>(pipeline.ProjectItem, pipeline.SourceTextNode.Key, string.Empty, SourcePropertyFlags.IsGuid);
             sourceProperty.SetValue(pipeline.SourceTextNode);
 
-            pipeline.Reference = pipeline.Factory.Reference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText, pipeline.DatabaseName);
-            pipeline.IsAborted = true;
+            pipeline.Reference = Factory.Reference(pipeline.ProjectItem, sourceProperty, pipeline.ReferenceText, pipeline.Database.DatabaseName);
+            pipeline.Abort();
         }
     }
 }

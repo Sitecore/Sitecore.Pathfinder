@@ -10,10 +10,10 @@ using Sitecore.Pathfinder.Text;
 
 namespace Sitecore.Pathfinder.Projects
 {
-    public class Database
+    public class Database : IDatabase
     {
         [NotNull]
-        public static readonly Database Empty = new Database();
+        public static readonly IDatabase Empty = new Database();
 
         [NotNull]
         private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
@@ -39,23 +39,18 @@ namespace Sitecore.Pathfinder.Projects
         {
         }
 
-        [NotNull]
         public string DatabaseName { get; } = string.Empty;
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<Item> Items => Project.Items.Where(i => i.Database == this);
+        public IEnumerable<Item> Items => Project.Items.Where(i => Equals(i.Database));
 
-        [ItemNotNull, NotNull]
         public IEnumerable<Language> Languages => _languages.Values;
 
         [NotNull, Obsolete("Use DatabaseName property", false)]
         public string Name => DatabaseName;
 
-        [NotNull]
         public IProjectBase Project { get; } = Projects.Project.Empty;
 
-        [NotNull, ItemNotNull]
-        public IEnumerable<Template> Templates => Project.Templates.Where(t => t.Database == this);
+        public IEnumerable<Template> Templates => Project.Templates.Where(t => Equals(t.Database));
 
         [NotNull]
         protected IFactory Factory { get; }
@@ -66,20 +61,21 @@ namespace Sitecore.Pathfinder.Projects
             {
                 return false;
             }
+
             if (ReferenceEquals(this, obj))
             {
                 return true;
             }
+
             if (obj.GetType() != GetType())
             {
                 return false;
             }
 
-            return Equals((Database) obj);
+            return Equals((IDatabase) obj);
         }
 
-        [CanBeNull]
-        public T FindByIdOrPath<T>([NotNull] string idOrPath) where T : DatabaseProjectItem
+        public T FindByIdOrPath<T>(string idOrPath) where T : DatabaseProjectItem
         {
             if (idOrPath.IsGuidOrSoftGuid() || idOrPath.IndexOf('/') >= 0)
             {
@@ -90,8 +86,7 @@ namespace Sitecore.Pathfinder.Projects
             return items.Length == 1 ? items[0] : null;
         }
 
-        [CanBeNull]
-        public virtual T FindQualifiedItem<T>([NotNull] string qualifiedName) where T : DatabaseProjectItem
+        public virtual T FindQualifiedItem<T>(string qualifiedName) where T : DatabaseProjectItem
         {
             if (!qualifiedName.IsGuidOrSoftGuid())
             {
@@ -106,16 +101,13 @@ namespace Sitecore.Pathfinder.Projects
             return Project.Indexes.GuidDatabaseIndex.FirstOrDefault<T>(this, guid.Format());
         }
 
-        [ItemNotNull, NotNull]
-        public IEnumerable<T> GetByQualifiedName<T>([NotNull] string qualifiedName) where T : DatabaseProjectItem => Project.Indexes.QualifiedNameDatabaseIndex.Where<T>(this, qualifiedName);
+        public IEnumerable<T> GetByQualifiedName<T>(string qualifiedName) where T : DatabaseProjectItem => Project.Indexes.QualifiedNameDatabaseIndex.Where<T>(this, qualifiedName);
 
-        [ItemNotNull, NotNull]
-        public IEnumerable<T> GetByShortName<T>([NotNull] string shortName) where T : DatabaseProjectItem => Project.Indexes.ShortNameDatabaseIndex.Where<T>(this, shortName);
+        public IEnumerable<T> GetByShortName<T>(string shortName) where T : DatabaseProjectItem => Project.Indexes.ShortNameDatabaseIndex.Where<T>(this, shortName);
 
         public override int GetHashCode() => DatabaseName.GetHashCode();
 
-        [CanBeNull]
-        public Item GetItem([NotNull] string itemPath)
+        public Item GetItem(string itemPath)
         {
             if (Guid.TryParse(itemPath, out Guid guid))
             {
@@ -125,11 +117,9 @@ namespace Sitecore.Pathfinder.Projects
             return FindQualifiedItem<Item>(itemPath);
         }
 
-        [CanBeNull]
         public Item GetItem(Guid guid) => Project.Indexes.FindQualifiedItem<Item>(new ProjectItemUri(DatabaseName, guid));
 
-        [CanBeNull]
-        public Item GetItem([NotNull] ProjectItemUri uri)
+        public Item GetItem(ProjectItemUri uri)
         {
             if (!string.Equals(uri.FileOrDatabaseName, DatabaseName, StringComparison.OrdinalIgnoreCase))
             {
@@ -139,8 +129,7 @@ namespace Sitecore.Pathfinder.Projects
             return Project.Indexes.FindQualifiedItem<Item>(uri);
         }
 
-        [NotNull]
-        public Language GetLanguage([NotNull] string languageName)
+        public Language GetLanguage(string languageName)
         {
             var key = languageName.ToUpperInvariant();
 
@@ -161,6 +150,6 @@ namespace Sitecore.Pathfinder.Projects
 
         public static bool operator !=([CanBeNull] Database left, [CanBeNull] Database right) => !Equals(left, right);
 
-        protected bool Equals([NotNull] Database other) => string.Equals(DatabaseName, other.DatabaseName);
+        protected bool Equals([NotNull] IDatabase other) => string.Equals(DatabaseName, other.DatabaseName);
     }
 }

@@ -28,27 +28,27 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull]
-        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Error([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, fileName, textSpan, Severity.Error, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, fileName, textSpan, Severity.Error, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Error([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Error, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Error, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Error([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Error, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Error, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Error(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Error([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Error, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Error, GetText(text, details, checkerName));
         }
 
         protected virtual bool FileExists([NotNull] ICheckerContext context, [NotNull] string fileName)
@@ -66,51 +66,51 @@ namespace Sitecore.Pathfinder.Checking
         }
 
         [NotNull]
-        protected Diagnostic Information(int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Information([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, fileName, textSpan, Severity.Information, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, fileName, textSpan, Severity.Information, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Information(int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Information([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Information, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Information, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Information(int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Information([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Information, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Information, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Information(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Information([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Information, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Information, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Warning([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Warning, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, string.Empty, TextSpan.Empty, Severity.Warning, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Warning([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] string fileName, TextSpan textSpan, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, fileName, textSpan, Severity.Warning, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, fileName, textSpan, Severity.Warning, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Warning([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ISourceFile sourceFile, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Warning, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, sourceFile.AbsoluteFileName, TextSpan.Empty, Severity.Warning, GetText(text, details, checkerName));
         }
 
         [NotNull]
-        protected Diagnostic Warning(int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
+        protected IDiagnostic Warning([NotNull] ICheckerContext context, int msg, [NotNull] string text, [NotNull] ITextNode textNode, [NotNull] string details = "", [NotNull, CallerMemberName] string checkerName = "")
         {
-            return new Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Warning, GetText(text, details, checkerName));
+            return context.Factory.Diagnostic(msg, textNode.Snapshot.SourceFile.AbsoluteFileName, textNode.TextSpan, Severity.Warning, GetText(text, details, checkerName));
         }
 
         [NotNull]

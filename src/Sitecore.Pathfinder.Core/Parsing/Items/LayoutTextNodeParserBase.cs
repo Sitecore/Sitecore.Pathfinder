@@ -1,4 +1,4 @@
-﻿// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+﻿// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +22,8 @@ namespace Sitecore.Pathfinder.Parsing.Items
             Factory = factory;
             ReferenceParserService = referenceParserService;
         }
+
+        public override ISchemaService SchemaService { get; } = null;
 
         [NotNull]
         protected IFactory Factory { get; }

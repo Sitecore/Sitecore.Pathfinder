@@ -18,7 +18,7 @@ namespace Sitecore.Pathfinder.Snapshots
         private string _fileNameWithoutExtensions;
 
         [FactoryConstructor]
-        public SourceFile([NotNull] IConfiguration configuration, [NotNull] IFileSystemService fileSystem, [NotNull] string absoluteFileName)
+        public SourceFile([NotNull] IConfiguration configuration, [NotNull] IFileSystem fileSystem, [NotNull] string absoluteFileName)
         {
             FileSystem = fileSystem;
             AbsoluteFileName = absoluteFileName;
@@ -43,9 +43,24 @@ namespace Sitecore.Pathfinder.Snapshots
         public string RelativeFileName { get; }
 
         [NotNull]
-        protected IFileSystemService FileSystem { get; }
+        protected IFileSystem FileSystem { get; }
 
-        public virtual string GetFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
+        public virtual string GetDirectoryAndFileNameWithoutExtensions() => _fileNameWithoutExtensions ?? (_fileNameWithoutExtensions = PathHelper.GetDirectoryAndFileNameWithoutExtensions(AbsoluteFileName));
+
+        public virtual string GetFileNameWithoutExtensions()
+        {
+            var fileName = PathHelper.NormalizeItemPath(AbsoluteFileName);
+
+            var s = fileName.LastIndexOf('/') + 1;
+            var e = fileName.IndexOf('.', s);
+
+            if (e < 0)
+            {
+                return fileName.Mid(s);
+            }
+
+            return fileName.Mid(s, e - s);
+        }
 
         public virtual string[] ReadAsLines() => FileSystem.ReadAllLines(AbsoluteFileName);
 

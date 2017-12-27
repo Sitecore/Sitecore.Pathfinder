@@ -1,0 +1,26 @@
+- Folder: Tests
+    ItemPath: /sitecore/client/Applications/SitecoreWorks/content/TemplateStandardValuesTest
+    Database: master
+    - Items: 
+        - Template:
+            Name: TemplateStandardValuesTest
+            - Section: Fields
+                - Field: IsActive
+                    Type: Checkbox
+                    Sharing: Shared
+                - Field: Text
+                    Type: Single-Line Text
+                    Sharing: Unversioned
+            - TemplateStandardValuesTest: __Standard Values
+                - Fields:
+                    IsActive: true
+                    - en:
+                        Text: Welcome to Sitecore
+                - Layout:
+                    - Default: Sample Layout
+                        - main:
+                            - Sample Sublayout:
+                                - centercolumn:
+                                    - Sample Inner Sublayout:
+                                        - content:
+                                            - Sample Rendering:

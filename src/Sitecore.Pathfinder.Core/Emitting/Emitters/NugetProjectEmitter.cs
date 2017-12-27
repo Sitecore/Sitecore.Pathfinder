@@ -31,7 +31,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Template> _templates = new List<Template>();
 
         [ImportingConstructor]
-        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public NugetProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters)
         {
             Factory = factory;
             FileSystem = fileSystem;
@@ -42,7 +42,7 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         protected IFactory Factory { get; }
 
         [NotNull]
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         [NotNull]
         public string OutputDirectory { get; }

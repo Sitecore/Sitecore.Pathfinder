@@ -13,8 +13,7 @@ namespace Sitecore.Pathfinder.Projects
     [Export(typeof(IProjectService)), Shared]
     public class ProjectService : IProjectService
     {
-        [FactoryConstructor]
-        [ImportingConstructor]
+        [FactoryConstructor, ImportingConstructor]
         public ProjectService([NotNull] IConfiguration configuration, [NotNull] IFactory factory)
         {
             Configuration = configuration;
@@ -45,7 +44,7 @@ namespace Sitecore.Pathfinder.Projects
 
         public virtual IProject LoadProjectFromNewHost(string projectDirectory)
         {
-            var host = new Startup().AsInteractive().WithProjectDirectory(projectDirectory).Start();
+            var host = new Startup().WithProjectDirectory(projectDirectory).Start();
             if (host == null)
             {
                 return null;

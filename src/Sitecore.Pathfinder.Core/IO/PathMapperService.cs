@@ -131,7 +131,7 @@ namespace Sitecore.Pathfinder.IO
         {
             Clear();
 
-            var pipeline = Pipelines.Resolve<ParsePathMappersPipeline>().Execute(configuration);
+            var pipeline = Pipelines.GetPipeline<ParsePathMappersPipeline>().Execute(configuration);
 
             ProjectDirectoryToWebsiteDirectories.AddRange(pipeline.ProjectDirectoryToWebsiteDirectories);
             ProjectDirectoryToWebsiteItemPaths.AddRange(pipeline.ProjectDirectoryToWebsiteItemPaths);

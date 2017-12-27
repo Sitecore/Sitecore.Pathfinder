@@ -17,6 +17,8 @@ namespace Sitecore.Pathfinder.Snapshots
 
         public string RelativeFileName { get; } = string.Empty;
 
+        public string GetDirectoryAndFileNameWithoutExtensions() => string.Empty;
+
         public string GetFileNameWithoutExtensions() => string.Empty;
 
         public string[] ReadAsLines() => throw new InvalidOperationException("Cannot read from empty source file");

@@ -9,6 +9,9 @@ namespace Sitecore.Pathfinder.Parsing.Items
     {
         double Priority { get; }
 
+        [CanBeNull]
+        ISchemaService SchemaService { get; }
+
         bool CanParse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode);
 
         void Parse([NotNull] ItemParseContext context, [NotNull] ITextNode textNode);

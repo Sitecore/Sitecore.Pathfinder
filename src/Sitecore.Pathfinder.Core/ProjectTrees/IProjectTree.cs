@@ -10,7 +10,7 @@ namespace Sitecore.Pathfinder.ProjectTrees
     public interface IProjectTree
     {
         [NotNull]
-        IFileSystemService FileSystem { get; }
+        IFileSystem FileSystem { get; }
 
         [NotNull]
         IPipelineService Pipelines { get; }

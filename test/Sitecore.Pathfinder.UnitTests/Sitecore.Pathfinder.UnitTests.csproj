@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Console\Sitecore.Pathfinder.Console.csproj" />
+    <ProjectReference Include="..\..\src\Sitecore.Pathfinder.App\Sitecore.Pathfinder.App.csproj" />
     <ProjectReference Include="..\..\src\Sitecore.Pathfinder.Core\Sitecore.Pathfinder.Core.csproj" />
   </ItemGroup>
 
@@ -137,6 +137,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="items\yaml\home.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\yaml\TemplateStandardValueTest.content.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="items\yaml\TemplateIconTest.content.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="items\yaml\ribbon.content.yaml">

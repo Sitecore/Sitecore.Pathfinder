@@ -5,8 +5,6 @@ using System.IO;
 using System.Text.RegularExpressions;
 using Sitecore.Pathfinder.Diagnostics;
 using Sitecore.Pathfinder.Extensions;
-using Sitecore.Pathfinder.Projects;
-using Sitecore.Pathfinder.Snapshots;
 
 namespace Sitecore.Pathfinder.IO
 {
@@ -146,22 +144,6 @@ namespace Sitecore.Pathfinder.IO
         }
 
         [NotNull]
-        public static string GetItemName([NotNull] ISourceFile sourceFile)
-        {
-            var fileName = NormalizeItemPath(sourceFile.AbsoluteFileName);
-
-            var s = fileName.LastIndexOf('/') + 1;
-            var e = fileName.IndexOf('.', s);
-
-            if (e < 0)
-            {
-                return fileName.Mid(s);
-            }
-
-            return fileName.Mid(s, e - s);
-        }
-
-        [NotNull]
         public static string GetItemParentPath([NotNull] string itemPath)
         {
             itemPath = NormalizeItemPath(itemPath).TrimEnd('/');
@@ -169,28 +151,6 @@ namespace Sitecore.Pathfinder.IO
             var n = itemPath.LastIndexOf('/');
 
             return n >= 0 ? itemPath.Left(n) : itemPath;
-        }
-
-        [NotNull]
-        public static string GetItemPath([NotNull] IProjectBase project, [NotNull] ISourceFile sourceFile, [NotNull] string localFileDirectory, [NotNull] string itemPath)
-        {
-            var result = "/" + NormalizeItemPath(UnmapPath(project.ProjectDirectory, sourceFile.AbsoluteFileName)).TrimStart('/');
-
-            result = NormalizeItemPath(GetDirectoryAndFileNameWithoutExtensions(result));
-
-            localFileDirectory = "/" + NormalizeItemPath(localFileDirectory).Trim('/');
-
-            if (result.StartsWith(localFileDirectory, StringComparison.OrdinalIgnoreCase))
-            {
-                result = itemPath.TrimEnd('/') + "/" + result.Mid(localFileDirectory.Length).TrimStart('/');
-            }
-
-            if (!result.StartsWith("/sitecore/", StringComparison.OrdinalIgnoreCase))
-            {
-                result = "/sitecore" + result;
-            }
-
-            return result;
         }
 
         public static bool IsProbablyItemPath([NotNull] string itemPath)

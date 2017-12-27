@@ -24,9 +24,9 @@ namespace Sitecore.Pathfinder.Tasks
 
         public bool IsHidden { get; protected set; } = false;
 
-        public string Alias { get; set; } = string.Empty;
+        public string Alias { get; } = string.Empty;
 
-        public string Shortcut { get; set; } = string.Empty;
+        public string Shortcut { get; protected set; } = string.Empty;
 
         public string TaskName { get; }
 
@@ -34,8 +34,22 @@ namespace Sitecore.Pathfinder.Tasks
 
         protected virtual bool GetOptionBoolValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
         {
+            string value;
+
+            // get positional argument from command line
+            if (attribute.PositionalArg > 0)
+            {
+                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                {
+                    if (bool.TryParse(value, out var b))
+                    {
+                        return b;
+                    }
+                }
+            }
+
             // get from configuration
-            if (context.Configuration.TryGet(attribute.Name, out var value))
+            if (context.Configuration.TryGet(attribute.Name, out value))
             {
                 if (bool.TryParse(value, out var b))
                 {
@@ -55,10 +69,10 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            // get positional argument from command line
-            if (attribute.PositionalArg > 0)
+            // get from configuration by configuration name
+            if (!string.IsNullOrEmpty(attribute.ConfigurationName))
             {
-                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                if (context.Configuration.TryGet(attribute.ConfigurationName, out value))
                 {
                     if (bool.TryParse(value, out var b))
                     {
@@ -87,8 +101,19 @@ namespace Sitecore.Pathfinder.Tasks
         [NotNull]
         protected virtual string GetOptionStringValue([NotNull] ITaskContext context, [NotNull] PropertyInfo property, [NotNull] OptionAttribute attribute)
         {
+            string value;
+
+            // get positional argument from command line
+            if (attribute.PositionalArg > 0)
+            {
+                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                {
+                    return MatchPartialStringValue(context, attribute, property, value ?? string.Empty);
+                }
+            }
+
             // get from configuration
-            if (context.Configuration.TryGet(attribute.Name, out var value))
+            if (context.Configuration.TryGet(attribute.Name, out value))
             {
                 return value ?? string.Empty;
             }
@@ -102,10 +127,10 @@ namespace Sitecore.Pathfinder.Tasks
                 }
             }
 
-            // get positional argument from command line
-            if (attribute.PositionalArg > 0)
+            // get from configuration by configuration name
+            if (!string.IsNullOrEmpty(attribute.ConfigurationName))
             {
-                if (context.Configuration.TryGet("arg" + attribute.PositionalArg, out value))
+                if (context.Configuration.TryGet(attribute.ConfigurationName, out value))
                 {
                     return MatchPartialStringValue(context, attribute, property, value ?? string.Empty);
                 }

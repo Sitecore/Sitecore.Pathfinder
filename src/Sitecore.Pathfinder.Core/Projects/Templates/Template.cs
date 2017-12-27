@@ -14,7 +14,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
     public class Template : DatabaseProjectItem
     {
         [NotNull]
-        public static readonly Template Empty = new Template(Database.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty);
+        public static readonly Template Empty = new Template(Projects.Database.Empty, new Guid("{00000000-0000-0000-0000-000000000000}"), string.Empty, string.Empty);
 
         [NotNull]
         private readonly object _syncObject = new object();
@@ -26,7 +26,7 @@ namespace Sitecore.Pathfinder.Projects.Templates
         private ID[] _baseTemplateIDs;
 
         [FactoryConstructor]
-        public Template([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database, guid, itemName, itemIdOrPath)
+        public Template([NotNull] IDatabase database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
             BaseTemplatesProperty = NewSourceProperty("BaseTemplates", string.Empty);
             LongHelpProperty = NewSourceProperty("LongHelp", string.Empty);

@@ -5,11 +5,9 @@ using System.Composition;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Sitecore.Pathfinder.Checking.Checkers;
 using Sitecore.Pathfinder.Configuration;
 using Sitecore.Pathfinder.Configuration.ConfigurationModel;
 using Sitecore.Pathfinder.Diagnostics;
-using Sitecore.Pathfinder.Extensibility;
 using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.Projects;
 
@@ -46,14 +44,22 @@ namespace Sitecore.Pathfinder.Checking
             {
                 foreach (var method in checker.GetType().GetMethods(BindingFlags.Public | BindingFlags.Instance))
                 {
-                    if (method.GetCustomAttribute<CheckAttribute>() != null)
+                    if (method.GetCustomAttribute<CheckAttribute>() == null)
                     {
-                        var checkerInfo = new CheckerInfo(method.DeclaringType.Name, method.Name, context => method.Invoke(checker, new object[]
+                        continue;
+                    }
+
+                    var checkerInfo = new CheckerInfo(method.DeclaringType.Name, method.Name, context =>
+                    {
+                        var parameters = new object[]
                         {
                             context
-                        }) as IEnumerable<Diagnostic>);
-                        list.Add(checkerInfo);
-                    }
+                        };
+
+                        return method.Invoke(checker, parameters) as IEnumerable<IDiagnostic>;
+                    });
+
+                    list.Add(checkerInfo);
                 }
             }
 
@@ -112,6 +118,7 @@ namespace Sitecore.Pathfinder.Checking
                 {
                     var diagnostics = checker.Checker(context).ToArray();
                     TraceDiagnostics(context, checker, diagnostics, treatWarningsAsErrors);
+
                 });
             }
             else
@@ -212,7 +219,7 @@ namespace Sitecore.Pathfinder.Checking
             return Checkers.Where(c => c.Severity != CheckerSeverity.Disabled).ToArray();
         }
 
-        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] Diagnostic[] diagnostics, bool treatWarningsAsErrors)
+        protected virtual void TraceDiagnostics([NotNull] ICheckerContext context, [NotNull] CheckerInfo checker, [NotNull, ItemNotNull] IDiagnostic[] diagnostics, bool treatWarningsAsErrors)
         {
             if (checker.Severity == CheckerSeverity.Default)
             {

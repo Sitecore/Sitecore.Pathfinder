@@ -9,8 +9,7 @@ An experimental CLI for Sitecore.
 
 ![Pathfinder](docs/img/SitecorePathfinder.png)
  
-Download [the latest Pathfinder build](https://github.com/JakobChristensen/Sitecore.Pathfinder/releases) to 
-try it out.
+Run `npm install -g sitecore-pathfinder` to install Sitecore Pathfinder.
 
 Follow the walk-throughs:
 

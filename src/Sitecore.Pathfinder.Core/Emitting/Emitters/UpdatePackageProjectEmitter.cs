@@ -32,14 +32,14 @@ namespace Sitecore.Pathfinder.Emitting.Emitters
         private readonly List<Item> _items = new List<Item>();
 
         [ImportingConstructor]
-        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystemService fileSystem) : base(configuration, trace, emitters)
+        public UpdatePackageProjectEmitter([NotNull] IConfiguration configuration, [NotNull] IFactory factory, [NotNull] ITraceService trace, [ItemNotNull, NotNull, ImportMany] IEnumerable<IEmitter> emitters, [NotNull] IFileSystem fileSystem) : base(configuration, trace, emitters)
         {
             Factory = factory;
             FileSystem = fileSystem;
         }
 
         [NotNull]
-        public IFileSystemService FileSystem { get; }
+        public IFileSystem FileSystem { get; }
 
         [NotNull]
         public ZipWriter Zip { get; private set; }

@@ -20,6 +20,6 @@ namespace Sitecore.Pathfinder.ProjectTrees
 
         public ProjectTreeUri Uri { get; }
 
-        public IEnumerable<IProjectTreeItem> GetChildren() => ProjectTree.Pipelines.Resolve<GetProjectTreeChildrenPipeline>().Execute(this).Children;
+        public IEnumerable<IProjectTreeItem> GetChildren() => ProjectTree.Pipelines.GetPipeline<GetProjectTreeChildrenPipeline>().Execute(this).Children;
     }
 }

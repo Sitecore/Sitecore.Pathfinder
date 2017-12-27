@@ -22,7 +22,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
             Add(projectItem.Database, GetKey(projectItem), projectItem);
         }
 
-        public void Add([NotNull] Database database, [NotNull] string key, [NotNull] TV projectItem)
+        public void Add([NotNull] IDatabase database, [NotNull] string key, [NotNull] TV projectItem)
         {
             key = (database.DatabaseName + key).ToUpperInvariant();
             if (!TryGetValue(key, out List<TV> projectItemList))
@@ -35,7 +35,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
         }
 
         [CanBeNull]
-        public T FirstOrDefault<T>([NotNull] Database database, [NotNull] string key) where T : class, TV
+        public T FirstOrDefault<T>([NotNull] IDatabase database, [NotNull] string key) where T : class, TV
         {
             key = (database.DatabaseName + key).ToUpperInvariant();
             return TryGetValue(key, out List<TV> projectItemList) ? projectItemList.OfType<T>().FirstOrDefault() : null;
@@ -46,7 +46,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
             Remove(projectItem.Database, GetKey(projectItem), projectItem);
         }
 
-        public void Remove([NotNull] Database database, [NotNull] string key, [NotNull] TV projectItem)
+        public void Remove([NotNull] IDatabase database, [NotNull] string key, [NotNull] TV projectItem)
         {
             key = (database.DatabaseName + key).ToUpperInvariant();
             if (!TryGetValue(key, out List<TV> projectItemList))
@@ -62,7 +62,7 @@ namespace Sitecore.Pathfinder.Projects.ProjectIndexes
         }
 
         [NotNull, ItemNotNull]
-        public IEnumerable<T> Where<T>([NotNull] Database database, [NotNull] string key) where T : class, TV
+        public IEnumerable<T> Where<T>([NotNull] IDatabase database, [NotNull] string key) where T : class, TV
         {
             key = (database.DatabaseName + key).ToUpperInvariant();
             return TryGetValue(key.ToUpperInvariant(), out List<TV> projectItemList) ? projectItemList.OfType<T>() : Enumerable.Empty<T>();

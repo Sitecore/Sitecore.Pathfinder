@@ -52,8 +52,15 @@ namespace Sitecore.Pathfinder.Languages.Yaml
 
                 foreach (var versionChildNode in languageChildNode.ChildNodes)
                 {
+                    if (!int.TryParse(versionChildNode.Key, out var _))
+                    {
+                        Trace.TraceError(Msg.C1136, "Version element is not a valid number", versionChildNode);
+                        continue;
+                    }
+
                     var versionVersionContext = new LanguageVersionContext();
                     versionVersionContext.LanguageProperty.SetValue(languageVersionContext.LanguageProperty);
+
                     versionVersionContext.VersionProperty.SetValue(new AttributeNameTextNode(versionChildNode));
 
                     ParseAttributes(context, item, versionVersionContext, versionChildNode);

@@ -1,3 +1,5 @@
+// © 2015-2017 by Jakob Christensen. All rights reserved.
+
 using System;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -17,7 +19,7 @@ namespace Sitecore.Pathfinder.Projects.Items
     public class Item : DatabaseProjectItem
     {
         [NotNull]
-        public static readonly Item Empty = new Item(Database.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), string.Empty, string.Empty, string.Empty);
+        public static readonly Item Empty = new Item(Projects.Database.Empty, new Guid("{935B8D6C-D25A-48B8-8167-2C0443D77027}"), string.Empty, string.Empty, string.Empty);
 
         [CanBeNull]
         private ItemAppearance _appearance;
@@ -44,7 +46,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         private ItemVersions _versions;
 
         [FactoryConstructor]
-        public Item([NotNull] Database database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(database, guid, itemName, itemIdOrPath)
+        public Item([NotNull] IDatabase database, Guid guid, [NotNull] string itemName, [NotNull] string itemIdOrPath, [NotNull] string templateIdOrPath) : base(database, guid, itemName, itemIdOrPath)
         {
             TemplateIdOrPathProperty = NewSourceProperty("Template", string.Empty, SourcePropertyFlags.IsQualified);
             TemplateIdOrPath = templateIdOrPath;
@@ -98,6 +100,7 @@ namespace Sitecore.Pathfinder.Projects.Items
         public Template Template => Database.FindByIdOrPath<Template>(TemplateIdOrPath) ?? Template.Empty;
 
         [NotNull, Obsolete("Use Template.Uri.Guid instead")]
+
         // ReSharper disable once InconsistentNaming
         public ID TemplateID => Template.ID;
 

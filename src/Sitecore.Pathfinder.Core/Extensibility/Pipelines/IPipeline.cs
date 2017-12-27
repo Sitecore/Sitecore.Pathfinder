@@ -5,12 +5,9 @@ using Sitecore.Pathfinder.Diagnostics;
 
 namespace Sitecore.Pathfinder.Extensibility.Pipelines
 {
-    public interface IPipeline<T> where T : IPipeline<T>
+    public interface IPipeline<out T> where T : IPipeline<T>
     {
         bool IsAborted { get; }
-
-        [NotNull, ItemNotNull]
-        IList<IPipelineProcessor<T>> Processors { get; }
 
         [NotNull]
         IPipeline<T> Abort();
@@ -18,6 +15,7 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
         [NotNull]
         IPipeline<T> Execute();
 
-        void Next([CanBeNull] IPipelineProcessor<T> currentProcessor);
+        [NotNull]
+        IPipeline<T> With([ItemNotNull, NotNull] IEnumerable<IPipelineProcessor<T>> processors);
     }
 }

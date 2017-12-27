@@ -1,7 +1,6 @@
-// © 2015-2017 Sitecore Corporation A/S. All rights reserved.
+// © 2015-2017 by Jakob Christensen. All rights reserved.
 
 using System;
-using System.Composition;
 using System.IO;
 using System.Linq;
 using Sitecore.Pathfinder.Configuration;
@@ -11,6 +10,7 @@ using Sitecore.Pathfinder.Extensions;
 using Sitecore.Pathfinder.IO;
 using Sitecore.Pathfinder.Parsing.Pipelines.TemplateParserPipelines;
 using Sitecore.Pathfinder.Parsing.References;
+using Sitecore.Pathfinder.Projects.Items;
 using Sitecore.Pathfinder.Projects.Templates;
 using Sitecore.Pathfinder.Snapshots;
 using Sitecore.Pathfinder.Text;
@@ -29,10 +29,10 @@ namespace Sitecore.Pathfinder.Parsing.Items
         }
 
         [NotNull]
-        protected IFactory Factory { get; }
+        public override ISchemaService SchemaService { get; }
 
         [NotNull]
-        protected ITraceService Trace { get; }
+        protected IFactory Factory { get; }
 
         [NotNull]
         protected IPipelineService Pipelines { get; }
@@ -41,7 +41,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
         protected IReferenceParserService ReferenceParser { get; }
 
         [NotNull]
-        protected ISchemaService SchemaService { get; }
+        protected ITraceService Trace { get; }
 
         public override void Parse(ItemParseContext context, ITextNode textNode)
         {
@@ -75,14 +75,34 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             template.References.AddRange(ReferenceParser.ParseReferences(template, template.BaseTemplatesProperty));
 
-            // create standard values item
-            var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
-            var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
-            var standardValuesItem = Factory.Item(database, standardValuesGuid, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
-            standardValuesItem.IsImport = template.IsImport;
+            Item standardValuesItem;
+            var standardValuesTextNode = textNode.ChildNodes.FirstOrDefault(n => string.Equals(n.Value, "__Standard Values", StringComparison.OrdinalIgnoreCase));
+            if (standardValuesTextNode != null)
+            {
+                var newContext = Factory.ItemParseContext(context.ParseContext, context.Parser, template.Database, template.ItemIdOrPath, template.IsImport);
+                context.Parser.ParseTextNode(newContext, standardValuesTextNode);
+                standardValuesItem = template.Database.GetItem(template.ItemIdOrPath + "/__Standard Values");
 
-            // todo: should be Uri
-            template.StandardValuesItem = standardValuesItem;
+                if (standardValuesItem == null)
+                {
+                    Trace.TraceError(Msg.C1137, "'__Standard Values' item not parsed correctly", standardValuesTextNode);
+                }
+            }
+            else
+            {
+                // create standard values item
+                var standardValuesItemIdOrPath = itemIdOrPath + "/__Standard Values";
+                var standardValuesGuid = StringHelper.GetGuid(context.ParseContext.Project, standardValuesItemIdOrPath);
+                standardValuesItem = Factory.Item(database, standardValuesGuid, "__Standard Values", standardValuesItemIdOrPath, itemIdOrPath).With(textNode);
+                context.ParseContext.Project.AddOrMerge(standardValuesItem);
+            }
+
+            if (standardValuesItem != null)
+            {
+                // todo: should be Uri
+                template.StandardValuesItem = standardValuesItem;
+                standardValuesItem.IsImport = template.IsImport;
+            }
 
             // parse fields and sections
             foreach (var sectionTreeNode in textNode.ChildNodes)
@@ -90,17 +110,16 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 ParseSection(context, template, sectionTreeNode);
             }
 
-            Pipelines.Resolve<TemplateParserPipeline>().Execute(context, template, textNode);
+            Pipelines.GetPipeline<TemplateParserPipeline>().Execute(context, template, textNode);
 
             context.ParseContext.Project.AddOrMerge(template);
-            context.ParseContext.Project.AddOrMerge(standardValuesItem);
         }
 
         protected virtual void ParseField([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] TemplateSection templateSection, [NotNull] ITextNode templateFieldTextNode, ref int nextSortOrder)
         {
             SchemaService.ValidateTextNodeSchema(templateFieldTextNode, "TemplateField");
 
-            GetName(context.ParseContext, templateFieldTextNode, out string fieldName, out ITextNode fieldNameTextNode, "Field", "Name");
+            GetName(context.ParseContext, templateFieldTextNode, out var fieldName, out var fieldNameTextNode, "Field", "Name");
             if (string.IsNullOrEmpty(fieldName))
             {
                 Trace.TraceError(Msg.P1005, Texts._Field__element_must_have_a__Name__attribute, templateFieldTextNode.Snapshot.SourceFile.AbsoluteFileName, templateFieldTextNode.TextSpan);
@@ -129,6 +148,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
             nextSortOrder = templateField.Sortorder + 100;
 
+            // set field standard value
             var standardValueTextNode = templateFieldTextNode.GetAttribute("StandardValue");
             if (standardValueTextNode != null && !string.IsNullOrEmpty(standardValueTextNode.Value))
             {
@@ -138,12 +158,15 @@ namespace Sitecore.Pathfinder.Parsing.Items
                 }
                 else
                 {
-                    // todo: support language and version
-                    var field = Factory.Field(template.StandardValuesItem).With(standardValueTextNode);
-                    field.FieldNameProperty.SetValue(fieldNameTextNode);
-                    field.ValueProperty.SetValue(standardValueTextNode);
+                    var field = template.StandardValuesItem.Fields.GetField(templateField.FieldName);
+                    if (field == null)
+                    {
+                        field = Factory.Field(template.StandardValuesItem).With(standardValueTextNode);
+                        field.FieldNameProperty.SetValue(fieldNameTextNode);
+                        template.StandardValuesItem.Fields.Add(field);
+                    }
 
-                    template.StandardValuesItem.Fields.Add(field);
+                    field.ValueProperty.SetValue(standardValueTextNode);
                 }
             }
 
@@ -152,9 +175,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
         protected virtual void ParseSection([NotNull] ItemParseContext context, [NotNull] Template template, [NotNull] ITextNode templateSectionTextNode)
         {
+            if (string.Equals(templateSectionTextNode.Value, "__Standard Values", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
             SchemaService.ValidateTextNodeSchema(templateSectionTextNode, "TemplateSection");
 
-            GetName(context.ParseContext, templateSectionTextNode, out string sectionName, out ITextNode sectionNameTextNode, "Section", "Name");
+            GetName(context.ParseContext, templateSectionTextNode, out var sectionName, out var sectionNameTextNode, "Section", "Name");
             if (string.IsNullOrEmpty(sectionName))
             {
                 Trace.TraceError(Msg.P1007, Texts._Section__element_must_have_a__Name__attribute, sectionNameTextNode);

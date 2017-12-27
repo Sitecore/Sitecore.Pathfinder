@@ -13,7 +13,7 @@ namespace Sitecore.Pathfinder.Parsing
         CultureInfo Culture { get; }
 
         [NotNull]
-        Database Database { get; }
+        IDatabase Database { get; }
 
         [NotNull]
         string FilePath { get; }

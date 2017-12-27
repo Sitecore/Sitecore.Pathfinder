@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Sitecore.Pathfinder.Languages.Unicorn;
+
 #pragma warning disable 1591
 
 namespace Sitecore.Pathfinder.Configuration
@@ -28,11 +30,11 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Languages.Content.ContentFile ContentFile(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string filePath) => new Sitecore.Pathfinder.Languages.Content.ContentFile(project, snapshot, filePath);
 
-        public virtual Sitecore.Pathfinder.Projects.Database Database(Sitecore.Pathfinder.Projects.IProjectBase project, string databaseName, System.Collections.Generic.IEnumerable<string> languageNames) => new Sitecore.Pathfinder.Projects.Database(this, project, databaseName, languageNames);
+        public virtual Sitecore.Pathfinder.Projects.IDatabase Database(Sitecore.Pathfinder.Projects.IProjectBase project, string databaseName, System.Collections.Generic.IEnumerable<string> languageNames) => new Sitecore.Pathfinder.Projects.Database(this, project, databaseName, languageNames);
 
         public virtual Sitecore.Pathfinder.Projects.References.DeviceReference DeviceReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, string referenceText, string databaseName) => new Sitecore.Pathfinder.Projects.References.DeviceReference(owner, sourceProperty, referenceText, databaseName);
 
-        public virtual Sitecore.Pathfinder.Projects.Diagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
+        public virtual Sitecore.Pathfinder.Projects.IDiagnostic Diagnostic(int msg, string fileName, Sitecore.Pathfinder.Snapshots.TextSpan span, Sitecore.Pathfinder.Diagnostics.Severity severity, string text) => new Sitecore.Pathfinder.Projects.Diagnostic(msg, fileName, span, severity, text);
 
         public virtual Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem DirectoryProjectTreeItem(Sitecore.Pathfinder.ProjectTrees.IProjectTree projectTree, string directory) => new Sitecore.Pathfinder.ProjectTrees.DirectoryProjectTreeItem(projectTree, directory);
 
@@ -50,15 +52,15 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Projects.References.FileReference FileReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Snapshots.ITextNode textNode, string referenceText) => new Sitecore.Pathfinder.Projects.References.FileReference(owner, textNode, referenceText);
 
-        public virtual Sitecore.Pathfinder.Projects.Items.Item Item(Sitecore.Pathfinder.Projects.Database database, System.Guid guid, string itemName, string itemIdOrPath, string templateIdOrPath) => new Sitecore.Pathfinder.Projects.Items.Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
+        public virtual Sitecore.Pathfinder.Projects.Items.Item Item(Sitecore.Pathfinder.Projects.IDatabase database, System.Guid guid, string itemName, string itemIdOrPath, string templateIdOrPath) => new Sitecore.Pathfinder.Projects.Items.Item(database, guid, itemName, itemIdOrPath, templateIdOrPath);
 
-        public virtual Sitecore.Pathfinder.Parsing.Items.ItemParseContext ItemParseContext(Sitecore.Pathfinder.Parsing.IParseContext parseContext, Sitecore.Pathfinder.Parsing.Items.ItemParser parser, Sitecore.Pathfinder.Projects.Database database, string parentItemPath, bool isImport) => new Sitecore.Pathfinder.Parsing.Items.ItemParseContext(parseContext, parser, database, parentItemPath, isImport);
+        public virtual Sitecore.Pathfinder.Parsing.Items.ItemParseContext ItemParseContext(Sitecore.Pathfinder.Parsing.IParseContext parseContext, Sitecore.Pathfinder.Parsing.Items.ItemParser parser, Sitecore.Pathfinder.Projects.IDatabase database, string parentItemPath, bool isImport) => new Sitecore.Pathfinder.Parsing.Items.ItemParseContext(parseContext, parser, database, parentItemPath, isImport);
 
         public virtual Sitecore.Pathfinder.Languages.Json.JsonTextSnapshot JsonTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents) => Resolve<Sitecore.Pathfinder.Languages.Json.JsonTextSnapshot>().With(sourceFile, contents);
 
         public virtual Sitecore.Pathfinder.Projects.Items.Language Language(string languageName) => new Sitecore.Pathfinder.Projects.Items.Language(languageName);
 
-        public virtual Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext LayoutCompileContext(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Projects.Database database, Sitecore.Pathfinder.Snapshots.ITextSnapshot snapshot) => new Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext(project, database, snapshot);
+        public virtual Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext LayoutCompileContext(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Projects.IDatabase database, Sitecore.Pathfinder.Snapshots.ITextSnapshot snapshot) => new Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompileContext(project, database, snapshot);
 
         public virtual Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompiler LayoutCompiler() => new Sitecore.Pathfinder.Compiling.FieldCompilers.LayoutCompiler(Trace, FileSystem);
 
@@ -66,7 +68,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Projects.References.LayoutRenderingReference LayoutRenderingReference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Projects.SourceProperty<string> sourceProperty, string referenceText, string databaseName) => new Sitecore.Pathfinder.Projects.References.LayoutRenderingReference(owner, sourceProperty, referenceText, databaseName);
 
-        public virtual Sitecore.Pathfinder.Languages.Media.MediaFile MediaFile(Sitecore.Pathfinder.Projects.Database database, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string itemName, string itemPath, string filePath) => new Sitecore.Pathfinder.Languages.Media.MediaFile(database, snapshot, itemName, itemPath, filePath);
+        public virtual Sitecore.Pathfinder.Languages.Media.MediaFile MediaFile(Sitecore.Pathfinder.Projects.IDatabase database, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string itemName, string itemPath, string filePath) => new Sitecore.Pathfinder.Languages.Media.MediaFile(database, snapshot, itemName, itemPath, filePath);
 
         public virtual Sitecore.Pathfinder.Tasks.Building.OutputFile OutputFile(string fileName) => new Sitecore.Pathfinder.Tasks.Building.OutputFile(fileName);
 
@@ -74,7 +76,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Parsing.PathMappingContext PathMappingContext(Sitecore.Pathfinder.IO.IPathMapperService pathMapper) => new Sitecore.Pathfinder.Parsing.PathMappingContext(pathMapper);
 
-        public virtual Sitecore.Pathfinder.IO.PathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
+        public virtual Sitecore.Pathfinder.IO.IPathMatcher PathMatcher(string include, string exclude) => new Sitecore.Pathfinder.IO.PathMatcher(include, exclude);
 
         public virtual Sitecore.Pathfinder.Projects.IProject Project(Sitecore.Pathfinder.Projects.ProjectOptions projectOptions, System.Collections.Generic.IEnumerable<string> sourceFileNames) => Resolve<Sitecore.Pathfinder.Projects.IProject>().With(projectOptions, sourceFileNames);
 
@@ -96,7 +98,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Projects.References.Reference Reference(Sitecore.Pathfinder.Projects.IProjectItem owner, Sitecore.Pathfinder.Snapshots.ITextNode textNode, string referenceText, string databaseName) => new Sitecore.Pathfinder.Projects.References.Reference(owner, textNode, referenceText, databaseName);
 
-        public virtual Sitecore.Pathfinder.Languages.Renderings.Rendering Rendering(Sitecore.Pathfinder.Projects.Database database, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Sitecore.Pathfinder.Languages.Renderings.Rendering(database, snapshot, itemPath, itemName, filePath, templateIdOrPath);
+        public virtual Sitecore.Pathfinder.Languages.Renderings.Rendering Rendering(Sitecore.Pathfinder.Projects.IDatabase database, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string itemPath, string itemName, string filePath, string templateIdOrPath) => new Sitecore.Pathfinder.Languages.Renderings.Rendering(database, snapshot, itemPath, itemName, filePath, templateIdOrPath);
 
         public virtual Sitecore.Pathfinder.Languages.Serialization.SerializationFile SerializationFile(Sitecore.Pathfinder.Projects.IProjectBase project, Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string filePath) => new Sitecore.Pathfinder.Languages.Serialization.SerializationFile(project, snapshot, filePath);
 
@@ -110,7 +112,7 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Snapshots.SourceFile SourceFile(string absoluteFileName) => new Sitecore.Pathfinder.Snapshots.SourceFile(Configuration, FileSystem, absoluteFileName);
 
-        public virtual Sitecore.Pathfinder.Projects.Templates.Template Template(Sitecore.Pathfinder.Projects.Database database, System.Guid guid, string itemName, string itemIdOrPath) => new Sitecore.Pathfinder.Projects.Templates.Template(database, guid, itemName, itemIdOrPath);
+        public virtual Sitecore.Pathfinder.Projects.Templates.Template Template(Sitecore.Pathfinder.Projects.IDatabase database, System.Guid guid, string itemName, string itemIdOrPath) => new Sitecore.Pathfinder.Projects.Templates.Template(database, guid, itemName, itemIdOrPath);
 
         public virtual Sitecore.Pathfinder.Projects.Templates.TemplateField TemplateField(Sitecore.Pathfinder.Projects.Templates.Template template, System.Guid guid) => new Sitecore.Pathfinder.Projects.Templates.TemplateField(template, guid);
 
@@ -118,11 +120,15 @@ namespace Sitecore.Pathfinder.Configuration
 
         public virtual Sitecore.Pathfinder.Snapshots.TextNode TextNode(Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string key, string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan) => new Sitecore.Pathfinder.Snapshots.TextNode(snapshot, key, value, textSpan);
 
+        public virtual Sitecore.Pathfinder.Snapshots.TextNode TextNode(Sitecore.Pathfinder.Snapshots.ISnapshot snapshot, string key, string value, Sitecore.Pathfinder.Snapshots.TextSpan textSpan, System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> attributes, System.Collections.Generic.IEnumerable<Sitecore.Pathfinder.Snapshots.ITextNode> childNodes) => new Sitecore.Pathfinder.Snapshots.TextNode(snapshot, key, value, textSpan, attributes, childNodes);
+
         public virtual Sitecore.Pathfinder.Projects.Items.Version Version(int number) => new Sitecore.Pathfinder.Projects.Items.Version(number);
 
         public virtual Sitecore.Pathfinder.Languages.Xml.XmlTextSnapshot XmlTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents, string schemaNamespace, string schemaFileName) => Resolve<Sitecore.Pathfinder.Languages.Xml.XmlTextSnapshot>().With(sourceFile, contents, schemaNamespace, schemaFileName);
 
         public virtual Sitecore.Pathfinder.Languages.Yaml.YamlTextSnapshot YamlTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents) => Resolve<Sitecore.Pathfinder.Languages.Yaml.YamlTextSnapshot>().With(sourceFile, contents);
+
+        public virtual Sitecore.Pathfinder.Languages.Unicorn.UnicornTextSnapshot UnicornTextSnapshot(Sitecore.Pathfinder.Snapshots.ISourceFile sourceFile, string contents) => Resolve<Sitecore.Pathfinder.Languages.Unicorn.UnicornTextSnapshot>().With(sourceFile, contents) as UnicornTextSnapshot;
 
     }
 

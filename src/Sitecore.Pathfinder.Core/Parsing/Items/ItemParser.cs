@@ -25,14 +25,14 @@ namespace Sitecore.Pathfinder.Parsing.Items
             SchemaService = schemaService;
             TextNodeParsers = textNodeParsers;
 
-            PathMatcher = new PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
+            PathMatcher = Factory.PathMatcher(configuration.GetString(Constants.Configuration.Items.Include), configuration.GetString(Constants.Configuration.Items.Exclude));
         }
 
         [NotNull, ItemNotNull]
         public IEnumerable<ITextNodeParser> TextNodeParsers { get; }
 
         [NotNull]
-        protected PathMatcher PathMatcher { get; }
+        protected IPathMatcher PathMatcher { get; }
 
         [NotNull]
         protected IConfiguration Configuration { get; }
@@ -100,7 +100,7 @@ namespace Sitecore.Pathfinder.Parsing.Items
 
                     parsed = true;
 
-                    if (SchemaService.ValidateTextNodeSchema(textNode))
+                    if (textNodeParser.SchemaService == null || textNodeParser.SchemaService.ValidateTextNodeSchema(textNode))
                     {
                         textNodeParser.Parse(context, textNode);
                     }

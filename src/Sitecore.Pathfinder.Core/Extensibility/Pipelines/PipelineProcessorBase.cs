@@ -6,19 +6,20 @@ namespace Sitecore.Pathfinder.Extensibility.Pipelines
 {
     public abstract class PipelineProcessorBase<T> : IPipelineProcessor<T> where T : IPipeline<T>
     {
+        private readonly float _sortorder;
+
         protected PipelineProcessorBase(float sortorder)
         {
-            Sortorder = sortorder;
+            _sortorder = sortorder;
         }
 
-        public float Sortorder { get; }
-
-        public void ExecuteAndNext(T pipeline)
-        {
-            Process(pipeline);
-            pipeline.Next(this);
-        }
+        float IPipelineProcessor<T>.Sortorder => _sortorder;
 
         protected abstract void Process([NotNull] T pipeline);
+
+        void IPipelineProcessor<T>.Execute(T pipeline)
+        {
+            Process(pipeline);
+        }
     }
 }
