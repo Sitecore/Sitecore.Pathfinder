@@ -52,7 +52,7 @@ Try installing the Package.zip file in the Sitecore website and check that the `
 
 ## Create a new template
 
-Create a new file `HelloWorldTemplate.content.yaml` with the following contents:
+Create a new YAML file `HelloWorldTemplate.content.yaml` with the following contents:
 
 ```yaml
 - Template: HelloWorldTemplate
@@ -94,7 +94,7 @@ Install the package in the Sitecore website and check that the image has been in
 
 ## Create a layout
 
-Create a new directory named `view` then create a new layout by creating a `HelloWorldLayout.cshtml` file in the `view` directory with the following contents:
+Create a new directory named `views` then create a new layout by creating a `HelloWorldLayout.cshtml` file in the `views` directory with the following contents:
 
 ```html
 @model Sitecore.Mvc.Presentation.RenderingModel
@@ -109,7 +109,7 @@ Create a new directory named `view` then create a new layout by creating a `Hell
 </html>
 ```
 
-Create a new rendering by creating a HelloWorld.cshtml file in the `/view` directory with the following contents:
+Create a new rendering by creating a HelloWorld.cshtml file in the `/views` directory with the following contents:
 
 ```html
 @model Sitecore.Mvc.Presentation.RenderingModel
@@ -120,9 +120,9 @@ Create a new rendering by creating a HelloWorld.cshtml file in the `/view` direc
 @Html.Sitecore().Field("Image")
 ```
 
-Remember to have a proper web.config file in the /view directory or the layout will not render.
+Remember to have a proper `web.config` file in the `/views` directory of your Sitecore instance or the layout will not render.
 
-Modify the `HelloWorld.content.yaml` file to setup the layout.
+Modify the `HelloWorld.content.yaml` file to use the above renderings, by setting up the layout definition for the item.
 
 ```yaml
 - HelloWorldTemplate: HelloWorld
