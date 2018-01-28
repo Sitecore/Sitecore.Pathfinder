@@ -8,7 +8,7 @@ included or referenced from the project.
 Items are stored as files but can have a number of formats. Currently Json, Yaml and Xml formats are supported. Yaml is recommended, but Json 
 and Xml are good formats, since code editors can support schema validation and IntelliSense.
 
-Yaml format (extension .item.yaml): 
+Yaml format (extension .content.yaml): 
 ```yaml
 - Sample Item: HelloWorld
     ItemPath: /sitecore/content/Home/HelloWorld
@@ -43,7 +43,7 @@ Yaml format (extension .item.yaml):
                     Sharing: Unversioned
 ```
 
-Json format (extension .item.json): 
+Json format (extension .content.json): 
 ```js
 {
     "Sample Item": {
@@ -107,7 +107,7 @@ Json format (extension .item.json):
 }
 ```
 
-Xml format (extension .item.xml) - please notice the namespace, which indicates the Xml schema to use.
+Xml format (extension .content.xml) - please notice the namespace, which indicates the Xml schema to use.
 ```xml
 <SampleItem TemplateName="Sample Item" Name="HelloWorld" ItemPath="/sitecore/content/Home/HelloWorld" Database="master">
     <Fields>
