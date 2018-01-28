@@ -2,7 +2,7 @@
 
 This walkthrough shows how to build a Hello World website.
 
-The following assumes, that you have already setup Pathfinder and created a new Sitecore website.
+The following assumes, that you have already setup Pathfinder to be globally accessible and created a new Sitecore website.
 
 ## Create an empty folder
 
@@ -13,7 +13,7 @@ Sitecore website, so you project folder only contains the project files.
 
 ## Create HelloWorld item file
 
-Create a new item file by executing the `generate-file` task.
+Create a new YAML item file by executing the `generate-file` task.
 
 ```
 scc g y HelloWorld
@@ -31,11 +31,12 @@ Open the file in Notepad and paste the following text into it.
     Database: master
     - Fields:
         - en:
-            Title: Hello World
-            Text: Hello from Pathfinder
+			-1:
+				Title: Hello World
+				Text: Hello from Pathfinder
 ```
 
-This item file will create the /sitecore/content/Home/HelloWorld item.
+This item file will create the `/sitecore/content/Home/HelloWorld` item.
 
 ## Compile the project
 
@@ -45,13 +46,13 @@ Compile the project by executing `scc b` in the command prompt.
 
 Check that there are no errors or warnings.
 
-There should now be a Package.zip file in the ./dist directory. 
+There should now be a Package.zip file in the `./dist` directory. 
 
-Try installing the Package.zip file in the Sitecore website and check that the /sitecore/content/Home/HelloWorld item has been created.
+Try installing the Package.zip file in the Sitecore website and check that the `/sitecore/content/Home/HelloWorld` item has been created.
 
 ## Create a new template
 
-Create a new file HelloWorldTemplate.content.yaml with the following contents:
+Create a new file `HelloWorldTemplate.content.yaml` with the following contents:
 
 ```yaml
 - Template: HelloWorldTemplate
@@ -71,7 +72,7 @@ Create a new file HelloWorldTemplate.content.yaml with the following contents:
 
 This file defines a new template; HelloWorldTemplate. 
 
-Edit the HelloWorld.content.yaml file to use the new template:
+Edit the `HelloWorld.content.yaml` file to use the new template:
 
 ```yaml
 - HelloWorldTemplate: HelloWorld
@@ -85,16 +86,15 @@ Edit the HelloWorld.content.yaml file to use the new template:
                 Text: Hello from Pathfinder
 ```
 
-Copy an image file named Pathfinder.png to the /items/master/sitecore/media library/ directory. Pathfinder will upload the image automatically.
+Copy an image file named `Pathfinder.png` to the `/items/master/sitecore/media library/` directory. Pathfinder will add the image to the package when it's built.
 
 Compile the project again and check that there are no errors.
 
-Install the package in the Sitecore website and check that the image has been uploaded and that the /sitecore/content/Home/HelloWorld item has
-an Image field which refers to the Pathfinder.png image.
+Install the package in the Sitecore website and check that the image has been installed and that the `/sitecore/content/Home/HelloWorld` item has an Image field which refers to the `Pathfinder.png` image.
 
 ## Create a layout
 
-Create a new layout by creating a HelloWorldLayout.cshtml file in the /view directory with the following contents:
+Create a new directory named `view` then create a new layout by creating a `HelloWorldLayout.cshtml` file in the `view` directory with the following contents:
 
 ```html
 @model Sitecore.Mvc.Presentation.RenderingModel
@@ -109,7 +109,7 @@ Create a new layout by creating a HelloWorldLayout.cshtml file in the /view dire
 </html>
 ```
 
-Create a new rendering by creating a HelloWorld.cshtml file in the /view directory with the following contents:
+Create a new rendering by creating a HelloWorld.cshtml file in the `/view` directory with the following contents:
 
 ```html
 @model Sitecore.Mvc.Presentation.RenderingModel
@@ -122,7 +122,7 @@ Create a new rendering by creating a HelloWorld.cshtml file in the /view directo
 
 Remember to have a proper web.config file in the /view directory or the layout will not render.
 
-Modify the HelloWorld.content.yaml file to setup the layout.
+Modify the `HelloWorld.content.yaml` file to setup the layout.
 
 ```yaml
 - HelloWorldTemplate: HelloWorld
@@ -144,5 +144,4 @@ Compile the project again and check that there are no errors.
 
 Install the package in the Sitecore website and publish the Master database.
 
-In a browser, navigate to the /home/HelloWorld webpage and check that the text and image are rendered properly.
-
+In a browser, navigate to the `/home/HelloWorld` webpage and check that the text and image are rendered properly.
